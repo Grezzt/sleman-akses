@@ -31,8 +31,8 @@ class CategoryRepository implements CategoryRepositoryInterface
     return $category;
   }
 
-  public function delete(int $id): void
+  public function delete(int $id): bool
   {
-    FacilityCategory::whereKey($id)->delete();
+    return (bool) FacilityCategory::whereKey($id)->delete();
   }
 }

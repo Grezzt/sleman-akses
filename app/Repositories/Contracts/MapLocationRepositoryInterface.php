@@ -13,5 +13,7 @@ interface MapLocationRepositoryInterface
 
   public function getAllPublished(): Collection;
 
-  public function delete(int $id): void;
+  public function findWithDetails(int $id): ?MapLocation;
+
+  public function delete(int $id): bool;
 }

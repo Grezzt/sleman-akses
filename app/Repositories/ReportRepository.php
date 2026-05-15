@@ -23,14 +23,24 @@ class ReportRepository implements ReportRepositoryInterface
     ]);
   }
 
-  public function findWithRelations(int $id): Report
+  public function findWithRelations(int $id): ?Report
   {
-    return Report::with(['user', 'details.category', 'validation'])->findOrFail($id);
+    return Report::with(['user', 'details.category', 'validation'])->find($id);
   }
 
-  public function getAllPaginated(array $filters): LengthAwarePaginator
+  public function getByUserPaginated(int $userId, int $perPage = 10): LengthAwarePaginator
   {
-    $perPage = $filters['per_page'] ?? 15;
+    return Report::with(['user', 'details.category', 'validation'])
+      ->where('user_id', $userId)
+      ->orderByDesc('timestamp')
+      ->paginate($perPage);
+  }
+
+  public function getAllPaginated(array $filters = [], int $perPage = 15): LengthAwarePaginator
+  {
+    if (!empty($filters['per_page'])) {
+      $perPage = (int) $filters['per_page'];
+    }
 
     $query = Report::query()->with(['user', 'details.category', 'validation']);
 

@@ -31,8 +31,17 @@ class MapLocationRepository implements MapLocationRepositoryInterface
       ->get();
   }
 
-  public function delete(int $id): void
+  public function findWithDetails(int $id): ?MapLocation
   {
-    MapLocation::whereKey($id)->delete();
+    return MapLocation::with([
+      'validation.user',
+      'validation.report.user',
+      'validation.report.details.category',
+    ])->find($id);
+  }
+
+  public function delete(int $id): bool
+  {
+    return (bool) MapLocation::whereKey($id)->delete();
   }
 }

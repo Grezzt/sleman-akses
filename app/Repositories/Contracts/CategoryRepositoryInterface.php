@@ -15,5 +15,5 @@ interface CategoryRepositoryInterface
 
   public function update(FacilityCategory $category, array $data): FacilityCategory;
 
-  public function delete(int $id): void;
+  public function delete(int $id): bool;
 }

@@ -1,22 +1,22 @@
 # Sleman Akses — Backend Implementation Plan
 
-> **Platform:** Laravel 12 (PHP 8.2) + MySQL  
-> **Scope:** Foundation bersama (Database, Models, Repository, Service) + REST API untuk Mobile  
+> **Platform:** Laravel 12 (PHP 8.2) + MySQL
+> **Scope:** Foundation bersama (Database, Models, Repository, Service) + REST API untuk Mobile
 > **Lokasi:** `c:\laragon\www\sleman-akses`
 
 ---
 
 ## Ringkasan Fase
 
-| #   | Fase                          | Output Utama                    | Status |
-| --- | ----------------------------- | ------------------------------- | ------ |
-| B1  | Fondasi: Database & Migration | Migration + Seeder              | ⬜     |
-| B2  | Models & Relasi Eloquent      | 6 Model                         | ⬜     |
-| B3  | Repository Layer              | 5 Interface + 5 Implementasi    | ⬜     |
-| B4  | Service Layer                 | 6 Service                       | ⬜     |
-| B5  | REST API — Auth & Profil      | 2 Controller + Form Request     | ⬜     |
-| B6  | REST API — Laporan & Peta     | 3 Controller + Resources        | ⬜     |
-| B7  | Middleware, Config & Finalisasi | Sanctum, Rate Limit, CORS      | ⬜     |
+| #   | Fase                            | Output Utama                 | Status |
+| --- | ------------------------------- | ---------------------------- | ------ |
+| B1  | Fondasi: Database & Migration   | Migration + Seeder           | X      |
+| B2  | Models & Relasi Eloquent        | 6 Model                      | x      |
+| B3  | Repository Layer                | 5 Interface + 5 Implementasi | x      |
+| B4  | Service Layer                   | 6 Service                    | x      |
+| B5  | REST API — Auth & Profil        | 2 Controller + Form Request  | ⬜     |
+| B6  | REST API — Laporan & Peta       | 3 Controller + Resources     | ⬜     |
+| B7  | Middleware, Config & Finalisasi | Sanctum, Rate Limit, CORS    | ⬜     |
 
 ---
 
@@ -33,42 +33,42 @@
 - [ ] **`create_validations_table.php`** — Kolom: `user_id` FK, `report_id` FK, `approval_status` ENUM('pending','approved','rejected') DEFAULT 'pending', `evaluation_note` TEXT NULLABLE, `validation_date` TIMESTAMP NULLABLE
 - [ ] **`create_map_locations_table.php`** — Kolom: `validation_id` FK, `latitude` DECIMAL(10,7), `longitude` DECIMAL(10,7), `publish_date` TIMESTAMP NULLABLE
 - [ ] Publish Sanctum migration:
-  ```bash
-  php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
-  ```
+    ```bash
+    php artisan vendor:publish --provider="Laravel\Sanctum\SanctumServiceProvider"
+    ```
 - [ ] Jalankan migrasi:
-  ```bash
-  php artisan migrate:fresh
-  ```
+    ```bash
+    php artisan migrate:fresh
+    ```
 
 ### Task: Buat Seeders
 
 - [ ] **[NEW]** `database/seeders/FacilityCategorySeeder.php`
 
-  ```php
-  // 5 kategori default:
-  // 1. Ramp / Jalur Khusus     → ramp.png
-  // 2. Toilet Difabel           → toilet.png
-  // 3. Parkir Difabel           → parking.png
-  // 4. Lift Aksesibel           → elevator.png
-  // 5. Guiding Block            → guiding-block.png
-  ```
+    ```php
+    // 5 kategori default:
+    // 1. Ramp / Jalur Khusus     → ramp.png
+    // 2. Toilet Difabel           → toilet.png
+    // 3. Parkir Difabel           → parking.png
+    // 4. Lift Aksesibel           → elevator.png
+    // 5. Guiding Block            → guiding-block.png
+    ```
 
 - [ ] **[NEW]** `database/seeders/UserSeeder.php`
 
-  ```php
-  // Admin default:
-  // email    : admin@sleman-akses.id
-  // password : password (bcrypt)
-  // role     : admin
-  ```
+    ```php
+    // Admin default:
+    // email    : admin@sleman-akses.id
+    // password : password (bcrypt)
+    // role     : admin
+    ```
 
 - [ ] **[MODIFY]** `database/seeders/DatabaseSeeder.php` — Panggil `FacilityCategorySeeder` dan `UserSeeder`
 
 - [ ] Jalankan:
-  ```bash
-  php artisan migrate:fresh --seed
-  ```
+    ```bash
+    php artisan migrate:fresh --seed
+    ```
 
 ---
 
@@ -79,35 +79,35 @@
 ### Task: Lengkapi Semua Model — `app/Models/`
 
 - [ ] **`User.php`**
-  - Trait: `HasApiTokens`, `HasFactory`, `Notifiable`
-  - `$fillable`: `full_name`, `email`, `password`, `role`
-  - `$hidden`: `password`, `remember_token`
-  - `$casts`: `password → hashed`
-  - Relasi: `hasMany(Report::class)`, `hasMany(Validation::class)`
+    - Trait: `HasApiTokens`, `HasFactory`, `Notifiable`
+    - `$fillable`: `full_name`, `email`, `password`, `role`
+    - `$hidden`: `password`, `remember_token`
+    - `$casts`: `password → hashed`
+    - Relasi: `hasMany(Report::class)`, `hasMany(Validation::class)`
 
 - [ ] **`FacilityCategory.php`**
-  - `$fillable`: `facility_name`, `icon_marker`
-  - Relasi: `hasMany(ReportDetail::class)`
+    - `$fillable`: `facility_name`, `icon_marker`
+    - Relasi: `hasMany(ReportDetail::class)`
 
 - [ ] **`Report.php`**
-  - `$fillable`: `user_id`, `latitude`, `longitude`, `photo_url`, `timestamp`
-  - `$casts`: `latitude → float`, `longitude → float`, `timestamp → datetime`
-  - Relasi: `belongsTo(User::class)`, `hasMany(ReportDetail::class)`, `hasOne(Validation::class)`
+    - `$fillable`: `user_id`, `latitude`, `longitude`, `photo_url`, `timestamp`
+    - `$casts`: `latitude → float`, `longitude → float`, `timestamp → datetime`
+    - Relasi: `belongsTo(User::class)`, `hasMany(ReportDetail::class)`, `hasOne(Validation::class)`
 
 - [ ] **`ReportDetail.php`**
-  - `$fillable`: `report_id`, `category_id`, `availability_status`
-  - `$casts`: `availability_status → boolean`
-  - Relasi: `belongsTo(Report::class)`, `belongsTo(FacilityCategory::class, 'category_id')`
+    - `$fillable`: `report_id`, `category_id`, `availability_status`
+    - `$casts`: `availability_status → boolean`
+    - Relasi: `belongsTo(Report::class)`, `belongsTo(FacilityCategory::class, 'category_id')`
 
 - [ ] **`Validation.php`**
-  - `$fillable`: `user_id`, `report_id`, `approval_status`, `evaluation_note`, `validation_date`
-  - `$casts`: `validation_date → datetime`
-  - Relasi: `belongsTo(User::class)`, `belongsTo(Report::class)`, `hasOne(MapLocation::class)`
+    - `$fillable`: `user_id`, `report_id`, `approval_status`, `evaluation_note`, `validation_date`
+    - `$casts`: `validation_date → datetime`
+    - Relasi: `belongsTo(User::class)`, `belongsTo(Report::class)`, `hasOne(MapLocation::class)`
 
 - [ ] **`MapLocation.php`**
-  - `$fillable`: `validation_id`, `latitude`, `longitude`, `publish_date`
-  - `$casts`: `latitude → float`, `longitude → float`, `publish_date → datetime`
-  - Relasi: `belongsTo(Validation::class)`
+    - `$fillable`: `validation_id`, `latitude`, `longitude`, `publish_date`
+    - `$casts`: `latitude → float`, `longitude → float`, `publish_date → datetime`
+    - Relasi: `belongsTo(Validation::class)`
 
 ---
 
@@ -118,71 +118,75 @@
 ### Task: Buat Interface — `app/Repositories/Contracts/`
 
 - [ ] **[NEW]** `UserRepositoryInterface.php`
-  ```php
-  public function findByEmail(string $email): ?User;
-  public function findById(int $id): ?User;
-  public function create(array $data): User;
-  public function update(User $user, array $data): User;
-  ```
+
+    ```php
+    public function findByEmail(string $email): ?User;
+    public function findById(int $id): ?User;
+    public function create(array $data): User;
+    public function update(User $user, array $data): User;
+    ```
 
 - [ ] **[NEW]** `ReportRepositoryInterface.php`
-  ```php
-  public function create(array $data): Report;
-  public function addDetail(Report $report, int $categoryId, bool $status): ReportDetail;
-  public function findWithRelations(int $id): ?Report;
-  public function getByUserPaginated(int $userId, int $perPage = 10): LengthAwarePaginator;
-  public function getAllPaginated(array $filters = [], int $perPage = 15): LengthAwarePaginator;
-  ```
+
+    ```php
+    public function create(array $data): Report;
+    public function addDetail(Report $report, int $categoryId, bool $status): ReportDetail;
+    public function findWithRelations(int $id): ?Report;
+    public function getByUserPaginated(int $userId, int $perPage = 10): LengthAwarePaginator;
+    public function getAllPaginated(array $filters = [], int $perPage = 15): LengthAwarePaginator;
+    ```
 
 - [ ] **[NEW]** `ValidationRepositoryInterface.php`
-  ```php
-  public function initPending(Report $report): Validation;
-  public function update(Validation $validation, array $data): Validation;
-  public function findByReport(int $reportId): ?Validation;
-  public function getCountByStatus(): array; // ['pending' => n, 'approved' => n, 'rejected' => n]
-  ```
+
+    ```php
+    public function initPending(Report $report): Validation;
+    public function update(Validation $validation, array $data): Validation;
+    public function findByReport(int $reportId): ?Validation;
+    public function getCountByStatus(): array; // ['pending' => n, 'approved' => n, 'rejected' => n]
+    ```
 
 - [ ] **[NEW]** `MapLocationRepositoryInterface.php`
-  ```php
-  public function createFromReport(Validation $validation, Report $report): MapLocation;
-  public function getAllPublished(): Collection;
-  public function findWithDetails(int $id): ?MapLocation;
-  public function delete(int $id): bool;
-  ```
+
+    ```php
+    public function createFromReport(Validation $validation, Report $report): MapLocation;
+    public function getAllPublished(): Collection;
+    public function findWithDetails(int $id): ?MapLocation;
+    public function delete(int $id): bool;
+    ```
 
 - [ ] **[NEW]** `CategoryRepositoryInterface.php`
-  ```php
-  public function all(): Collection;
-  public function find(int $id): ?FacilityCategory;
-  public function create(array $data): FacilityCategory;
-  public function update(FacilityCategory $category, array $data): FacilityCategory;
-  public function delete(int $id): bool;
-  ```
+    ```php
+    public function all(): Collection;
+    public function find(int $id): ?FacilityCategory;
+    public function create(array $data): FacilityCategory;
+    public function update(FacilityCategory $category, array $data): FacilityCategory;
+    public function delete(int $id): bool;
+    ```
 
 ### Task: Buat Implementasi — `app/Repositories/`
 
 - [ ] **[NEW]** `UserRepository.php` — Implementasi `UserRepositoryInterface`
 - [ ] **[NEW]** `ReportRepository.php` — Implementasi `ReportRepositoryInterface`
-  - `getAllPaginated()` harus support filter `status` (join validations)
+    - `getAllPaginated()` harus support filter `status` (join validations)
 - [ ] **[NEW]** `ValidationRepository.php` — Implementasi `ValidationRepositoryInterface`
 - [ ] **[NEW]** `MapLocationRepository.php` — Implementasi `MapLocationRepositoryInterface`
-  - `getAllPublished()` eager load: `validation.report.reportDetails.category`
+    - `getAllPublished()` eager load: `validation.report.reportDetails.category`
 - [ ] **[NEW]** `CategoryRepository.php` — Implementasi `CategoryRepositoryInterface`
 
 ### Task: Bind Interface ke Implementasi
 
 - [ ] **[MODIFY]** `app/Providers/AppServiceProvider.php`
 
-  ```php
-  public function register(): void
-  {
-      $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
-      $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
-      $this->app->bind(ValidationRepositoryInterface::class, ValidationRepository::class);
-      $this->app->bind(MapLocationRepositoryInterface::class, MapLocationRepository::class);
-      $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
-  }
-  ```
+    ```php
+    public function register(): void
+    {
+        $this->app->bind(UserRepositoryInterface::class, UserRepository::class);
+        $this->app->bind(ReportRepositoryInterface::class, ReportRepository::class);
+        $this->app->bind(ValidationRepositoryInterface::class, ValidationRepository::class);
+        $this->app->bind(MapLocationRepositoryInterface::class, MapLocationRepository::class);
+        $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+    }
+    ```
 
 ---
 
@@ -194,92 +198,92 @@
 
 - [ ] **[NEW]** `AuthService.php`
 
-  ```
-  register(array $data): array
-  ├── Hash password
-  ├── UserRepository::create($data)
-  └── Buat Sanctum token → return ['token' => ..., 'user' => ...]
+    ```
+    register(array $data): array
+    ├── Hash password
+    ├── UserRepository::create($data)
+    └── Buat Sanctum token → return ['token' => ..., 'user' => ...]
 
-  login(array $credentials): array
-  ├── Auth::attempt($credentials)
-  ├── Cek user exists & role valid
-  ├── Buat Sanctum token
-  └── return ['token' => ..., 'user' => ...]
+    login(array $credentials): array
+    ├── Auth::attempt($credentials)
+    ├── Cek user exists & role valid
+    ├── Buat Sanctum token
+    └── return ['token' => ..., 'user' => ...]
 
-  logout(User $user): void
-  └── $user->currentAccessToken()->delete()
-  ```
+    logout(User $user): void
+    └── $user->currentAccessToken()->delete()
+    ```
 
 - [ ] **[NEW]** `ReportService.php`
 
-  ```
-  createReport(array $data, int $userId, UploadedFile $photo): Report
-  ├── PhotoUploadService::upload($photo, $userId) → $photoUrl
-  ├── ReportRepository::create([..., 'photo_url' => $photoUrl])
-  ├── foreach $data['categories'] as $item:
-  │     ReportRepository::addDetail($report, $item['id'], $item['available'])
-  └── ValidationRepository::initPending($report)
+    ```
+    createReport(array $data, int $userId, UploadedFile $photo): Report
+    ├── PhotoUploadService::upload($photo, $userId) → $photoUrl
+    ├── ReportRepository::create([..., 'photo_url' => $photoUrl])
+    ├── foreach $data['categories'] as $item:
+    │     ReportRepository::addDetail($report, $item['id'], $item['available'])
+    └── ValidationRepository::initPending($report)
 
-  getUserReports(int $userId, int $perPage): LengthAwarePaginator
-  └── ReportRepository::getByUserPaginated($userId, $perPage)
+    getUserReports(int $userId, int $perPage): LengthAwarePaginator
+    └── ReportRepository::getByUserPaginated($userId, $perPage)
 
-  getReportDetail(int $reportId, int $userId): Report
-  └── ReportRepository::findWithRelations($reportId) + policy check
-  ```
+    getReportDetail(int $reportId, int $userId): Report
+    └── ReportRepository::findWithRelations($reportId) + policy check
+    ```
 
 - [ ] **[NEW]** `ValidationService.php`
 
-  ```
-  validate(Validation $validation, array $data, User $admin): Validation
-  ├── ValidationRepository::update($validation, [
-  │     'approval_status' => $data['status'],
-  │     'evaluation_note' => $data['note'],
-  │     'user_id'         => $admin->id,
-  │     'validation_date' => now()
-  │   ])
-  └── if $data['status'] === 'approved':
-        MapLocationRepository::createFromReport($validation, $validation->report)
-  ```
+    ```
+    validate(Validation $validation, array $data, User $admin): Validation
+    ├── ValidationRepository::update($validation, [
+    │     'approval_status' => $data['status'],
+    │     'evaluation_note' => $data['note'],
+    │     'user_id'         => $admin->id,
+    │     'validation_date' => now()
+    │   ])
+    └── if $data['status'] === 'approved':
+          MapLocationRepository::createFromReport($validation, $validation->report)
+    ```
 
 - [ ] **[NEW]** `MapLocationService.php`
 
-  ```
-  getPublished(): Collection
-  └── MapLocationRepository::getAllPublished()
+    ```
+    getPublished(): Collection
+    └── MapLocationRepository::getAllPublished()
 
-  getDetail(int $id): MapLocation
-  └── MapLocationRepository::findWithDetails($id)
+    getDetail(int $id): MapLocation
+    └── MapLocationRepository::findWithDetails($id)
 
-  delete(int $locationId): void
-  └── MapLocationRepository::delete($locationId)
-  ```
+    delete(int $locationId): void
+    └── MapLocationRepository::delete($locationId)
+    ```
 
 - [ ] **[NEW]** `CategoryService.php`
 
-  ```
-  getAll(): Collection   → CategoryRepository::all()
-  create(array $data)    → CategoryRepository::create($data)
-  update(int $id, array) → CategoryRepository::find($id) → update()
-  delete(int $id)        → CategoryRepository::delete($id)
-  ```
+    ```
+    getAll(): Collection   → CategoryRepository::all()
+    create(array $data)    → CategoryRepository::create($data)
+    update(int $id, array) → CategoryRepository::find($id) → update()
+    delete(int $id)        → CategoryRepository::delete($id)
+    ```
 
 - [ ] **[NEW]** `PhotoUploadService.php`
 
-  ```
-  upload(UploadedFile $file, int $userId): string
-  ├── Resize ke max 1200px lebar via Intervention Image
-  ├── Simpan ke storage/public/reports/{userId}/{uuid}.jpg
-  └── return Storage::url($path)
+    ```
+    upload(UploadedFile $file, int $userId): string
+    ├── Resize ke max 1200px lebar via Intervention Image
+    ├── Simpan ke storage/public/reports/{userId}/{uuid}.jpg
+    └── return Storage::url($path)
 
-  delete(string $path): void
-  └── Storage::delete($path)
-  ```
+    delete(string $path): void
+    └── Storage::delete($path)
+    ```
 
 ---
 
 ## FASE B5 — REST API: Auth & Profil
 
-> Auth menggunakan **Laravel Sanctum** (Bearer Token).  
+> Auth menggunakan **Laravel Sanctum** (Bearer Token).
 > Prefix route: `/api/v1/`
 
 ### Task: Install Dependencies
@@ -316,41 +320,44 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
 ### Task: Form Requests — `app/Http/Requests/Api/`
 
 - [ ] **[NEW]** `RegisterRequest.php`
-  ```
-  full_name  : required|string|max:255
-  email      : required|email|unique:users,email
-  password   : required|string|min:8|confirmed
-  ```
+
+    ```
+    full_name  : required|string|max:255
+    email      : required|email|unique:users,email
+    password   : required|string|min:8|confirmed
+    ```
 
 - [ ] **[NEW]** `LoginRequest.php`
-  ```
-  email    : required|email
-  password : required|string
-  ```
+
+    ```
+    email    : required|email
+    password : required|string
+    ```
 
 - [ ] **[NEW]** `UpdateProfileRequest.php`
-  ```
-  full_name : sometimes|string|max:255
-  email     : sometimes|email|unique:users,email,{userId}
-  password  : sometimes|string|min:8|confirmed
-  ```
+    ```
+    full_name : sometimes|string|max:255
+    email     : sometimes|email|unique:users,email,{userId}
+    password  : sometimes|string|min:8|confirmed
+    ```
 
 ### Task: Controllers — `app/Http/Controllers/Api/`
 
 - [ ] **[NEW]** `AuthController.php`
-  ```php
-  // Inject: AuthService
-  public function register(RegisterRequest $request): JsonResponse
-  public function login(LoginRequest $request): JsonResponse
-  public function logout(Request $request): JsonResponse
-  ```
+
+    ```php
+    // Inject: AuthService
+    public function register(RegisterRequest $request): JsonResponse
+    public function login(LoginRequest $request): JsonResponse
+    public function logout(Request $request): JsonResponse
+    ```
 
 - [ ] **[NEW]** `ProfileController.php`
-  ```php
-  // Inject: UserRepository
-  public function show(Request $request): JsonResponse
-  public function update(UpdateProfileRequest $request): JsonResponse
-  ```
+    ```php
+    // Inject: UserRepository
+    public function show(Request $request): JsonResponse
+    public function update(UpdateProfileRequest $request): JsonResponse
+    ```
 
 ### Task: Format Response Auth
 
@@ -387,67 +394,72 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
 ### Task: Form Requests — `app/Http/Requests/Api/`
 
 - [ ] **[NEW]** `StoreReportRequest.php`
-  ```
-  latitude     : required|numeric|between:-90,90
-  longitude    : required|numeric|between:-180,180
-  photo        : required|file|mimes:jpg,jpeg,png|max:5120
-  categories   : required|array|min:1
-  categories.*.id        : required|integer|exists:facility_categories,category_id
-  categories.*.available : required|boolean
-  ```
+    ```
+    latitude     : required|numeric|between:-90,90
+    longitude    : required|numeric|between:-180,180
+    photo        : required|file|mimes:jpg,jpeg,png|max:5120
+    categories   : required|array|min:1
+    categories.*.id        : required|integer|exists:facility_categories,category_id
+    categories.*.available : required|boolean
+    ```
 
 ### Task: API Resources — `app/Http/Resources/`
 
 - [ ] **[NEW]** `UserResource.php`
-  ```json
-  { "user_id", "full_name", "email", "role", "created_at" }
-  ```
+
+    ```json
+    { "user_id", "full_name", "email", "role", "created_at" }
+    ```
 
 - [ ] **[NEW]** `ReportResource.php`
-  ```json
-  {
-    "report_id", "latitude", "longitude", "photo_url", "timestamp",
-    "validation_status": "pending|approved|rejected",
-    "details": [{ "category", "icon_marker", "availability_status" }]
-  }
-  ```
+
+    ```json
+    {
+      "report_id", "latitude", "longitude", "photo_url", "timestamp",
+      "validation_status": "pending|approved|rejected",
+      "details": [{ "category", "icon_marker", "availability_status" }]
+    }
+    ```
 
 - [ ] **[NEW]** `MapLocationResource.php`
-  ```json
-  {
-    "location_id", "latitude", "longitude", "publish_date",
-    "photo_url", "reported_by",
-    "facilities": [{ "category", "icon_marker", "available" }]
-  }
-  ```
+
+    ```json
+    {
+      "location_id", "latitude", "longitude", "publish_date",
+      "photo_url", "reported_by",
+      "facilities": [{ "category", "icon_marker", "available" }]
+    }
+    ```
 
 - [ ] **[NEW]** `CategoryResource.php`
-  ```json
-  { "category_id", "facility_name", "icon_marker" }
-  ```
+    ```json
+    { "category_id", "facility_name", "icon_marker" }
+    ```
 
 ### Task: Controllers — `app/Http/Controllers/Api/`
 
 - [ ] **[NEW]** `ReportController.php`
-  ```php
-  // Inject: ReportService
-  public function index(Request $request): JsonResponse     // laporan milik user login
-  public function store(StoreReportRequest $request): JsonResponse
-  public function show(int $id, Request $request): JsonResponse
-  ```
+
+    ```php
+    // Inject: ReportService
+    public function index(Request $request): JsonResponse     // laporan milik user login
+    public function store(StoreReportRequest $request): JsonResponse
+    public function show(int $id, Request $request): JsonResponse
+    ```
 
 - [ ] **[NEW]** `CategoryController.php`
-  ```php
-  // Inject: CategoryService
-  public function index(): JsonResponse  // semua kategori (public)
-  ```
+
+    ```php
+    // Inject: CategoryService
+    public function index(): JsonResponse  // semua kategori (public)
+    ```
 
 - [ ] **[NEW]** `MapController.php`
-  ```php
-  // Inject: MapLocationService
-  public function index(): JsonResponse   // semua lokasi approved (public)
-  public function show(int $id): JsonResponse
-  ```
+    ```php
+    // Inject: MapLocationService
+    public function index(): JsonResponse   // semua lokasi approved (public)
+    public function show(int $id): JsonResponse
+    ```
 
 ### Task: Format Response Laporan
 
@@ -477,54 +489,56 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
 ### Task: Middleware & Config
 
 - [ ] Buat `app/Http/Middleware/CheckRole.php`
-  ```php
-  // Digunakan untuk route web admin
-  if (!auth()->check() || auth()->user()->role !== $role) {
-      abort(403, 'Akses ditolak.');
-  }
-  ```
+    ```php
+    // Digunakan untuk route web admin
+    if (!auth()->check() || auth()->user()->role !== $role) {
+        abort(403, 'Akses ditolak.');
+    }
+    ```
 - [ ] Daftarkan alias `role` di `bootstrap/app.php`
 
 - [ ] Konfigurasi CORS di `config/cors.php`:
-  ```
-  allowed_origins: ['*']   // sesuaikan saat production
-  allowed_methods: ['*']
-  allowed_headers: ['*']
-  ```
+
+    ```
+    allowed_origins: ['*']   // sesuaikan saat production
+    allowed_methods: ['*']
+    allowed_headers: ['*']
+    ```
 
 - [ ] Konfigurasi Rate Limiting di `bootstrap/app.php`:
-  ```php
-  RateLimiter::for('api', fn($req) => Limit::perMinute(60)->by($req->user()?->id ?: $req->ip()));
-  ```
+
+    ```php
+    RateLimiter::for('api', fn($req) => Limit::perMinute(60)->by($req->user()?->id ?: $req->ip()));
+    ```
 
 - [ ] Update `.env`:
-  ```env
-  APP_NAME="Sleman Akses"
-  APP_TIMEZONE=Asia/Jakarta
-  FILESYSTEM_DISK=public
-  SANCTUM_STATEFUL_DOMAINS=localhost,127.0.0.1
-  ```
+    ```env
+    APP_NAME="Sleman Akses"
+    APP_TIMEZONE=Asia/Jakarta
+    FILESYSTEM_DISK=public
+    SANCTUM_STATEFUL_DOMAINS=localhost,127.0.0.1
+    ```
 
 ### Task: Error Handling Global
 
 - [ ] Update `bootstrap/app.php` — tambahkan exception handler untuk `JsonResponse` saat request `Accept: application/json`:
-  ```php
-  // 404: ModelNotFoundException → { success: false, message: "Data tidak ditemukan." }
-  // 422: ValidationException   → { success: false, message: "...", errors: {...} }
-  // 401: Unauthenticated       → { success: false, message: "Autentikasi diperlukan." }
-  // 403: AuthorizationException → { success: false, message: "Akses ditolak." }
-  ```
+    ```php
+    // 404: ModelNotFoundException → { success: false, message: "Data tidak ditemukan." }
+    // 422: ValidationException   → { success: false, message: "...", errors: {...} }
+    // 401: Unauthenticated       → { success: false, message: "Autentikasi diperlukan." }
+    // 403: AuthorizationException → { success: false, message: "Akses ditolak." }
+    ```
 
 ### Task: Finalisasi & Testing
 
 - [ ] `php artisan storage:link`
 - [ ] `php artisan migrate:fresh --seed`
 - [ ] Test semua endpoint API menggunakan Postman:
-  - [ ] Auth: register, login, logout
-  - [ ] Profile: show, update
-  - [ ] Reports: index, store (dengan foto), show
-  - [ ] Map: index, show
-  - [ ] Categories: index
+    - [ ] Auth: register, login, logout
+    - [ ] Profile: show, update
+    - [ ] Reports: index, store (dengan foto), show
+    - [ ] Map: index, show
+    - [ ] Categories: index
 - [ ] Validasi response format konsisten di semua endpoint
 - [ ] Test error case: unauthorized, not found, validation error
 
@@ -622,4 +636,4 @@ Model (Models/)         ← Mapping tabel, relasi
 MySQL Database
 ```
 
-*Tandai setiap item dengan `[x]` saat selesai dikerjakan.*
+_Tandai setiap item dengan `[x]` saat selesai dikerjakan._

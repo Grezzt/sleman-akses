@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Models\Report;
 use App\Models\Validation;
 use App\Repositories\Contracts\ValidationRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class ValidationRepository implements ValidationRepositoryInterface
 {
@@ -27,5 +28,20 @@ class ValidationRepository implements ValidationRepositoryInterface
   public function findByReport(int $reportId): ?Validation
   {
     return Validation::where('report_id', $reportId)->first();
+  }
+
+  public function getCountByStatus(): array
+  {
+    $rows = Validation::query()
+      ->select('approval_status', DB::raw('count(*) as total'))
+      ->groupBy('approval_status')
+      ->pluck('total', 'approval_status')
+      ->all();
+
+    return [
+      'pending' => (int) ($rows['pending'] ?? 0),
+      'approved' => (int) ($rows['approved'] ?? 0),
+      'rejected' => (int) ($rows['rejected'] ?? 0),
+    ];
   }
 }

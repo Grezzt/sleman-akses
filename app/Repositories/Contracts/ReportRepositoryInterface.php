@@ -12,7 +12,9 @@ interface ReportRepositoryInterface
 
   public function addDetail(Report $report, int $categoryId, bool $status): ReportDetail;
 
-  public function findWithRelations(int $id): Report;
+  public function findWithRelations(int $id): ?Report;
 
-  public function getAllPaginated(array $filters): LengthAwarePaginator;
+  public function getByUserPaginated(int $userId, int $perPage = 10): LengthAwarePaginator;
+
+  public function getAllPaginated(array $filters = [], int $perPage = 15): LengthAwarePaginator;
 }

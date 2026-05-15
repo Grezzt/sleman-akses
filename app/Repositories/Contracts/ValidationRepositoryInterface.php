@@ -12,4 +12,6 @@ interface ValidationRepositoryInterface
   public function update(Validation $validation, array $data): Validation;
 
   public function findByReport(int $reportId): ?Validation;
+
+  public function getCountByStatus(): array;
 }
