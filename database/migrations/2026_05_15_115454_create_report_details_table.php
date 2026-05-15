@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('report_details', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
+            $table->foreignId('category_id')->constrained('facility_categories')->cascadeOnDelete();
+            $table->boolean('availability_status');
             $table->timestamps();
         });
     }

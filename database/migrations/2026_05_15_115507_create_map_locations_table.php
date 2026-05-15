@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('map_locations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('validation_id')->constrained('validations')->cascadeOnDelete();
+            $table->decimal('latitude', 10, 7);
+            $table->decimal('longitude', 10, 7);
+            $table->timestamp('publish_date')->nullable();
             $table->timestamps();
         });
     }

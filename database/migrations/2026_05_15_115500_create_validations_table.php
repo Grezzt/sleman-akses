@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('validations', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->foreignId('report_id')->constrained('reports')->cascadeOnDelete();
+            $table->enum('approval_status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->text('evaluation_note')->nullable();
+            $table->timestamp('validation_date')->nullable();
             $table->timestamps();
         });
     }
