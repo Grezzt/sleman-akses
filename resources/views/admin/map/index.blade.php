@@ -103,7 +103,7 @@
             form.addEventListener('submit', (event) => {
                 event.preventDefault();
                 Swal.fire({
-                    title: 'Hapus lokasi ini?'
+                    title: 'Hapus lokasi ini?',
                     text: 'Lokasi akan dihapus dari peta publik.',
                     icon: 'warning',
                     showCancelButton: true,
