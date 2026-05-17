@@ -4,9 +4,7 @@
 @section('page_title', 'Detail Laporan')
 
 @push('styles')
-    <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"
-        integrity="sha512-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMYX+IGu9eJwzS1hOFyZ0QvBv8FzD8B4h3ceE0gD/2ezQ=="
-        crossorigin="">
+    <link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet">
 @endpush
 
 @section('content')
@@ -100,9 +98,7 @@
 
 @push('scripts')
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-        integrity="sha512-KjS/2t3C6+P5THK6T/ymM3Gf3XzQFh9c2vQYl8uVLA2GgK2GkC3qTxdx3EJfYp8tC9f9a6BqM8XrU9FQ5x3n1g=="
-        crossorigin=""></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
     <script>
         const map = L.map('report-map').setView([{{ $report->latitude }}, {{ $report->longitude }}], 15);
 

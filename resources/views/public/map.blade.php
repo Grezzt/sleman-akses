@@ -8,7 +8,7 @@
             <div class="alert alert-warning m-3">MAPTILER_KEY belum diatur.</div>
         @endif
 
-        <div id="map" class="public-map"></div>
+        <div id="map" class="public-map" style="height: calc(100vh - 56px);"></div>
 
         <div class="map-filter">
             <h6>Filter Kategori</h6>
@@ -42,6 +42,9 @@
 
         const mapCenter = [-7.716, 110.355];
         const map = L.map('map').setView(mapCenter, 11);
+        window.addEventListener('load', () => {
+            map.invalidateSize();
+        });
 
         const tileUrl = maptilerKey ?
             `https://api.maptiler.com/maps/streets/{z}/{x}/{y}.png?key=${maptilerKey}` :
