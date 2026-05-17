@@ -18,14 +18,17 @@ class ValidationService
     public function validate(Validation $validation, array $data, User $admin): Validation
     {
         try {
-            if (empty($data['status'])) {
+            $status = $data['approval_status'] ?? $data['status'] ?? null;
+            $note = $data['evaluation_note'] ?? $data['note'] ?? null;
+
+            if (empty($status)) {
                 throw new \RuntimeException('Approval status is required.');
             }
 
             $payload = [
                 'user_id' => $admin->id,
-                'approval_status' => $data['status'],
-                'evaluation_note' => $data['note'] ?? null,
+                'approval_status' => $status,
+                'evaluation_note' => $note,
                 'validation_date' => now(),
             ];
 
