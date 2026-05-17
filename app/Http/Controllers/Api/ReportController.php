@@ -7,16 +7,17 @@ use App\Http\Requests\Api\StoreReportRequest;
 use App\Http\Resources\ReportResource;
 use App\Services\ReportService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
   public function __construct(private readonly ReportService $reports) {}
 
-  public function index(): JsonResponse
+  public function index(Request $request): JsonResponse
   {
     $user = Auth::user();
-    $perPage = (int) request()->query('per_page', 10);
+    $perPage = (int) $request->query('per_page', 10);
 
     $paginator = $this->reports->getUserReports($user->id, $perPage);
 

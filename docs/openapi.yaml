@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   description: REST API untuk aplikasi mobile Sleman Akses
 servers:
-  - url: http://localhost/api/v1
+  - url: http://localhost:8000/api/v1
 security:
   - bearerAuth: []
 paths:

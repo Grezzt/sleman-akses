@@ -7,11 +7,14 @@ use App\Http\Controllers\Admin\ReportController as AdminReportController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ValidationController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\ApiDocsController;
 use App\Http\Controllers\PublicMapController;
 use Illuminate\Support\Facades\Route;
 
 // Public
 Route::get('/', [PublicMapController::class, 'index'])->name('public.map');
+Route::get('/api/api-docs', [ApiDocsController::class, 'index'])->name('api.docs');
+Route::get('/api/api-docs/openapi.yaml', [ApiDocsController::class, 'spec'])->name('api.docs.spec');
 
 // Auth
 Route::get('/login', [LoginController::class, 'showForm'])->name('login');
