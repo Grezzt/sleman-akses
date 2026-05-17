@@ -10,3 +10,83 @@
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
         'Segoe UI Symbol', 'Noto Color Emoji';
 }
+
+:root {
+    --sa-primary: #0f766e;
+    --sa-primary-dark: #0f172a;
+    --sa-accent: #22c55e;
+    --sa-bg: #f8fafc;
+    --sa-card: #ffffff;
+    --sa-border: #e2e8f0;
+    --sa-text: #0f172a;
+    --sa-muted: #64748b;
+}
+
+body.public-body {
+    font-family: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+    background: var(--sa-bg);
+    color: var(--sa-text);
+}
+
+.public-body .navbar {
+    box-shadow: 0 1px 0 rgba(15, 23, 42, 0.08);
+}
+
+.public-map {
+    height: calc(100vh - 56px);
+    width: 100%;
+}
+
+.map-filter {
+    position: absolute;
+    top: 76px;
+    right: 20px;
+    z-index: 900;
+    width: 280px;
+    background: var(--sa-card);
+    border: 1px solid var(--sa-border);
+    border-radius: 14px;
+    box-shadow: 0 12px 32px rgba(15, 23, 42, 0.12);
+    padding: 16px;
+}
+
+.map-filter h6 {
+    font-weight: 700;
+    margin-bottom: 12px;
+}
+
+.map-filter .form-check {
+    margin-bottom: 8px;
+}
+
+.map-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--sa-muted);
+}
+
+.map-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.map-legend .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sa-primary);
+}
+
+@media (max-width: 768px) {
+    .map-filter {
+        position: fixed;
+        top: auto;
+        bottom: 20px;
+        right: 16px;
+        left: 16px;
+        width: auto;
+    }
+}

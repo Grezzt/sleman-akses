@@ -14,9 +14,9 @@
 | B2  | Models & Relasi Eloquent        | 6 Model                      | x      |
 | B3  | Repository Layer                | 5 Interface + 5 Implementasi | x      |
 | B4  | Service Layer                   | 6 Service                    | x      |
-| B5  | REST API — Auth & Profil        | 2 Controller + Form Request  | ⬜     |
-| B6  | REST API — Laporan & Peta       | 3 Controller + Resources     | ⬜     |
-| B7  | Middleware, Config & Finalisasi | Sanctum, Rate Limit, CORS    | ⬜     |
+| B5  | REST API — Auth & Profil        | 2 Controller + Form Request  | x      |
+| B6  | REST API — Laporan & Peta       | 3 Controller + Resources     | x      |
+| B7  | Middleware, Config & Finalisasi | Sanctum, Rate Limit, CORS    | x      |
 
 ---
 
@@ -51,7 +51,6 @@
     // 2. Toilet Difabel           → toilet.png
     // 3. Parkir Difabel           → parking.png
     // 4. Lift Aksesibel           → elevator.png
-    // 5. Guiding Block            → guiding-block.png
     ```
 
 - [ ] **[NEW]** `database/seeders/UserSeeder.php`
