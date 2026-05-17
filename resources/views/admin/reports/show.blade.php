@@ -116,7 +116,7 @@
         document.getElementById('validationForm').addEventListener('submit', function(event) {
             event.preventDefault();
             Swal.fire({
-                title: 'Yakin validasi laporan?'
+                title: 'Yakin validasi laporan?',
                 text: 'Status laporan akan diperbarui.',
                 icon: 'warning',
                 showCancelButton: true,
