@@ -249,6 +249,75 @@ Alur ringkas:
 
 - Upload foto -> simpan report -> detail -> init validation pending.
 
+#### 3.10.1 Storage Foto (Cloudinary)
+
+- Penyimpanan foto laporan menggunakan Cloudinary (secure CDN). Foto di-resize dulu di server, lalu di-upload ke Cloudinary.
+- `photo_url` yang disimpan dan dikembalikan oleh API adalah URL HTTPS dari Cloudinary (`secure_url`).
+- Pengaturan Cloudinary disimpan di environment variables: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, dan opsional `CLOUDINARY_FOLDER` (default: `reports`).
+- Saat laporan dihapus atau rollback dibuat, service akan menghapus file di Cloudinary menggunakan `public_id` yang diekstrak dari URL.
+
+Contoh request (curl) untuk membuat laporan dengan foto:
+
+```
+curl -X POST "http://localhost:8000/api/v1/reports" \
+	-H "Authorization: Bearer <TOKEN>" \
+	-F "latitude=-7.75" \
+	-F "longitude=110.366" \
+	-F "photo=@/path/to/photo.jpg" \
+	-F "categories[0][id]=1" \
+	-F "categories[0][available]=true"
+```
+
+Respons sukses (201) — contoh ringkas:
+
+```
+{
+	"success": true,
+	"message": "Laporan berhasil dikirim.",
+	"data": {
+		"report_id": 123,
+		"latitude": -7.75,
+		"longitude": 110.366,
+		"photo_url": "https://res.cloudinary.com/<cloud_name>/image/upload/v167xxxx/reports/123/uuid.jpg",
+		"timestamp": "2026-05-21T12:34:56Z",
+		"validation_status": "pending",
+		"details": [ ... ]
+	}
+}
+```
+
+#### 3.10.2 API Media (daftar & hapus foto)
+
+- `GET /api/v1/media` (protected — `auth:sanctum`): Mengembalikan daftar foto yang di-upload oleh user.
+- `DELETE /api/v1/media/{id}` (protected — `auth:sanctum`): Menghapus foto pada laporan dengan `id` tersebut. Server akan menghapus foto dari Cloudinary dan mengosongkan `photo_url` pada record laporan.
+
+Contoh `GET /media`:
+
+```
+curl -X GET "http://localhost:8000/api/v1/media" -H "Authorization: Bearer <TOKEN>"
+
+Response:
+{
+	"success": true,
+	"message": "Daftar foto berhasil diambil.",
+	"data": [
+		{ "report_id": 123, "photo_url": "https://res.cloudinary.com/.../reports/123/uuid.jpg", "timestamp": "2026-05-21T12:34:56Z" }
+	]
+}
+```
+
+Contoh `DELETE /media/{id}`:
+
+```
+curl -X DELETE "http://localhost:8000/api/v1/media/123" -H "Authorization: Bearer <TOKEN>"
+
+Response:
+{
+	"success": true,
+	"message": "Foto berhasil dihapus dari Cloudinary dan laporan diperbarui."
+}
+```
+
 ### 3.11 Modul API Peta & Kategori
 
 Komponen:
