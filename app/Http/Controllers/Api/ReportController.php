@@ -42,7 +42,7 @@ class ReportController extends Controller
     $report = $this->reports->createReport(
       $request->validated(),
       $user->id,
-      $request->file('photo')
+      $request->input('photo_url')
     );
 
     return response()->json([

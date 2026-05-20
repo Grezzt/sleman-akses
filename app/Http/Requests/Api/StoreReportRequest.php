@@ -16,7 +16,7 @@ class StoreReportRequest extends FormRequest
     return [
       'latitude' => ['required', 'numeric', 'between:-90,90'],
       'longitude' => ['required', 'numeric', 'between:-180,180'],
-      'photo' => ['required', 'file', 'mimes:jpg,jpeg,png', 'max:5120'],
+      'photo_url' => ['required', 'string'],
       'categories' => ['required', 'array', 'min:1'],
       'categories.*.id' => ['required', 'integer', 'exists:facility_categories,id'],
       'categories.*.available' => ['required', 'boolean'],
