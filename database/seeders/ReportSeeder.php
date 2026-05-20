@@ -67,6 +67,10 @@ class ReportSeeder extends Seeder
           'validation_date' => now()->subDays(5),
         ],
         'map' => [
+          'place_name' => 'Alun-Alun Sleman',
+          'address' => 'Jl. Parasamya, Tridadi, Sleman',
+          'status' => 'active',
+          'facility_type' => 'RUANG PUBLIK',
           'latitude' => -7.715380,
           'longitude' => 110.352950,
           'publish_date' => now()->subDays(5),
@@ -87,6 +91,10 @@ class ReportSeeder extends Seeder
           'validation_date' => now()->subDays(3),
         ],
         'map' => [
+          'place_name' => 'RSUD Sleman',
+          'address' => 'Jl. Bhayangkara, Sleman',
+          'status' => 'active',
+          'facility_type' => 'RUMAH SAKIT',
           'latitude' => -7.727760,
           'longitude' => 110.368410,
           'publish_date' => now()->subDays(3),
@@ -107,6 +115,10 @@ class ReportSeeder extends Seeder
           'validation_date' => now()->subDays(2),
         ],
         'map' => [
+          'place_name' => 'Gor Triharjo',
+          'address' => 'Jl. Magelang, Sleman',
+          'status' => 'active',
+          'facility_type' => 'OLAH RAGA',
           'latitude' => -7.703150,
           'longitude' => 110.357070,
           'publish_date' => now()->subDays(2),
@@ -127,6 +139,10 @@ class ReportSeeder extends Seeder
           'validation_date' => now()->subDay(),
         ],
         'map' => [
+          'place_name' => 'Kantor Kecamatan Mlati',
+          'address' => 'Jl. Magelang, Mlati, Sleman',
+          'status' => 'active',
+          'facility_type' => 'PELAYANAN PUBLIK',
           'latitude' => -7.689890,
           'longitude' => 110.343160,
           'publish_date' => now()->subDay(),
@@ -212,6 +228,10 @@ class ReportSeeder extends Seeder
         MapLocation::updateOrCreate(
           ['validation_id' => $validation->id],
           [
+            'place_name' => $reportData['map']['place_name'],
+            'address' => $reportData['map']['address'],
+            'status' => $reportData['map']['status'],
+            'facility_type' => $reportData['map']['facility_type'],
             'latitude' => $reportData['map']['latitude'],
             'longitude' => $reportData['map']['longitude'],
             'publish_date' => $reportData['map']['publish_date'],

@@ -9,7 +9,9 @@ use Illuminate\Support\Collection;
 
 interface MapLocationRepositoryInterface
 {
-  public function createFromReport(Validation $validation, Report $report): MapLocation;
+  public function upsertFromReport(Validation $validation, Report $report, array $mapData): MapLocation;
+
+  public function deleteByValidationId(int $validationId): bool;
 
   public function getAllPublished(): Collection;
 

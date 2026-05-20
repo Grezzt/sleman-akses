@@ -41,7 +41,16 @@ class ValidationService
                     throw new \RuntimeException('Validation report not found.');
                 }
 
-                $this->mapLocations->createFromReport($validation, $validation->report);
+                $mapPayload = [
+                    'place_name' => $data['place_name'] ?? null,
+                    'address' => $data['address'] ?? null,
+                    'status' => $data['status'] ?? null,
+                    'facility_type' => $data['facility_type'] ?? null,
+                ];
+
+                $this->mapLocations->upsertFromReport($validation, $validation->report, $mapPayload);
+            } else {
+                $this->mapLocations->deleteByValidationId($validation->id);
             }
 
             return $validation;

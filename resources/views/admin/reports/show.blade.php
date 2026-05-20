@@ -75,14 +75,39 @@
                     <hr>
 
                     <h5 class="mb-3">Validasi Laporan</h5>
+                    @php
+                        $mapLocation = $report->validation?->mapLocation;
+                    @endphp
                     <form id="validationForm" action="{{ route('admin.reports.validate', $report->id) }}" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label class="form-label">Status</label>
                             <select name="approval_status" class="form-select" required>
-                                <option value="approved">Disetujui</option>
-                                <option value="rejected">Ditolak</option>
+                                <option value="approved" @selected(old('approval_status', 'approved') === 'approved')>Disetujui</option>
+                                <option value="rejected" @selected(old('approval_status') === 'rejected')>Ditolak</option>
                             </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Nama Tempat</label>
+                            <input type="text" name="place_name" class="form-control"
+                                value="{{ old('place_name', $mapLocation?->place_name) }}" maxlength="150" data-map-field />
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Alamat</label>
+                            <textarea name="address" rows="2" class="form-control" maxlength="255" data-map-field>{{ old('address', $mapLocation?->address) }}</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status Lokasi</label>
+                            <select name="status" class="form-select" data-map-field>
+                                <option value="active" @selected(old('status', $mapLocation?->status ?? 'active') === 'active')>Aktif</option>
+                                <option value="inactive" @selected(old('status', $mapLocation?->status) === 'inactive')>Nonaktif</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Kategori Badge</label>
+                            <input type="text" name="facility_type" class="form-control"
+                                value="{{ old('facility_type', $mapLocation?->facility_type) }}" maxlength="100"
+                                data-map-field />
                         </div>
                         <div class="mb-3">
                             <label class="form-label">Catatan Evaluasi</label>
@@ -108,6 +133,21 @@
         }).addTo(map);
 
         L.marker([{{ $report->latitude }}, {{ $report->longitude }}]).addTo(map);
+
+        const approvalSelect = document.querySelector('[name="approval_status"]');
+        const mapFields = document.querySelectorAll('[data-map-field]');
+
+        const toggleMapFields = () => {
+            const isApproved = approvalSelect.value === 'approved';
+
+            mapFields.forEach((field) => {
+                field.disabled = !isApproved;
+                field.required = isApproved;
+            });
+        };
+
+        toggleMapFields();
+        approvalSelect.addEventListener('change', toggleMapFields);
 
         document.getElementById('validationForm').addEventListener('submit', function(event) {
             event.preventDefault();
