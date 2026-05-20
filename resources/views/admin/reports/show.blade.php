@@ -33,7 +33,16 @@
                 <div class="card-body">
                     <h5 class="mb-3">Foto Laporan</h5>
                     @if ($report->photo_url)
-                        <img src="{{ $report->photo_url }}" alt="Foto laporan" class="img-fluid rounded">
+                        @php
+                            $photos = explode(',', $report->photo_url);
+                        @endphp
+                        <div class="row g-2">
+                            @foreach ($photos as $photo)
+                                <div class="col-6 col-md-4">
+                                    <img src="{{ trim($photo) }}" alt="Foto laporan" class="img-fluid rounded border" style="object-fit: cover; aspect-ratio: 1/1; width: 100%;">
+                                </div>
+                            @endforeach
+                        </div>
                     @else
                         <p class="text-muted">Tidak ada foto.</p>
                     @endif
