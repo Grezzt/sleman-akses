@@ -26,6 +26,7 @@ class ReportResource extends JsonResource
       'photo_urls' => $this->photo_url ? explode(',', $this->photo_url) : [],
       'timestamp' => $this->timestamp,
       'validation_status' => $validationStatus,
+      'evaluation_note' => $validation?->evaluation_note,
       'map_location' => $mapLocation ? [
         'location_id' => $mapLocation->id,
         'place_name' => $mapLocation->place_name,
