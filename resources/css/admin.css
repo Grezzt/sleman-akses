@@ -1,9 +1,15 @@
+@import './fonts.css';
+
 :root {
-  --sidebar-bg: #1e293b;
-  --sidebar-text: #e2e8f0;
-  --sidebar-active: #334155;
-  --content-bg: #f8fafc;
-  --card-radius: 14px;
+  --font-sans: 'KitRounded', ui-sans-serif, system-ui, sans-serif;
+  
+  /* Retain sidebar specific colors but use primary/secondary for active states */
+  --sidebar-bg: #0f172a; /* dark slate */
+  --sidebar-text: #f3f4f6;
+  --sidebar-active: var(--color-primary);
+  
+  --content-bg: var(--color-background);
+  --card-radius: var(--radius-card);
 }
 
 * {
@@ -11,9 +17,9 @@
 }
 
 body.admin-body {
-  font-family: "Nunito", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-family: var(--font-sans);
   background: var(--content-bg);
-  color: #0f172a;
+  color: var(--color-text-primary);
   margin: 0;
 }
 
@@ -30,6 +36,7 @@ body.admin-body {
   position: sticky;
   top: 0;
   height: 100vh;
+  border-right: 2px solid var(--color-border-solid);
 }
 
 .sidebar-brand {
@@ -39,6 +46,7 @@ body.admin-body {
 .brand-title {
   font-size: 20px;
   font-weight: 800;
+  color: var(--color-surface);
 }
 
 .brand-subtitle {
@@ -46,6 +54,7 @@ body.admin-body {
   text-transform: uppercase;
   letter-spacing: 0.12em;
   opacity: 0.7;
+  color: var(--color-surface);
 }
 
 .sidebar-nav {
@@ -60,14 +69,19 @@ body.admin-body {
   gap: 10px;
   color: var(--sidebar-text);
   padding: 10px 12px;
-  border-radius: 10px;
+  border-radius: var(--radius-input);
   text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
 }
 
 .sidebar-nav .nav-link.active,
 .sidebar-nav .nav-link:hover {
   background: var(--sidebar-active);
   color: #ffffff;
+  border: 1px solid var(--color-border-solid);
+  box-shadow: 2px 2px 0px 0px var(--color-secondary);
+  transform: translate(-1px, -1px);
 }
 
 .admin-main {
@@ -81,8 +95,10 @@ body.admin-body {
   align-items: center;
   justify-content: space-between;
   padding: 18px 28px;
-  background: #0f172a;
-  color: #ffffff;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border-bottom: 2px solid var(--color-border-solid);
+  box-shadow: var(--shadow-solid);
 }
 
 .topbar-title {
@@ -105,6 +121,16 @@ body.admin-body {
   border-radius: var(--card-radius);
 }
 
+/* Applying Solid Shadow to admin cards */
+.admin-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-solid);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-solid);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
 .badge.bg-warning {
   color: #0f172a;
 }
@@ -117,5 +143,7 @@ body.admin-body {
   .admin-sidebar {
     position: relative;
     height: auto;
+    border-right: none;
+    border-bottom: 2px solid var(--color-border-solid);
   }
 }
