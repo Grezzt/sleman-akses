@@ -62,6 +62,15 @@ class ReportService
         }
     }
 
+    public function getUserReportStats(int $userId): array
+    {
+        try {
+            return $this->reports->getStatsByUser($userId);
+        } catch (Throwable $e) {
+            throw new \RuntimeException('Failed to fetch report stats.', 0, $e);
+        }
+    }
+
     public function getReportDetail(int $reportId, int $userId): Report
     {
         try {

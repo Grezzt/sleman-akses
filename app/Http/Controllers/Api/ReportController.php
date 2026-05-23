@@ -36,6 +36,18 @@ class ReportController extends Controller
     ]);
   }
 
+  public function stats(): JsonResponse
+  {
+    $user = Auth::user();
+    $stats = $this->reports->getUserReportStats($user->id);
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Berhasil mengambil statistik laporan.',
+      'data' => $stats,
+    ]);
+  }
+
   public function store(StoreReportRequest $request): JsonResponse
   {
     $user = Auth::user();

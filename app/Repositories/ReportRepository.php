@@ -36,6 +36,19 @@ class ReportRepository implements ReportRepositoryInterface
       ->paginate($perPage);
   }
 
+  public function getStatsByUser(int $userId): array
+  {
+    $reports = Report::with('validation')
+      ->where('user_id', $userId)
+      ->get();
+
+    return [
+      'total_dikirim' => $reports->count(),
+      'total_disetujui' => $reports->filter(fn($r) => $r->validation?->approval_status === 'approved')->count(),
+      'total_ditolak' => $reports->filter(fn($r) => $r->validation?->approval_status === 'rejected')->count(),
+    ];
+  }
+
   public function getAllPaginated(array $filters = [], int $perPage = 15): LengthAwarePaginator
   {
     if (!empty($filters['per_page'])) {

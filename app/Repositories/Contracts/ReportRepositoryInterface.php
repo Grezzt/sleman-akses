@@ -16,5 +16,7 @@ interface ReportRepositoryInterface
 
   public function getByUserPaginated(int $userId, int $perPage = 10): LengthAwarePaginator;
 
+  public function getStatsByUser(int $userId): array;
+
   public function getAllPaginated(array $filters = [], int $perPage = 15): LengthAwarePaginator;
 }

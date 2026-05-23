@@ -53,4 +53,30 @@ class ProfileController extends Controller
       ],
     ]);
   }
+
+  public function updatePassword(\Illuminate\Http\Request $request): JsonResponse
+  {
+    $request->validate([
+      'current_password' => ['required', 'string'],
+      'new_password' => ['required', 'string', 'min:8', 'confirmed'],
+    ]);
+
+    $user = Auth::user();
+
+    if (!Hash::check($request->current_password, $user->password)) {
+      return response()->json([
+        'success' => false,
+        'message' => 'Kata sandi saat ini tidak cocok.',
+      ], 422);
+    }
+
+    $user = $this->users->update($user, [
+      'password' => Hash::make($request->new_password)
+    ]);
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Kata sandi berhasil diperbarui.',
+    ]);
+  }
 }

@@ -20,6 +20,8 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
   Route::post('auth/logout', [AuthController::class, 'logout']);
   Route::get('profile', [ProfileController::class, 'show']);
   Route::put('profile', [ProfileController::class, 'update']);
+  Route::put('profile/password', [ProfileController::class, 'updatePassword']);
+  Route::get('reports/stats', [ReportController::class, 'stats']);
   Route::get('reports', [ReportController::class, 'index']);
   Route::post('reports', [ReportController::class, 'store']);
   Route::get('reports/{id}', [ReportController::class, 'show']);
