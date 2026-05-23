@@ -7,16 +7,17 @@ use App\Http\Requests\Api\StoreReportRequest;
 use App\Http\Resources\ReportResource;
 use App\Services\ReportService;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class ReportController extends Controller
 {
   public function __construct(private readonly ReportService $reports) {}
 
-  public function index(): JsonResponse
+  public function index(Request $request): JsonResponse
   {
     $user = Auth::user();
-    $perPage = (int) request()->query('per_page', 10);
+    $perPage = (int) $request->query('per_page', 10);
 
     $paginator = $this->reports->getUserReports($user->id, $perPage);
 
@@ -35,13 +36,25 @@ class ReportController extends Controller
     ]);
   }
 
+  public function stats(): JsonResponse
+  {
+    $user = Auth::user();
+    $stats = $this->reports->getUserReportStats($user->id);
+
+    return response()->json([
+      'success' => true,
+      'message' => 'Berhasil mengambil statistik laporan.',
+      'data' => $stats,
+    ]);
+  }
+
   public function store(StoreReportRequest $request): JsonResponse
   {
     $user = Auth::user();
     $report = $this->reports->createReport(
       $request->validated(),
       $user->id,
-      $request->file('photo')
+      $request->input('photo_url')
     );
 
     return response()->json([

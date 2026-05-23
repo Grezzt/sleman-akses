@@ -14,15 +14,29 @@ class ReportResource extends JsonResource
    */
   public function toArray(Request $request): array
   {
-    $validationStatus = $this->validation?->approval_status ?? 'pending';
+    $validation = $this->validation;
+    $validationStatus = $validation?->approval_status ?? 'pending';
+    $mapLocation = $validation?->mapLocation;
 
     return [
       'report_id' => $this->id,
       'latitude' => $this->latitude,
       'longitude' => $this->longitude,
-      'photo_url' => $this->photo_url,
+      'photo_url' => $this->photo_url ? explode(',', $this->photo_url)[0] : null,
+      'photo_urls' => $this->photo_url ? explode(',', $this->photo_url) : [],
       'timestamp' => $this->timestamp,
       'validation_status' => $validationStatus,
+      'evaluation_note' => $validation?->evaluation_note,
+      'map_location' => $mapLocation ? [
+        'location_id' => $mapLocation->id,
+        'place_name' => $mapLocation->place_name,
+        'address' => $mapLocation->address,
+        'status' => $mapLocation->status,
+        'facility_type' => $mapLocation->facility_type,
+        'latitude' => $mapLocation->latitude,
+        'longitude' => $mapLocation->longitude,
+        'publish_date' => $mapLocation->publish_date,
+      ] : null,
       'details' => $this->details->map(function ($detail) {
         return [
           'category' => $detail->category?->facility_name,

@@ -2,9 +2,26 @@ openapi: 3.0.3
 info:
   title: Sleman Akses API
   version: 1.0.0
-  description: REST API untuk aplikasi mobile Sleman Akses
+  description: |-
+    REST API untuk aplikasi mobile Sleman Akses.
+
+    Catatan penyimpanan foto: aplikasi menggunakan Cloudinary untuk menyimpan foto laporan.
+    Environment variables yang relevan: `CLOUDINARY_CLOUD_NAME`, `CLOUDINARY_API_KEY`, `CLOUDINARY_API_SECRET`, `CLOUDINARY_FOLDER`.
 servers:
-  - url: http://localhost/api/v1
+  - url: http://localhost:8000/api/v1
+tags:
+  - name: Auth
+    description: Endpoint autentikasi (register, login, logout)
+  - name: Profile
+    description: Endpoint profil pengguna
+  - name: Categories
+    description: Daftar kategori fasilitas
+  - name: Map
+    description: Data lokasi peta
+  - name: Reports
+    description: CRUD laporan dan upload foto (foto di-upload ke Cloudinary)
+  - name: Media
+    description: Manajemen foto pengguna (list, delete) — terintegrasi dengan Cloudinary
 security:
   - bearerAuth: []
 paths:
@@ -162,12 +179,19 @@ paths:
     post:
       tags: [Reports]
       summary: Buat laporan baru
+      description: |-
+        Buat laporan baru dengan foto. Foto akan di-resize di server dan di-upload ke Cloudinary.
+        Field `photo` harus berupa file (`multipart/form-data`). Respons `photo_url` pada data
+        adalah URL HTTPS langsung dari Cloudinary (secure_url).
       requestBody:
         required: true
         content:
           multipart/form-data:
             schema:
               $ref: "#/components/schemas/StoreReportRequest"
+            encoding:
+              photo:
+                contentType: image/jpeg, image/png
       responses:
         "201":
           description: Laporan berhasil dikirim
@@ -175,6 +199,19 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReportResponse"
+              examples:
+                success:
+                  value:
+                    success: true
+                    message: Laporan berhasil dikirim.
+                    data:
+                      report_id: 123
+                      latitude: -7.75
+                      longitude: 110.366
+                      photo_url: "https://res.cloudinary.com/<cloud_name>/image/upload/v167xxxx/reports/123/uuid.jpg"
+                      timestamp: "2026-05-21T12:34:56Z"
+                      validation_status: pending
+                      details: []
         "401":
           $ref: "#/components/responses/Unauthenticated"
         "422":
@@ -192,6 +229,44 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReportResponse"
+        "401":
+          $ref: "#/components/responses/Unauthenticated"
+        "404":
+          $ref: "#/components/responses/NotFound"
+  /media:
+    get:
+      tags: [Media]
+      summary: Daftar foto milik user
+      description: Ambil daftar foto yang di-upload user. Mengembalikan `report_id`, `photo_url`, dan `timestamp`.
+      responses:
+        "200":
+          description: Berhasil mengambil daftar foto
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/MediaListResponse"
+        "401":
+          $ref: "#/components/responses/Unauthenticated"
+
+  /media/{id}:
+    delete:
+      tags: [Media]
+      summary: Hapus foto milik user
+      parameters:
+        - $ref: "#/components/parameters/IdPath"
+      responses:
+        "200":
+          description: Foto berhasil dihapus
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SuccessMessage"
+        "400":
+          description: Foto tidak ditemukan pada laporan
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ErrorResponse"
         "401":
           $ref: "#/components/responses/Unauthenticated"
         "404":
@@ -281,6 +356,7 @@ components:
         photo:
           type: string
           format: binary
+          description: "File gambar (jpg/jpeg/png). Di-upload ke Cloudinary; server akan mengembalikan `photo_url` sebagai secure HTTPS URL. Max 5MB."
         categories:
           type: array
           items:
@@ -387,6 +463,29 @@ components:
           type: array
           items:
             $ref: "#/components/schemas/Category"
+    MediaItem:
+      type: object
+      properties:
+        report_id:
+          type: integer
+        photo_url:
+          type: string
+        timestamp:
+          type: string
+          format: date-time
+    MediaListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Berhasil mengambil daftar foto.
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/MediaItem"
     ReportDetail:
       type: object
       properties:
@@ -409,6 +508,7 @@ components:
           format: float
         photo_url:
           type: string
+          description: "HTTPS URL dari Cloudinary (secure_url)."
         timestamp:
           type: string
           format: date-time

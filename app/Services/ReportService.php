@@ -17,13 +17,9 @@ class ReportService
         private readonly PhotoUploadService $photoUploadService
     ) {}
 
-    public function createReport(array $data, int $userId, UploadedFile $photo): Report
+    public function createReport(array $data, int $userId, string $photoUrl): Report
     {
-        $photoUrl = null;
-
         try {
-            $photoUrl = $this->photoUploadService->upload($photo, $userId);
-
             $report = $this->reports->create([
                 'user_id' => $userId,
                 'latitude' => $data['latitude'],
@@ -45,14 +41,6 @@ class ReportService
 
             return $report;
         } catch (Throwable $e) {
-            if ($photoUrl) {
-                try {
-                    $this->photoUploadService->delete($photoUrl);
-                } catch (Throwable) {
-                    // Ignore cleanup errors to preserve original failure.
-                }
-            }
-
             if ($e instanceof \RuntimeException) {
                 throw $e;
             }
@@ -71,6 +59,15 @@ class ReportService
             }
 
             throw new \RuntimeException('Failed to fetch reports.', 0, $e);
+        }
+    }
+
+    public function getUserReportStats(int $userId): array
+    {
+        try {
+            return $this->reports->getStatsByUser($userId);
+        } catch (Throwable $e) {
+            throw new \RuntimeException('Failed to fetch report stats.', 0, $e);
         }
     }
 

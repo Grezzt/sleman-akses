@@ -6,7 +6,156 @@
 @source "../**/*.js";
 @source "../**/*.vue";
 
+@import './fonts.css';
+
 @theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+    /* 2. Color System */
+    --color-primary: #037940;
+    --color-secondary: #C7DE64;
+    --color-surface: #FFFFFF;
+    --color-background: #F3F4F6;
+    --color-text-primary: #037940;
+    --color-text-muted: #4B5563;
+    --color-border-solid: #D4D4D4;
+    --color-error: #DC2626;
+
+    /* 3. Typography */
+    /* Using KitRounded from public/fonts */
+    --font-sans: 'KitRounded', ui-sans-serif, system-ui, sans-serif;
+
+    /* 4. Bentuk, Border & Solid Shadow */
+    --radius-card: 16px;
+    --radius-input: 8px;
+    --radius-pill: 28px;
+
+    --shadow-solid: 4px 4px 0px 0px var(--color-border-solid);
+    --shadow-solid-secondary: 4px 4px 0px 0px var(--color-secondary);
+}
+
+:root {
+    --sa-primary: var(--color-primary);
+    --sa-secondary: var(--color-secondary);
+    --sa-bg: var(--color-background);
+    --sa-card: var(--color-surface);
+    --sa-border: var(--color-border-solid);
+    --sa-text: var(--color-text-primary);
+    --sa-muted: var(--color-text-muted);
+    --sa-error: var(--color-error);
+}
+
+body.public-body {
+    font-family: var(--font-sans);
+    background: var(--sa-bg);
+    color: var(--sa-muted);
+}
+
+h1, h2, h3, h4, h5, h6, .text-primary-heading {
+    color: var(--sa-text);
+}
+
+/* Base Component Styles for Solid Shadow (Neobrutalism) */
+.card-solid {
+    background: var(--sa-card);
+    border: 2px solid var(--sa-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-solid);
+}
+
+.btn-primary-solid {
+    background: var(--sa-primary);
+    color: #ffffff;
+    border: 2px solid var(--sa-border);
+    border-radius: var(--radius-pill);
+    box-shadow: var(--shadow-solid-secondary);
+    font-weight: 700;
+    padding: 0.5rem 1.5rem;
+    transition: all 0.2s ease-in-out;
+}
+
+.btn-primary-solid:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px 0px var(--sa-secondary);
+}
+
+.input-solid {
+    background: #f3f4f6;
+    border: 2px solid transparent;
+    border-radius: var(--radius-input);
+    padding: 0.75rem 1rem;
+    width: 100%;
+}
+
+.input-solid:focus {
+    border-color: var(--sa-primary);
+    outline: none;
+}
+
+.input-solid.error {
+    border-color: var(--sa-error);
+}
+
+.public-body .navbar {
+    box-shadow: var(--shadow-solid);
+    border-bottom: 2px solid var(--sa-border);
+    background: var(--sa-card);
+}
+
+.public-map {
+    height: calc(100vh - 76px);
+    width: 100%;
+}
+
+.map-filter {
+    position: absolute;
+    top: 96px;
+    right: 20px;
+    z-index: 900;
+    width: 280px;
+    background: var(--sa-card);
+    border: 2px solid var(--sa-border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-solid);
+    padding: 16px;
+}
+
+.map-filter h6 {
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--sa-text);
+}
+
+.map-filter .form-check {
+    margin-bottom: 8px;
+}
+
+.map-legend {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    font-size: 13px;
+    color: var(--sa-muted);
+}
+
+.map-legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.map-legend .dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--sa-primary);
+}
+
+@media (max-width: 768px) {
+    .map-filter {
+        position: fixed;
+        top: auto;
+        bottom: 20px;
+        right: 16px;
+        left: 16px;
+        width: auto;
+    }
 }

@@ -1,0 +1,149 @@
+@import './fonts.css';
+
+:root {
+  --font-sans: 'KitRounded', ui-sans-serif, system-ui, sans-serif;
+  
+  /* Retain sidebar specific colors but use primary/secondary for active states */
+  --sidebar-bg: #0f172a; /* dark slate */
+  --sidebar-text: #f3f4f6;
+  --sidebar-active: var(--color-primary);
+  
+  --content-bg: var(--color-background);
+  --card-radius: var(--radius-card);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body.admin-body {
+  font-family: var(--font-sans);
+  background: var(--content-bg);
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  min-height: 100vh;
+}
+
+.admin-sidebar {
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  padding: 24px 20px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  border-right: 2px solid var(--color-border-solid);
+}
+
+.sidebar-brand {
+  margin-bottom: 32px;
+}
+
+.brand-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--color-surface);
+}
+
+.brand-subtitle {
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  opacity: 0.7;
+  color: var(--color-surface);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-nav .nav-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: var(--sidebar-text);
+  padding: 10px 12px;
+  border-radius: var(--radius-input);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease-in-out;
+}
+
+.sidebar-nav .nav-link.active,
+.sidebar-nav .nav-link:hover {
+  background: var(--sidebar-active);
+  color: #ffffff;
+  border: 1px solid var(--color-border-solid);
+  box-shadow: 2px 2px 0px 0px var(--color-secondary);
+  transform: translate(-1px, -1px);
+}
+
+.admin-main {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 28px;
+  background: var(--color-surface);
+  color: var(--color-text-primary);
+  border-bottom: 2px solid var(--color-border-solid);
+  box-shadow: var(--shadow-solid);
+}
+
+.topbar-title {
+  font-weight: 700;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.admin-content {
+  padding: 28px;
+}
+
+.card,
+.table,
+.alert {
+  border-radius: var(--card-radius);
+}
+
+/* Applying Solid Shadow to admin cards */
+.admin-card {
+  background: var(--color-surface);
+  border: 2px solid var(--color-border-solid);
+  border-radius: var(--card-radius);
+  box-shadow: var(--shadow-solid);
+  padding: 24px;
+  margin-bottom: 24px;
+}
+
+.badge.bg-warning {
+  color: #0f172a;
+}
+
+@media (max-width: 992px) {
+  .admin-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .admin-sidebar {
+    position: relative;
+    height: auto;
+    border-right: none;
+    border-bottom: 2px solid var(--color-border-solid);
+  }
+}

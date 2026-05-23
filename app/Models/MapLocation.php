@@ -9,6 +9,10 @@ class MapLocation extends Model
 {
     protected $fillable = [
         'validation_id',
+        'place_name',
+        'address',
+        'status',
+        'facility_type',
         'latitude',
         'longitude',
         'publish_date',

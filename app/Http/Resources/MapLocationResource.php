@@ -19,6 +19,10 @@ class MapLocationResource extends JsonResource
 
     return [
       'location_id' => $this->id,
+      'place_name' => $this->place_name,
+      'address' => $this->address,
+      'status' => $this->status,
+      'facility_type' => $this->facility_type,
       'latitude' => $this->latitude,
       'longitude' => $this->longitude,
       'publish_date' => $this->publish_date,

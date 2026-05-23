@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('map_locations', function (Blueprint $table) {
             $table->id();
             $table->foreignId('validation_id')->constrained('validations')->cascadeOnDelete();
+            $table->string('place_name');
+            $table->string('address');
+            $table->string('status')->default('active');
+            $table->string('facility_type');
             $table->decimal('latitude', 10, 7);
             $table->decimal('longitude', 10, 7);
             $table->timestamp('publish_date')->nullable();

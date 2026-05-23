@@ -18,14 +18,17 @@ class ValidationService
     public function validate(Validation $validation, array $data, User $admin): Validation
     {
         try {
-            if (empty($data['status'])) {
+            $status = $data['approval_status'] ?? $data['status'] ?? null;
+            $note = $data['evaluation_note'] ?? $data['note'] ?? null;
+
+            if (empty($status)) {
                 throw new \RuntimeException('Approval status is required.');
             }
 
             $payload = [
                 'user_id' => $admin->id,
-                'approval_status' => $data['status'],
-                'evaluation_note' => $data['note'] ?? null,
+                'approval_status' => $status,
+                'evaluation_note' => $note,
                 'validation_date' => now(),
             ];
 
@@ -38,7 +41,16 @@ class ValidationService
                     throw new \RuntimeException('Validation report not found.');
                 }
 
-                $this->mapLocations->createFromReport($validation, $validation->report);
+                $mapPayload = [
+                    'place_name' => $data['place_name'] ?? null,
+                    'address' => $data['address'] ?? null,
+                    'status' => $data['status'] ?? null,
+                    'facility_type' => $data['facility_type'] ?? null,
+                ];
+
+                $this->mapLocations->upsertFromReport($validation, $validation->report, $mapPayload);
+            } else {
+                $this->mapLocations->deleteByValidationId($validation->id);
             }
 
             return $validation;

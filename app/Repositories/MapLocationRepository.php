@@ -10,14 +10,25 @@ use Illuminate\Support\Collection;
 
 class MapLocationRepository implements MapLocationRepositoryInterface
 {
-  public function createFromReport(Validation $validation, Report $report): MapLocation
+  public function upsertFromReport(Validation $validation, Report $report, array $mapData): MapLocation
   {
-    return MapLocation::create([
-      'validation_id' => $validation->id,
-      'latitude' => $report->latitude,
-      'longitude' => $report->longitude,
-      'publish_date' => now(),
-    ]);
+    return MapLocation::updateOrCreate(
+      ['validation_id' => $validation->id],
+      [
+        'place_name' => $mapData['place_name'],
+        'address' => $mapData['address'],
+        'status' => $mapData['status'],
+        'facility_type' => $mapData['facility_type'],
+        'latitude' => $report->latitude,
+        'longitude' => $report->longitude,
+        'publish_date' => now(),
+      ]
+    );
+  }
+
+  public function deleteByValidationId(int $validationId): bool
+  {
+    return (bool) MapLocation::where('validation_id', $validationId)->delete();
   }
 
   public function getAllPublished(): Collection

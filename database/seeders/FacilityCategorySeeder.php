@@ -17,7 +17,6 @@ class FacilityCategorySeeder extends Seeder
       ['facility_name' => 'Toilet Difabel', 'icon_marker' => 'toilet-difabel.png'],
       ['facility_name' => 'Parkir Difabel', 'icon_marker' => 'parkir-difabel.png'],
       ['facility_name' => 'Lift', 'icon_marker' => 'lift.png'],
-      ['facility_name' => 'Guiding Block', 'icon_marker' => 'guiding-block.png'],
     ];
 
     foreach ($categories as $category) {
