@@ -67,6 +67,7 @@ class MapController extends Controller
 
       return [
         'id' => $location->id,
+        'report_id' => $report?->id,
         'lat' => (float) $location->latitude,
         'lng' => (float) $location->longitude,
         'place_name' => $location->place_name,

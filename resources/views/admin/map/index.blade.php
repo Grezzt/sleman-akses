@@ -205,13 +205,18 @@
                                     </form>
                                 </div>
                                 
-                                <form id="formDeleteMap" method="POST" action="">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="button" onclick="confirmDelete(this.form)" class="w-full bg-white border-2 border-error text-error hover:bg-error hover:text-white font-black py-2.5 rounded-xl flex justify-center items-center gap-2 transition-colors text-sm">
-                                        <i class="fas fa-trash"></i> Hapus dari Peta
-                                    </button>
-                                </form>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <a id="btnEditReport" href="#" class="w-full bg-slate-100 border-2 border-border-solid text-text-onsurface hover:bg-slate-200 font-black py-2.5 rounded-xl flex justify-center items-center gap-2 transition-colors text-sm">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <form id="formDeleteMap" method="POST" action="" class="w-full">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="button" onclick="confirmDelete(this.form)" class="w-full bg-white border-2 border-error text-error hover:bg-error hover:text-white font-black py-2.5 rounded-xl flex justify-center items-center gap-2 transition-colors text-sm">
+                                            <i class="fas fa-trash"></i> Hapus
+                                        </button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -376,9 +381,17 @@
                 facContainer.innerHTML = `<span class="text-xs text-text-muted italic col-span-2">Belum ada data fasilitas.</span>`;
             }
 
-            // Update Forms
+            // Update Forms & Links
             document.getElementById('formToggleStatus').action = `/admin/map/${markerData.id}/toggle-status`;
             document.getElementById('formDeleteMap').action = `/admin/map/${markerData.id}`;
+            
+            const editBtn = document.getElementById('btnEditReport');
+            if (markerData.report_id) {
+                editBtn.href = `/admin/reports/${markerData.report_id}`;
+                editBtn.style.display = 'flex';
+            } else {
+                editBtn.style.display = 'none';
+            }
 
             panel.classList.add('active');
             
