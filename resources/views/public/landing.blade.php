@@ -77,8 +77,10 @@
         </div>
     </section>
 
+
+
     <!-- 2. CARA KERJA (Features Style) -->
-    <section id="cara-kerja" class="py-24 bg-background border-b-2 border-border-solid">
+    <section id="cara-kerja" class="py-24 bg-background border-b-2 border-border-solid" >
         <div class="container px-4 mx-auto max-w-7xl">
             <p class="font-bold text-primary mb-4 uppercase tracking-wider text-sm">Pemetaan Partisipatif</p>
             <div class="mb-14 max-w-3xl">
@@ -90,44 +92,96 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-0 border-y-2 border-l-2 border-border-solid bg-surface shadow-solid">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-6 lg:gap-10 pb-16 md:pb-24">
                 <!-- Step 1 -->
-                <div class="p-8 border-r-2 border-border-solid relative group hover:bg-secondary/10 transition-colors">
-                    <div class="mb-6 text-primary">
-                        <i class="fas fa-search-location text-4xl"></i>
+                <div class="card-solid bg-surface p-6 md:p-8 relative group flex flex-col h-full">
+                    <!-- Number Badge -->
+                    <div class="absolute -top-5 -left-5 w-12 h-12 bg-primary text-surface rounded-full flex items-center justify-center font-black text-xl border-2 border-border-solid shadow-[4px_4px_0px_0px_#0F0F0F] z-10 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                        1
                     </div>
-                    <h2 class="font-bold text-text-onsurface text-2xl mb-2">1. Temukan</h2>
-                    <p class="text-text-muted text-sm leading-relaxed mb-6">
-                        Temukan fasilitas publik yang belum terpetakan aksesibilitasnya atau periksa lokasi yang sudah ada di sekitar Anda.
-                    </p>
+                    <!-- Image Box -->
+                    <div class="mb-6 border-2 border-border-solid rounded-xl bg-surface overflow-hidden flex items-center justify-center p-4 h-48 md:h-56 group-hover:bg-secondary/30 transition-colors">
+                        <img src="{{ asset('onboarding slide 2.svg') }}" alt="Temukan" class="w-full h-full object-contain">
+                    </div>
+                    <!-- Text Content -->
+                    <div class="flex-grow">
+                        <h3 class="font-black text-text-onsurface text-2xl mb-3">Temukan</h3>
+                        <p class="text-text-muted text-base leading-relaxed">
+                            Temukan fasilitas publik yang belum terpetakan aksesibilitasnya atau periksa lokasi yang sudah ada di sekitar Anda.
+                        </p>
+                    </div>
                 </div>
+
                 <!-- Step 2 -->
-                <div class="p-8 border-r-2 border-border-solid relative group hover:bg-secondary/10 transition-colors">
-                    <div class="mb-6 text-primary">
-                        <i class="fas fa-camera text-4xl"></i>
+                <div class="card-solid bg-surface p-6 md:p-8 relative group flex flex-col h-full">
+                    <!-- Number Badge -->
+                    <div class="absolute -top-5 -left-5 w-12 h-12 bg-secondary text-text-onsurface rounded-full flex items-center justify-center font-black text-xl border-2 border-border-solid shadow-[4px_4px_0px_0px_#0F0F0F] z-10 group-hover:scale-110 group-hover:-rotate-6 transition-all">
+                        2
                     </div>
-                    <h2 class="font-bold text-text-onsurface text-2xl mb-2">2. Lapor</h2>
-                    <p class="text-text-muted text-sm leading-relaxed mb-6">
-                        Buka aplikasi, ambil foto fasilitas pendukung (seperti ramp atau toilet difabel), dan kirimkan laporan beserta detailnya.
-                    </p>
+                    <!-- Image Box -->
+                    <div class="mb-6 border-2 border-border-solid rounded-xl bg-surface overflow-hidden flex items-center justify-center p-4 h-48 md:h-56 group-hover:bg-primary/20 transition-colors">
+                        <img src="{{ asset('konfirmasi-titik-lokasi-unactive.svg') }}" alt="Lapor" class="w-full h-full object-contain">
+                    </div>
+                    <!-- Text Content -->
+                    <div class="flex-grow">
+                        <h3 class="font-black text-text-onsurface text-2xl mb-3">Lapor</h3>
+                        <p class="text-text-muted text-base leading-relaxed">
+                            Buka aplikasi, ambil foto fasilitas pendukung (seperti ramp atau toilet difabel), dan kirimkan laporan beserta detailnya.
+                        </p>
+                    </div>
                 </div>
+
                 <!-- Step 3 -->
-                <div class="p-8 border-r-2 border-border-solid relative group hover:bg-secondary/10 transition-colors">
-                    <div class="mb-6 text-primary">
-                        <i class="fas fa-check-double text-4xl"></i>
+                <div class="card-solid bg-surface p-6 md:p-8 relative group flex flex-col h-full">
+                    <!-- Number Badge -->
+                    <div class="absolute -top-5 -left-5 w-12 h-12 bg-primary text-surface rounded-full flex items-center justify-center font-black text-xl border-2 border-border-solid shadow-[4px_4px_0px_0px_#0F0F0F] z-10 group-hover:scale-110 group-hover:rotate-6 transition-all">
+                        3
                     </div>
-                    <h2 class="font-bold text-text-onsurface text-2xl mb-2">3. Publikasi</h2>
-                    <p class="text-text-muted text-sm leading-relaxed mb-6">
-                        Admin akan memvalidasi laporan Anda. Jika disetujui, lokasi akan langsung muncul di Peta Publik untuk membantu orang lain.
-                    </p>
+                    <!-- Image Box -->
+                    <div class="mb-6 border-2 border-border-solid rounded-xl bg-surface overflow-hidden flex items-center justify-center p-4 h-48 md:h-56 group-hover:bg-secondary/30 transition-colors">
+                        <img src="{{ asset('konfirmasi titik lokasi aktif.svg') }}" alt="Publikasi" class="w-full h-full object-contain">
+                    </div>
+                    <!-- Text Content -->
+                    <div class="flex-grow">
+                        <h3 class="font-black text-text-onsurface text-2xl mb-3">Publikasi</h3>
+                        <p class="text-text-muted text-base leading-relaxed">
+                            Admin akan memvalidasi laporan Anda. Jika disetujui, lokasi akan langsung muncul di Peta Publik untuk membantu orang lain.
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
+
+
+     <!-- BANNER PENGHUBUNG -->
+    <section class="relative bg-primary overflow-hidden py-12 lg:py-16 border-b-2 border-border-solid" style="background-image: url('{{ asset('landing-hijau.svg') }}'); background-size: cover; background-position: center;">
+        <div class="container px-4 mx-auto max-w-7xl relative z-10">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-8">
+                <div class="text-surface max-w-xl">
+                    <h2 class="text-3xl md:text-4xl font-black mb-3 " style="color: var(--color-secondary);">Aplikasi Sleman Akses</h2>
+                    <p class="text-lg opacity-90 leading-relaxed">
+                        Cara paling mudah untuk berkontribusi. Laporkan fasilitas publik yang belum terpetakan secara real-time langsung dari smartphone Anda.
+                    </p>
+                </div>
+                <!-- Pop Up Asset (Replacing Phone/QR) -->
+                {{-- <a href="#" class="card-solid bg-surface p-5 md:p-6 flex items-center gap-6 transform md:rotate-2 hover:rotate-0 transition-transform duration-300 group">
+                    <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl flex items-center justify-center text-2xl md:text-3xl bg-secondary text-text-onsurface border-2 border-border-solid shadow-[4px_4px_0px_0px_#0F0F0F] group-hover:scale-110 transition-transform">
+                        <i class="fab fa-google-play"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-black text-text-onsurface text-lg md:text-xl mb-1">Unduh Sekarang</h3>
+                        <p class="text-text-muted text-sm font-bold">Tersedia di Google Play</p>
+                    </div>
+                </a> --}}
+            </div>
+        </div>
+    </section>
+
     <!-- 3. CATEGORY GRID -->
-    <section class="py-24 bg-surface border-b-2 border-border-solid">
-        <div class="container px-4 mx-auto max-w-7xl">
+    <section class="py-24 bg-background border-b-2 border-border-solid" style="background-image: url('{{ asset('landing-putih.svg') }}'); background-size: cover; background-position: center;">
+        <div class="container px-4 mx-auto max-w-7xl relative z-10">
             <div class="mb-14 max-w-3xl">
                 <h2 class="font-black text-text-onsurface mb-6" style="font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: -0.02em;">
                     Kategori Aksesibilitas
@@ -139,14 +193,30 @@
 
             <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
                 @forelse ($categories as $category)
-                    <div class="card-solid p-6 flex flex-col justify-center items-center hover:-translate-y-1 transition duration-300 group">
-                        <div class="w-16 h-16 bg-background rounded-xl border-2 border-border-solid flex items-center justify-center mb-4 group-hover:bg-secondary group-hover:shadow-[2px_2px_0px_0px_#0F0F0F] transition-all">
-                            <i class="{{ $category->icon_marker ?? 'fas fa-map-marker-alt' }} text-2xl text-text-onsurface"></i>
+                    @php
+                        $iconPath = 'parkir-difabel.svg'; // fallback
+                        $name = strtolower($category->facility_name ?? '');
+
+                        if (Str::contains($name, 'parkir')) {
+                            $iconPath = 'parkir-difabel.svg';
+                        } elseif (Str::contains($name, 'toilet') || Str::contains($name, 'kamar mandi')) {
+                            $iconPath = 'toilet-difabel.svg';
+                        } elseif (Str::contains($name, 'ramp') || Str::contains($name, 'landai') || Str::contains($name, 'kursi roda')) {
+                            $iconPath = 'ramp.svg';
+                        } elseif (Str::contains($name, 'lift') || Str::contains($name, 'elevator')) {
+                            $iconPath = 'lift.svg';
+                        } elseif (!empty($category->icon_marker) && Str::endsWith($category->icon_marker, '.svg')) {
+                            $iconPath = $category->icon_marker;
+                        }
+                    @endphp
+                    <div class="card-solid bg-surface p-6 flex flex-col justify-center items-center hover:-translate-y-1 transition duration-300 group">
+                        <div class="w-16 h-16 bg-background rounded-xl border-2 border-border-solid flex items-center justify-center mb-4 group-hover:bg-secondary group-hover:shadow-[2px_2px_0px_0px_#0F0F0F] transition-all overflow-hidden p-3 relative z-10">
+                            <img src="{{ asset($iconPath) }}" alt="{{ $category->facility_name }}" class="w-full h-full object-contain">
                         </div>
                         <h3 class="font-bold text-text-onsurface text-center text-sm md:text-base">{{ $category->facility_name }}</h3>
                     </div>
                 @empty
-                    <div class="card-solid p-6 text-center"><h3 class="font-bold">Belum ada kategori</h3></div>
+                    <div class="card-solid bg-surface p-6 text-center"><h3 class="font-bold">Belum ada kategori</h3></div>
                 @endforelse
             </div>
 
@@ -158,7 +228,76 @@
         </div>
     </section>
 
-    <!-- 4. DOWNLOAD CTA (Preserved Section) -->
+    <!-- FAQ SECTION -->
+    <section class="py-24 bg-secondary border-b-2 border-border-solid">
+        <div class="container px-4 mx-auto max-w-4xl">
+            <div class="text-center mb-14">
+                <div class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-bold text-secondary bg-primary mb-6 border-2 border-border-solid shadow-[4px_4px_0px_0px_#0F0F0F]">
+                    <i class="fas fa-question-circle mr-2"></i> FAQ
+                </div>
+                <h2 class="font-black text-text-onsurface mb-4" style="font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: -0.02em;">
+                    Pertanyaan yang Sering Diajukan
+                </h2>
+                <p class="text-text-muted text-lg">Jawaban cepat untuk hal-hal yang mungkin ingin Anda ketahui tentang Sleman Akses.</p>
+            </div>
+
+            <div class="space-y-4">
+                <!-- FAQ 1 -->
+                <details class="group card-solid bg-background border-2 border-border-solid rounded-xl shadow-solid [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold text-lg cursor-pointer p-6 list-none hover:bg-secondary/10 transition-colors">
+                        <span class="text-text-onsurface">Apa itu Sleman Akses?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i class="fas fa-chevron-down text-primary"></i>
+                        </span>
+                    </summary>
+                    <div class="p-6 pt-0 text-text-muted text-base leading-relaxed">
+                        Sleman Akses adalah platform pemetaan digital partisipatif yang memungkinkan masyarakat untuk menemukan dan melaporkan ketersediaan fasilitas ramah disabilitas di Kabupaten Sleman.
+                    </div>
+                </details>
+
+                <!-- FAQ 2 -->
+                <details class="group card-solid bg-background border-2 border-border-solid rounded-xl shadow-solid [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold text-lg cursor-pointer p-6 list-none hover:bg-secondary/10 transition-colors">
+                        <span class="text-text-onsurface">Siapa saja yang bisa memberikan laporan fasilitas?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i class="fas fa-chevron-down text-primary"></i>
+                        </span>
+                    </summary>
+                    <div class="p-6 pt-0 text-text-muted text-base leading-relaxed">
+                        Semua warga masyarakat dapat berpartisipasi dengan mengunduh aplikasi Sleman Akses. Anda dapat memotret fasilitas pendukung, memberikan detail lokasi, dan mengirimkannya agar dapat divalidasi oleh admin.
+                    </div>
+                </details>
+
+                <!-- FAQ 3 -->
+                <details class="group card-solid bg-background border-2 border-border-solid rounded-xl shadow-solid [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold text-lg cursor-pointer p-6 list-none hover:bg-secondary/10 transition-colors">
+                        <span class="text-text-onsurface">Apakah laporan saya langsung muncul di peta?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i class="fas fa-chevron-down text-primary"></i>
+                        </span>
+                    </summary>
+                    <div class="p-6 pt-0 text-text-muted text-base leading-relaxed">
+                        Tidak. Setiap laporan yang masuk akan melalui tahap verifikasi oleh tim admin untuk memastikan keakuratan informasi dan keaslian foto. Jika disetujui, laporan baru akan muncul di Peta Aksesibilitas publik.
+                    </div>
+                </details>
+
+                <!-- FAQ 4 -->
+                <details class="group card-solid bg-background border-2 border-border-solid rounded-xl shadow-solid [&_summary::-webkit-details-marker]:hidden">
+                    <summary class="flex justify-between items-center font-bold text-lg cursor-pointer p-6 list-none hover:bg-secondary/10 transition-colors">
+                        <span class="text-text-onsurface">Apakah aplikasi ini berbayar?</span>
+                        <span class="transition group-open:rotate-180">
+                            <i class="fas fa-chevron-down text-primary"></i>
+                        </span>
+                    </summary>
+                    <div class="p-6 pt-0 text-text-muted text-base leading-relaxed">
+                        Sleman Akses adalah layanan publik yang sepenuhnya gratis untuk digunakan, baik untuk keperluan mencari informasi fasilitas melalui website maupun untuk melaporkan fasilitas melalui aplikasi mobile.
+                    </div>
+                </details>
+            </div>
+        </div>
+    </section>
+
+    {{-- <!-- 4. DOWNLOAD CTA (Preserved Section) -->
     <section class="py-24 bg-secondary overflow-hidden">
         <div class="container px-4 mx-auto max-w-7xl">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
@@ -190,7 +329,7 @@
                 </div>
             </div>
         </div>
-    </section>
+    </section> --}}
 @endsection
 
 @push('scripts')

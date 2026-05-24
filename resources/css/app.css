@@ -1,5 +1,10 @@
 @import 'tailwindcss';
 
+@import 'leaflet/dist/leaflet.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.css';
+@import 'leaflet.markercluster/dist/MarkerCluster.Default.css';
+@import '@fortawesome/fontawesome-free/css/all.css';
+
 @source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
 @source '../../storage/framework/views/*.php';
 @source "../**/*.blade.php";
@@ -14,7 +19,7 @@
     --color-primary-hover: #022c22;
     --color-secondary: #bfd852;
     --color-surface: #FFFFFF;
-    --color-background: #F1F1F1;
+    --color-background: #FAF9F8;
     --color-text-primary: #037940;
     --color-text-muted: #4B5563;
     --color-text-onsurface: #0F0F0F;

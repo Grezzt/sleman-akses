@@ -38,21 +38,31 @@ Website Sleman Akses terdiri dari **dua zona utama**:
 
 ### P-02 · Peta Interaktif Publik (`/map`)
 
-**Tujuan:** Fitur utama. Pengguna dapat menjelajahi seluruh sebaran fasilitas ramah disabilitas di Sleman.
+**Tujuan:** Fitur utama berbasis fullscreen map yang secara visual dan UX diadaptasi dari mobile app (`home_screen.dart`), namun dioptimalkan secara proporsional untuk layar lebar (desktop/Windows).
 
-**Konten:**
-- **Peta Leaflet.js Fullscreen** — Mengambil seluruh viewport, basemap OpenStreetMap
-- **Navbar Transparan** — Logo di kiri, tombol "Masuk Admin" di kanan
-- **Panel Filter Kategori** — Card solid shadow floating di kanan atas, toggle per kategori fasilitas
-- **MarkerCluster** — Pengelompokan marker saat zoom jauh
-- **Marker Kustom** — Ikon per kategori fasilitas (SVG warna Primary)
-- **Popup Marker** — Muncul saat klik marker: Foto fasilitas (Cloudinary), Nama/alamat (jika ada), Daftar fasilitas per kategori (ada/tidak ada), Tanggal diverifikasi, Badge status
-- **Search Bar** (opsional lanjutan) — Cari berdasarkan nama tempat/lokasi
+**Layout Desktop (Web):**
+- **Peta Leaflet.js Fullscreen** — Mengambil seluruh viewport (100vh, 100vw) tanpa navbar statis. Menggunakan basemap MapTiler Streets V2 (atau padanannya).
+- **Floating UI Kiri Atas (Search & Filter):**
+  - **Search Bar**: Input pencarian membulat (pill-shape) mengambang, menyatu dengan logo Sleman Akses di sebelah kiri. Menggunakan solid shadow yang identik dengan mobile app.
+  - **Category Chips**: Di bawah search bar, terdapat barisan tombol filter kategori bergaya "Chip" (stadium border). Saat aktif, chip memiliki background Primary dan shadow Secondary.
+- **Floating UI Kanan Atas (User Actions):**
+  - Tombol aksi berbentuk lingkaran (circular buttons) untuk Notifikasi dan "Masuk Admin" (sebagai pengganti profil user).
+- **Floating UI Kanan Bawah (FABs):**
+  - **FAB Lokasi Saya**: Tombol kecil berwarna putih untuk mendapatkan GPS pengguna (`Icons.my_location`).
+  - **FAB Tambah Laporan**: Tombol utama yang besar, warna Primary dengan solid shadow Secondary (`offset: 4,4`).
+- **Desain Marker Kustom (Leaflet DivIcon):**
+  - Mereplikasi bentuk marker Flutter: Ikon Map Pin besar berwarna Primary (`#025C30`) dengan elemen lingkaran putih (`#FFFFFF`) di bagian atas-tengah yang memuat mini ikon kategori.
+  - Ditambahkan efek interaktif hover (skala membesar) saat diletakkan kursor.
+- **Detail Panel (Pengganti Popup Biasa):**
+  - Saat marker diklik, munculkan **Floating Side Panel** (Card Panel) di sisi kiri layar (melayang di atas peta), yang meniru layout `_buildFacilityCard` dari mobile app:
+    - Foto sampul dengan rasio 16:9 (via Cloudinary/CachedImage).
+    - Judul fasilitas, badge status, dan alamat lengkap.
+    - Grid/Wrap *chip* fasilitas pendukung (kategori spesifik) dengan *background opacity* Primary.
 
 **Design Notes:**
-- Popup berdesain card-solid dengan border 2px
-- Filter panel menggunakan `.card-solid` dengan label checkbox per kategori
-- Warna marker mengikuti warna Primary/Secondary dari design system
+- Menghindari penggunaan kontrol default Leaflet (Zoom, Attribution) di posisi standar jika menabrak UI custom. Pindahkan zoom control ke kanan bawah (di atas FAB).
+- Seluruh elemen *floating* wajib menggunakan utilitas CSS *Neobrutalism* (`box-shadow: var(--shadow-solid)` dan radius tumpul) agar serasi dengan *design system* utama.
+- Interaksi mulus (smooth flyTo) saat menekan chip pencarian atau marker.
 
 ---
 
