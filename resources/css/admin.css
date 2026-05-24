@@ -18,7 +18,7 @@
 
 body.admin-body {
   font-family: var(--font-sans);
-  background: var(--content-bg);
+  background: var(--color-background);
   color: var(--color-text-primary);
   margin: 0;
 }

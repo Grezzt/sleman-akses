@@ -12,7 +12,9 @@ use App\Http\Controllers\PublicMapController;
 use Illuminate\Support\Facades\Route;
 
 // Public
-Route::get('/', [PublicMapController::class, 'index'])->name('public.map');
+Route::get('/', [\App\Http\Controllers\PublicController::class, 'landing'])->name('public.landing');
+Route::get('/map', [PublicMapController::class, 'index'])->name('public.map');
+Route::get('/about', [\App\Http\Controllers\PublicController::class, 'about'])->name('public.about');
 Route::get('/api/api-docs', [ApiDocsController::class, 'index'])->name('api.docs');
 Route::get('/api/api-docs/openapi.yaml', [ApiDocsController::class, 'spec'])->name('api.docs.spec');
 

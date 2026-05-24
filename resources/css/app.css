@@ -10,13 +10,17 @@
 
 @theme {
     /* 2. Color System */
-    --color-primary: #037940;
-    --color-secondary: #C7DE64;
+    --color-primary: #025C30;
+    --color-primary-hover: #022c22;
+    --color-secondary: #bfd852;
     --color-surface: #FFFFFF;
-    --color-background: #F3F4F6;
+    --color-background: #F1F1F1;
     --color-text-primary: #037940;
     --color-text-muted: #4B5563;
+    --color-text-onsurface: #0F0F0F;
     --color-border-solid: #D4D4D4;
+    --color-success: #16A34A;
+    --color-warning: #F59E0B;
     --color-error: #DC2626;
 
     /* 3. Typography */
@@ -32,39 +36,28 @@
     --shadow-solid-secondary: 4px 4px 0px 0px var(--color-secondary);
 }
 
-:root {
-    --sa-primary: var(--color-primary);
-    --sa-secondary: var(--color-secondary);
-    --sa-bg: var(--color-background);
-    --sa-card: var(--color-surface);
-    --sa-border: var(--color-border-solid);
-    --sa-text: var(--color-text-primary);
-    --sa-muted: var(--color-text-muted);
-    --sa-error: var(--color-error);
-}
-
 body.public-body {
     font-family: var(--font-sans);
-    background: var(--sa-bg);
-    color: var(--sa-muted);
+    background: var(--color-background);
+    color: var(--color-text-muted);
 }
 
 h1, h2, h3, h4, h5, h6, .text-primary-heading {
-    color: var(--sa-text);
+    color: var(--color-text-primary);
 }
 
 /* Base Component Styles for Solid Shadow (Neobrutalism) */
 .card-solid {
-    background: var(--sa-card);
-    border: 2px solid var(--sa-border);
+    background: var(--color-surface);
+    border: 2px solid var(--color-border-solid);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-solid);
 }
 
 .btn-primary-solid {
-    background: var(--sa-primary);
+    background: var(--color-primary);
     color: #ffffff;
-    border: 2px solid var(--sa-border);
+    border: 2px solid var(--color-border-solid);
     border-radius: var(--radius-pill);
     box-shadow: var(--shadow-solid-secondary);
     font-weight: 700;
@@ -74,7 +67,7 @@ h1, h2, h3, h4, h5, h6, .text-primary-heading {
 
 .btn-primary-solid:hover {
     transform: translate(2px, 2px);
-    box-shadow: 2px 2px 0px 0px var(--sa-secondary);
+    box-shadow: 2px 2px 0px 0px var(--color-secondary);
 }
 
 .input-solid {
@@ -86,18 +79,18 @@ h1, h2, h3, h4, h5, h6, .text-primary-heading {
 }
 
 .input-solid:focus {
-    border-color: var(--sa-primary);
+    border-color: var(--color-primary);
     outline: none;
 }
 
 .input-solid.error {
-    border-color: var(--sa-error);
+    border-color: var(--color-error);
 }
 
 .public-body .navbar {
     box-shadow: var(--shadow-solid);
-    border-bottom: 2px solid var(--sa-border);
-    background: var(--sa-card);
+    border-bottom: 2px solid var(--color-border-solid);
+    background: var(--color-surface);
 }
 
 .public-map {
@@ -111,8 +104,8 @@ h1, h2, h3, h4, h5, h6, .text-primary-heading {
     right: 20px;
     z-index: 900;
     width: 280px;
-    background: var(--sa-card);
-    border: 2px solid var(--sa-border);
+    background: var(--color-surface);
+    border: 2px solid var(--color-border-solid);
     border-radius: var(--radius-card);
     box-shadow: var(--shadow-solid);
     padding: 16px;
@@ -121,7 +114,7 @@ h1, h2, h3, h4, h5, h6, .text-primary-heading {
 .map-filter h6 {
     font-weight: 700;
     margin-bottom: 12px;
-    color: var(--sa-text);
+    color: var(--color-text-primary);
 }
 
 .map-filter .form-check {
@@ -133,7 +126,7 @@ h1, h2, h3, h4, h5, h6, .text-primary-heading {
     flex-direction: column;
     gap: 6px;
     font-size: 13px;
-    color: var(--sa-muted);
+    color: var(--color-text-muted);
 }
 
 .map-legend span {
@@ -146,7 +139,7 @@ h1, h2, h3, h4, h5, h6, .text-primary-heading {
     width: 10px;
     height: 10px;
     border-radius: 50%;
-    background: var(--sa-primary);
+    background: var(--color-primary);
 }
 
 @media (max-width: 768px) {
