@@ -1,133 +1,59 @@
 <!DOCTYPE html>
 <html lang="id">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Sleman Akses Admin - Login</title>
-
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-    <style>
-        body {
-            background: #f8fafc;
-        }
-
-        .login-page {
-            min-height: 100vh;
-            display: grid;
-            grid-template-columns: 1.1fr 0.9fr;
-        }
-
-        .login-visual {
-            position: relative;
-            background: radial-gradient(circle at top, rgba(15, 118, 110, 0.4), transparent 60%),
-                radial-gradient(circle at 30% 60%, rgba(34, 197, 94, 0.35), transparent 55%),
-                linear-gradient(135deg, #0f172a, #0f766e);
-            overflow: hidden;
-        }
-
-        .login-visual::after {
-            content: "";
-            position: absolute;
-            inset: 0;
-            background-image: linear-gradient(0deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255, 255, 255, 0.12) 1px, transparent 1px);
-            background-size: 28px 28px;
-            opacity: 0.35;
-        }
-
-        .login-visual-content {
-            position: relative;
-            z-index: 1;
-            padding: 64px;
-            color: #ffffff;
-        }
-
-        .login-card {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 48px 32px;
-        }
-
-        .login-box {
-            width: 100%;
-            max-width: 420px;
-            background: #ffffff;
-            border-radius: 18px;
-            box-shadow: 0 20px 45px rgba(15, 23, 42, 0.15);
-            padding: 32px;
-        }
-
-        .login-title {
-            font-weight: 800;
-        }
-
-        .login-subtitle {
-            color: #64748b;
-        }
-
-        @media (max-width: 992px) {
-            .login-page {
-                grid-template-columns: 1fr;
-            }
-
-            .login-visual {
-                min-height: 220px;
-            }
-        }
-    </style>
 </head>
+<body class="public-body min-h-screen flex flex-col md:flex-row">
+    <!-- Kolom Kiri - Background Hijau -->
+    <div class="hidden md:flex md:w-1/2 relative overflow-hidden items-center justify-center bg-[var(--color-primary)]"
+         style="background-image: url('/landing-hijau.svg'); background-size: cover; background-position: center;">
 
-<body>
-    <div class="login-page">
-        <div class="login-visual">
-            <div class="login-visual-content">
-                <h1 class="display-6 fw-bold">Sleman Akses</h1>
-                <p class="fs-5">Dashboard pengelolaan laporan aksesibilitas.</p>
-                <div class="mt-4">
-                    <span class="badge text-bg-light">Admin Only</span>
-                </div>
-            </div>
-        </div>
+        <!-- Overlay untuk mempertegas tulisan jika diperlukan -->
+        <div class="absolute inset-0 bg-[var(--color-primary)] opacity-40"></div>
 
-        <div class="login-card">
-            <div class="login-box">
-                <div class="mb-4">
-                    <h2 class="login-title">Sleman Akses Admin</h2>
-                    <p class="login-subtitle">Masuk untuk mengelola laporan dan peta.</p>
-                </div>
-
-                @if ($errors->any())
-                    <div class="alert alert-danger">
-                        {{ $errors->first() }}
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <div class="mb-3">
-                        <label class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required
-                            autofocus>
-                    </div>
-                    <div class="mb-4">
-                        <label class="form-label">Password</label>
-                        <input type="password" name="password" class="form-control" required>
-                    </div>
-                    <button type="submit" class="btn btn-primary w-100">Masuk</button>
-                </form>
-            </div>
+        <div class="relative z-10 p-12 text-white max-w-lg">
+            <h1 class="text-5xl font-bold mb-4 font-sans leading-tight "style="color: var(--color-text-onprimary);">Sleman Akses</h1>
+            <p class="text-xl opacity-90 mb-6 font-sans">Dashboard pengelolaan laporan aksesibilitas fasilitas umum di Kabupaten Sleman.</p>
+            <span class="bg-white text-[var(--color-primary)] px-4 py-1.5 rounded-full text-sm font-bold shadow-sm font-sans border-2 border-[var(--color-border-solid)]" style="box-shadow: 2px 2px 0px 0px var(--color-border-solid);">Admin Only</span>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
-    </script>
-</body>
+    <!-- Kolom Kanan - Form Login dengan Background Putih -->
+    <div class="w-full md:w-1/2 flex items-center justify-center p-6 relative bg-[var(--color-background)]"
+         style="background-image: url('/landing-putih.svg'); background-size: cover; background-position: center;">
 
+        <!-- Login Card -->
+        <div class="card-solid p-8 md:p-10 w-full max-w-md relative z-10">
+            <div class="mb-8 text-center">
+                <h2 class="text-3xl font-bold text-primary-heading mb-2 font-sans">Login Admin</h2>
+                <p class="text-[var(--color-text-muted)] font-sans">Masuk untuk mengelola laporan dan fasilitas.</p>
+            </div>
+
+            @if ($errors->any())
+                <div class="bg-red-100 border-2 border-red-400 text-red-700 px-4 py-3 rounded-xl relative mb-6 font-sans text-sm shadow-[2px_2px_0px_0px_rgba(248,113,113,1)]" role="alert">
+                    <span class="block sm:inline">{{ $errors->first() }}</span>
+                </div>
+            @endif
+
+            <form method="POST" action="{{ route('login') }}" class="space-y-5 font-sans">
+                @csrf
+                <div>
+                    <label class="block text-sm font-bold mb-2 text-[var(--color-text-primary)]" for="email">Email</label>
+                    <input type="email" name="email" id="email" class="input-solid" value="{{ old('email') }}" required autofocus placeholder="admin@slemanakses.id">
+                </div>
+                <div>
+                    <label class="block text-sm font-bold mb-2 text-[var(--color-text-primary)]" for="password">Password</label>
+                    <input type="password" name="password" id="password" class="input-solid" required placeholder="••••••••">
+                </div>
+                <div class="pt-4">
+                    <button type="submit" class="btn-primary-solid w-full text-center">Masuk</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
 </html>

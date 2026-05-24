@@ -23,6 +23,7 @@ class DashboardController extends Controller
 
     $chartData = $this->getMonthlyReportData();
     $recentLocations = $this->mapService->getPublished()->take(5);
+    $recentReports = Validation::with(['report.user'])->latest()->take(5)->get();
 
     $mapPoints = $this->mapService->getPublished()->map(function ($location) {
       return [
@@ -40,6 +41,7 @@ class DashboardController extends Controller
       'totalUsers' => $totalUsers,
       'chartData' => $chartData,
       'recentLocations' => $recentLocations,
+      'recentReports' => $recentReports,
       'mapPoints' => $mapPoints,
     ]);
   }
