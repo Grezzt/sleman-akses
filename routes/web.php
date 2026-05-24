@@ -33,6 +33,7 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
 
     Route::get('map', [AdminMapController::class, 'index'])->name('map.index');
     Route::delete('map/{id}', [AdminMapController::class, 'destroy'])->name('map.destroy');
+    Route::patch('map/{id}/toggle-status', [AdminMapController::class, 'toggleStatus'])->name('map.toggle_status');
 
     Route::get('categories', [CategoryController::class, 'index'])->name('categories.index');
     Route::post('categories', [CategoryController::class, 'store'])->name('categories.store');

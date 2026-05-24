@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Repositories\Contracts\MapLocationRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 use Throwable;
 use App\Models\MapLocation;
@@ -70,6 +71,38 @@ class MapLocationService
             }
 
             throw new \RuntimeException('Failed to fetch map location detail.', 0, $e);
+        }
+    }
+
+    public function getPublishedPaginated(int $perPage = 10): LengthAwarePaginator
+    {
+        try {
+            return $this->mapLocations->getPublishedPaginated($perPage);
+        } catch (Throwable $e) {
+            if ($e instanceof \RuntimeException) {
+                throw $e;
+            }
+
+            throw new \RuntimeException('Failed to fetch paginated map locations.', 0, $e);
+        }
+    }
+
+    public function toggleStatus(int $id): bool
+    {
+        try {
+            $location = $this->mapLocations->findWithDetails($id);
+            if (!$location) {
+                throw new \RuntimeException('Map location not found.');
+            }
+
+            $newStatus = $location->status === 'active' ? 'inactive' : 'active';
+            return $this->mapLocations->updateStatus($id, $newStatus);
+        } catch (Throwable $e) {
+            if ($e instanceof \RuntimeException) {
+                throw $e;
+            }
+
+            throw new \RuntimeException('Failed to toggle map location status.', 0, $e);
         }
     }
 }

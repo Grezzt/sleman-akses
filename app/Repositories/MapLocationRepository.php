@@ -6,6 +6,7 @@ use App\Models\MapLocation;
 use App\Models\Report;
 use App\Models\Validation;
 use App\Repositories\Contracts\MapLocationRepositoryInterface;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 
 class MapLocationRepository implements MapLocationRepositoryInterface
@@ -49,6 +50,23 @@ class MapLocationRepository implements MapLocationRepositoryInterface
       'validation.report.user',
       'validation.report.details.category',
     ])->find($id);
+  }
+
+  public function getPublishedPaginated(int $perPage = 10): LengthAwarePaginator
+  {
+    return MapLocation::with([
+      'validation.user',
+      'validation.report.user',
+      'validation.report.details.category',
+    ])
+      ->whereNotNull('publish_date')
+      ->latest('publish_date')
+      ->paginate($perPage);
+  }
+
+  public function updateStatus(int $id, string $status): bool
+  {
+    return (bool) MapLocation::whereKey($id)->update(['status' => $status]);
   }
 
   public function delete(int $id): bool
