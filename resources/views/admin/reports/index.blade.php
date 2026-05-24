@@ -23,16 +23,43 @@
 @endpush
 
 @section('content')
-    <div class="flex flex-wrap justify-between items-center mb-6">
-        <h4 class="m-0 font-black text-2xl text-text-primary">Daftar Laporan</h4>
-        <form method="GET" class="flex gap-2">
-            <select name="status" class="input-solid min-w-[150px] py-1.5 px-3">
-                <option value="">Semua Status</option>
-                <option value="pending" {{ $status === 'pending' ? 'selected' : '' }}>Pending</option>
-                <option value="approved" {{ $status === 'approved' ? 'selected' : '' }}>Disetujui</option>
-                <option value="rejected" {{ $status === 'rejected' ? 'selected' : '' }}>Ditolak</option>
+    <div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 mb-6">
+        <div class="flex flex-col gap-4 w-full md:w-auto">
+            <h4 class="m-0 font-black text-2xl text-text-primary">Daftar Laporan</h4>
+            
+            <!-- Filter Tabs -->
+            <div class="flex gap-3 overflow-x-auto pb-2 w-full">
+                <a href="{{ route('admin.reports.index') }}" 
+                   class="px-5 py-2 rounded-full font-bold border-2 transition-all whitespace-nowrap {{ empty($status) ? 'bg-primary text-white border-primary shadow-[2px_2px_0_0_var(--color-secondary)]' : 'bg-surface text-text-muted border-border-solid hover:bg-slate-100 hover:text-text-primary' }}">
+                   Semua
+                </a>
+                <a href="{{ route('admin.reports.index', ['status' => 'pending']) }}" 
+                   class="px-5 py-2 rounded-full font-bold border-2 transition-all whitespace-nowrap {{ $status === 'pending' ? 'bg-primary text-white border-primary shadow-[2px_2px_0_0_var(--color-secondary)]' : 'bg-surface text-text-muted border-border-solid hover:bg-slate-100 hover:text-text-primary' }}">
+                   Pending
+                </a>
+                <a href="{{ route('admin.reports.index', ['status' => 'approved']) }}" 
+                   class="px-5 py-2 rounded-full font-bold border-2 transition-all whitespace-nowrap {{ $status === 'approved' ? 'bg-primary text-white border-primary shadow-[2px_2px_0_0_var(--color-secondary)]' : 'bg-surface text-text-muted border-border-solid hover:bg-slate-100 hover:text-text-primary' }}">
+                   Disetujui
+                </a>
+                <a href="{{ route('admin.reports.index', ['status' => 'rejected']) }}" 
+                   class="px-5 py-2 rounded-full font-bold border-2 transition-all whitespace-nowrap {{ $status === 'rejected' ? 'bg-primary text-white border-primary shadow-[2px_2px_0_0_var(--color-secondary)]' : 'bg-surface text-text-muted border-border-solid hover:bg-slate-100 hover:text-text-primary' }}">
+                   Ditolak
+                </a>
+            </div>
+        </div>
+
+        <!-- Per Page Selector -->
+        <form method="GET" class="flex items-center gap-3 w-full md:w-auto mt-2 md:mt-0">
+            @if(request('status'))
+                <input type="hidden" name="status" value="{{ request('status') }}">
+            @endif
+            <label class="font-bold text-text-muted whitespace-nowrap">Per halaman:</label>
+            <select name="per_page" class="input-solid py-1.5 px-3 bg-white w-full md:w-auto" onchange="this.form.submit()">
+                <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
             </select>
-            <button class="btn-primary-solid text-sm px-4 py-1.5" type="submit">Filter</button>
         </form>
     </div>
 
