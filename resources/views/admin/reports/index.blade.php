@@ -57,7 +57,7 @@
                         @endphp
                         <tr class="hover:bg-slate-50 transition-colors">
                             <td class="py-3 px-4 font-bold text-text-onsurface">{{ $index + 1 }}</td>
-                            <td class="py-3 px-4 font-bold text-text-onsurface">{{ $report->user?->name ?? '-' }}</td>
+                            <td class="py-3 px-4 font-bold text-text-onsurface">{{ $report->user?->full_name ?? '-' }}</td>
                             <td class="py-3 px-4 text-text-muted font-bold text-sm">{{ $report->timestamp?->format('d M Y H:i') }}</td>
                             <td class="py-3 px-4">
                                 <span class="bg-background text-text-onsurface border-2 border-border-solid px-3 py-1 rounded-full text-xs font-bold">{{ $categoryName }}</span>

@@ -18,7 +18,7 @@
                             <button type="button" class="text-left js-focus flex-grow"
                                 data-lat="{{ $location->latitude }}" data-lng="{{ $location->longitude }}"
                                 data-id="{{ $location->id }}">
-                                <div class="font-black text-text-onsurface">{{ $location->validation?->report?->user?->name ?? 'Lokasi' }}
+                                <div class="font-black text-text-onsurface">{{ $location->validation?->report?->user?->full_name ?? 'Lokasi' }}
                                 </div>
                                 <small class="text-text-muted font-bold block mt-1">{{ $location->publish_date?->format('d M Y') }}</small>
                             </button>

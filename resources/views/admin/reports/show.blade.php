@@ -12,7 +12,7 @@
         <div class="lg:col-span-5 flex flex-col gap-6">
             <div class="admin-card m-0">
                 <h5 class="mb-4 font-black text-xl text-text-primary">Info Pengirim</h5>
-                <p class="mb-2 text-text-onsurface"><strong class="font-bold text-text-muted">Nama:</strong> {{ $report->user?->name ?? '-' }}</p>
+                <p class="mb-2 text-text-onsurface"><strong class="font-bold text-text-muted">Nama:</strong> {{ $report->user?->full_name ?? '-' }}</p>
                 <p class="mb-2 text-text-onsurface"><strong class="font-bold text-text-muted">Email:</strong> {{ $report->user?->email ?? '-' }}</p>
                 <p class="mb-2 text-text-onsurface"><strong class="font-bold text-text-muted">Waktu:</strong> {{ $report->timestamp?->format('d M Y H:i') }}</p>
                 <p class="m-0 text-text-onsurface"><strong class="font-bold text-text-muted">Koordinat:</strong> {{ $report->latitude }}, {{ $report->longitude }}</p>

@@ -13,13 +13,21 @@
     @vite(['resources/css/app.css', 'resources/css/admin.css', 'resources/js/app.js'])
     @stack('styles')
 </head>
-<body class="bg-background text-text-onsurface font-sans min-h-screen">
-    <div class="flex flex-col lg:flex-row min-h-screen">
+<body class="bg-background text-text-onsurface font-sans min-h-screen overflow-x-hidden">
+    <div class="flex min-h-screen relative w-full">
+        <!-- Sidebar Overlay (Mobile) -->
+        <div id="sidebar-overlay" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-40 hidden lg:hidden transition-opacity"></div>
+
         <!-- Sidebar -->
-        <aside class="w-full lg:w-[260px] bg-primary text-white p-6 flex flex-col border-b-2 lg:border-b-0 lg:border-r-2 border-border-solid flex-shrink-0 z-20 sticky top-0 lg:h-screen" style="background-image: url('{{ asset('landing-hijau.svg') }}'); background-size: cover; background-position: center;">
-            <div class="mb-8">
-                <div class="text-xl font-black text-white tracking-wide">Sleman Akses</div>
-                <div class="text-xs font-bold text-secondary tracking-widest uppercase mt-1">Admin Panel</div>
+        <aside id="sidebar" class="fixed lg:sticky top-0 left-0 h-[100dvh] w-[260px] bg-primary text-white p-6 flex flex-col border-r-2 border-border-solid flex-shrink-0 z-50 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out overflow-y-auto" style="background-image: url('{{ asset('landing-hijau.svg') }}'); background-size: cover; background-position: center;">
+            <div class="flex justify-between items-center mb-8">
+                <div>
+                    <div class="text-xl font-black text-white tracking-wide">Sleman Akses</div>
+                    <div class="text-xs font-bold text-secondary tracking-widest uppercase mt-1">Admin Panel</div>
+                </div>
+                <button id="close-sidebar" class="lg:hidden text-white/80 hover:text-white transition-colors">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
             </div>
 
             <nav class="flex flex-col gap-2 flex-grow">
@@ -49,30 +57,67 @@
                     <span>Pengguna</span>
                 </a>
             </nav>
+
+            <div class="mt-8 pt-6 border-t-2 border-white/20">
+                <div class="flex items-center gap-3 px-4 py-2 mb-2">
+                    <div class="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center font-bold text-white flex-shrink-0">
+                        {{ substr(auth()->user()?->full_name ?? 'A', 0, 1) }}
+                    </div>
+                    <div class="flex flex-col overflow-hidden">
+                        <span class="font-bold text-sm truncate">{{ auth()->user()?->full_name ?? 'Admin' }}</span>
+                        <span class="text-xs text-white/70 truncate">{{ auth()->user()?->email ?? '-' }}</span>
+                    </div>
+                </div>
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="submit" class="w-full flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold transition-all text-white/80 hover:bg-white/10 hover:text-white text-left">
+                        <i class="fa-solid fa-arrow-right-from-bracket w-5 text-center"></i>
+                        <span>Keluar</span>
+                    </button>
+                </form>
+            </div>
         </aside>
 
         <!-- Main Content -->
         <main class="flex-1 flex flex-col min-w-0">
             <!-- Topbar -->
-            <header class="bg-surface border-b-2 border-border-solid shadow-[0_4px_0_0_var(--color-border-solid)] px-6 py-4 flex items-center justify-between sticky top-0 z-10">
-                <div>
-                    <h2 class="text-xl font-black text-text-primary">@yield('page_title', 'Dashboard')</h2>
-                </div>
-                <div class="flex items-center gap-4">
-                    <span class="font-bold text-sm hidden md:inline-block text-text-muted">{{ auth()->user()?->name ?? 'Admin' }}</span>
-                    <form action="{{ route('logout') }}" method="POST">
-                        @csrf
-                        <button type="submit" class="bg-white text-error border-2 border-error px-4 py-1.5 rounded-full text-sm font-bold shadow-[2px_2px_0_0_var(--color-error)] hover:-translate-y-0.5 hover:shadow-[3px_3px_0_0_var(--color-error)] transition-all">Keluar</button>
-                    </form>
-                </div>
+            <header class="bg-surface border-b-2 border-border-solid shadow-[0_4px_0_0_var(--color-border-solid)] px-6 py-4 flex items-center gap-4 sticky top-0 z-10">
+                <button id="open-sidebar" class="lg:hidden text-text-primary hover:text-primary transition-colors flex items-center justify-center">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+                <h2 class="text-xl font-black text-text-primary m-0">@yield('page_title', 'Dashboard')</h2>
             </header>
 
             <!-- Page Content -->
-            <section class="p-6 lg:p-8 flex-1 w-full max-w-[100vw]">
+            <section class="p-6 lg:p-8 flex-1 w-full overflow-x-hidden">
                 @yield('content')
             </section>
         </main>
     </div>
+
+    <script>
+        const sidebar = document.getElementById('sidebar');
+        const overlay = document.getElementById('sidebar-overlay');
+        const openBtn = document.getElementById('open-sidebar');
+        const closeBtn = document.getElementById('close-sidebar');
+
+        const toggleSidebar = () => {
+            const isOpen = sidebar.classList.contains('translate-x-0');
+            if (isOpen) {
+                sidebar.classList.remove('translate-x-0');
+                sidebar.classList.add('-translate-x-full');
+                overlay.classList.add('hidden');
+            } else {
+                sidebar.classList.remove('-translate-x-full');
+                sidebar.classList.add('translate-x-0');
+                overlay.classList.remove('hidden');
+            }
+        };
+
+        openBtn.addEventListener('click', toggleSidebar);
+        closeBtn.addEventListener('click', toggleSidebar);
+        overlay.addEventListener('click', toggleSidebar);
+    </script>
 
     @stack('scripts')
 </body>

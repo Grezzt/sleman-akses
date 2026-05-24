@@ -86,13 +86,16 @@
                         </thead>
                         <tbody>
                             @forelse ($recentReports as $val)
-                                <tr>
+                                @php
+                                    $categoryName = $val->report?->details->first()?->category?->facility_name ?? '-';
+                                @endphp
+                                <tr class="hover:bg-slate-50 transition-colors">
                                     <td class="py-3 px-4">
-                                        <div class="font-bold text-text-onsurface">{{ $val->report?->user?->name ?? 'Anonim' }}</div>
+                                        <div class="font-bold text-text-onsurface">{{ $val->report?->user?->full_name ?? '-' }}</div>
                                         <div class="text-xs font-bold text-text-muted">{{ $val->report?->user?->email ?? '-' }}</div>
                                     </td>
                                     <td class="py-3 px-4">
-                                        <span class="bg-background text-text-onsurface border-2 border-border-solid px-3 py-1 rounded-full text-xs font-bold">{{ $val->report?->category?->name ?? 'Fasilitas' }}</span>
+                                        <span class="bg-background text-text-onsurface border-2 border-border-solid px-3 py-1 rounded-full text-xs font-bold">{{ $categoryName }}</span>
                                     </td>
                                     <td class="py-3 px-4 text-sm font-bold text-text-muted">{{ $val->created_at?->format('d M Y') }}</td>
                                     <td class="py-3 px-4">
