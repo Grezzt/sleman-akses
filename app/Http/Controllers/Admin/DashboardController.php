@@ -26,10 +26,29 @@ class DashboardController extends Controller
     $recentReports = Validation::with(['report.user', 'report.details.category'])->latest()->take(5)->get();
 
     $mapPoints = $this->mapService->getPublished()->map(function ($location) {
+      $report = $location->validation?->report;
+      $primaryCategory = $report?->details->first()?->category;
+      $primaryNameStr = strtolower($primaryCategory?->facility_name ?? '');
+      $primaryIconFile = 'parkir-difabel.svg';
+      if (\Illuminate\Support\Str::contains($primaryNameStr, 'parkir')) {
+          $primaryIconFile = 'parkir-difabel.svg';
+      } elseif (\Illuminate\Support\Str::contains($primaryNameStr, ['toilet', 'kamar mandi'])) {
+          $primaryIconFile = 'toilet-difabel.svg';
+      } elseif (\Illuminate\Support\Str::contains($primaryNameStr, ['ramp', 'landai', 'kursi roda'])) {
+          $primaryIconFile = 'ramp.svg';
+      } elseif (\Illuminate\Support\Str::contains($primaryNameStr, ['lift', 'elevator'])) {
+          $primaryIconFile = 'lift.svg';
+      } elseif (!empty($primaryCategory->icon_marker) && \Illuminate\Support\Str::endsWith($primaryCategory->icon_marker, '.svg')) {
+          $primaryIconFile = $primaryCategory->icon_marker;
+      }
+
       return [
+        'id' => $location->id,
         'lat' => (float) $location->latitude,
         'lng' => (float) $location->longitude,
-        'label' => $location->validation?->report?->user?->full_name ?? 'Lokasi Publik',
+        'label' => $report?->user?->full_name ?? 'Lokasi Publik',
+        'icon_url' => asset($primaryIconFile),
+        'status' => $location->status,
       ];
     })->values();
 

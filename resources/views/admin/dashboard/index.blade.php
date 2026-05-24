@@ -86,16 +86,26 @@
                         </thead>
                         <tbody>
                             @forelse ($recentReports as $val)
-                                @php
-                                    $categoryName = $val->report?->details->first()?->category?->facility_name ?? '-';
-                                @endphp
                                 <tr class="hover:bg-slate-50 transition-colors">
                                     <td class="py-3 px-4">
                                         <div class="font-bold text-text-onsurface">{{ $val->report?->user?->full_name ?? '-' }}</div>
                                         <div class="text-xs font-bold text-text-muted">{{ $val->report?->user?->email ?? '-' }}</div>
                                     </td>
                                     <td class="py-3 px-4">
-                                        <span class="bg-background text-text-onsurface border-2 border-border-solid px-3 py-1 rounded-full text-xs font-bold">{{ $categoryName }}</span>
+                                        <div class="flex flex-wrap gap-1.5">
+                                            @if($val->report)
+                                                @foreach ($val->report->details->where('availability_status', true) as $detail)
+                                                    <span class="bg-background text-text-onsurface border-2 border-border-solid px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">
+                                                        {{ $detail->category?->facility_name ?? '-' }}
+                                                    </span>
+                                                @endforeach
+                                                @if ($val->report->details->where('availability_status', true)->isEmpty())
+                                                    <span class="text-text-muted text-xs font-bold">-</span>
+                                                @endif
+                                            @else
+                                                <span class="text-text-muted text-xs font-bold">-</span>
+                                            @endif
+                                        </div>
                                     </td>
                                     <td class="py-3 px-4 text-sm font-bold text-text-muted">{{ $val->created_at?->format('d M Y') }}</td>
                                     <td class="py-3 px-4">
@@ -164,15 +174,54 @@
         const mapPoints = @json($mapPoints);
         const miniMap = L.map('mini-map').setView([-7.716, 110.355], 11);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 18,
-            attribution: '&copy; OpenStreetMap',
-        }).addTo(miniMap);
+        const maptilerKey = '{{ config("services.maptiler.key") }}';
+        if (maptilerKey) {
+            L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${maptilerKey}`, {
+                maxZoom: 18,
+                attribution: '&copy; MapTiler &copy; OpenStreetMap contributors',
+                crossOrigin: true
+            }).addTo(miniMap);
+        } else {
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 18,
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(miniMap);
+        }
+
+        const createCustomIcon = (iconUrl, status = 'active') => {
+            const isInactive = status === 'inactive';
+            const filterClass = isInactive ? 'grayscale opacity-75' : '';
+            const pinColor = isInactive ? '#94a3b8' : 'var(--color-primary)';
+            
+            const html = `
+                <div class="sleman-marker ${filterClass} hover:scale-110 transition-transform duration-200" style="display:flex; justify-content:center; align-items:flex-start; width:48px; height:60px; position:relative;">
+                    <i class="fas fa-map-marker pin" style="color:${pinColor}; font-size:48px; filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25)); transition: color 0.3s;"></i>
+                    <div class="icon-circle" style="position:absolute; top:7px; width:24px; height:24px; background:var(--color-surface); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:inset 0px 1px 3px rgba(0,0,0,0.1);">
+                        <img src="${iconUrl || '/parkir-difabel.svg'}" alt="icon" style="width: 14px; height: 14px; object-fit: contain;">
+                    </div>
+                </div>
+            `;
+            return L.divIcon({
+                html: html,
+                className: '',
+                iconSize: [48, 60],
+                iconAnchor: [24, 60],
+                popupAnchor: [0, -60]
+            });
+        };
 
         mapPoints.forEach((point) => {
-            L.marker([point.lat, point.lng])
+            const popupContent = `
+                <div class="text-center" style="min-width:140px; padding: 4px;">
+                    <strong class="font-black block mb-3 text-sm text-text-primary" style="font-family: var(--font-sans);">${point.label || 'Lokasi'}</strong>
+                    <button type="button" onclick="window.location.href='/admin/map?focus=${point.id}'" class="btn-primary-solid w-full text-xs py-2 px-3 m-0" style="font-size: 11px;">
+                        Lihat Detail
+                    </button>
+                </div>
+            `;
+            L.marker([point.lat, point.lng], { icon: createCustomIcon(point.icon_url, point.status) })
                 .addTo(miniMap)
-                .bindPopup(point.label || 'Lokasi');
+                .bindPopup(popupContent);
         });
     </script>
 @endpush

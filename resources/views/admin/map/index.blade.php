@@ -421,6 +421,18 @@
             
             const bounds = L.latLngBounds(markers.map(m => [m.lat, m.lng]));
             map.fitBounds(bounds, { padding: [20, 20], maxZoom: 15 });
+
+            // Handle focus parameter from URL (e.g. redirected from Dashboard)
+            const urlParams = new URLSearchParams(window.location.search);
+            const focusId = urlParams.get('focus');
+            if (focusId) {
+                const markerData = markers.find(m => m.id === Number(focusId));
+                if (markerData) {
+                    setTimeout(() => {
+                        showDetailPanel(markerData);
+                    }, 600);
+                }
+            }
         }
 
         // Sidebar List Click

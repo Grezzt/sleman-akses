@@ -152,20 +152,42 @@
     <script>
         const map = L.map('report-map').setView([{{ $report->latitude }}, {{ $report->longitude }}], 15);
 
-        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            maxZoom: 19,
-            attribution: '&copy; OpenStreetMap',
-        }).addTo(map);
+        const maptilerKey = '{{ config("services.maptiler.key") }}';
+        if (maptilerKey) {
+            L.tileLayer(`https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=${maptilerKey}`, {
+                maxZoom: 19,
+                attribution: '&copy; MapTiler &copy; OpenStreetMap contributors',
+                crossOrigin: true
+            }).addTo(map);
+        } else {
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                maxZoom: 19,
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(map);
+        }
 
         @php
-            $primaryIcon = $report->details->first()?->category?->icon_url ?? '/parkir-difabel.svg';
+            $primaryCategory = $report->details->first()?->category;
+            $primaryNameStr = strtolower($primaryCategory?->facility_name ?? '');
+            $primaryIconFile = 'parkir-difabel.svg';
+            if (\Illuminate\Support\Str::contains($primaryNameStr, 'parkir')) {
+                $primaryIconFile = 'parkir-difabel.svg';
+            } elseif (\Illuminate\Support\Str::contains($primaryNameStr, ['toilet', 'kamar mandi'])) {
+                $primaryIconFile = 'toilet-difabel.svg';
+            } elseif (\Illuminate\Support\Str::contains($primaryNameStr, ['ramp', 'landai', 'kursi roda'])) {
+                $primaryIconFile = 'ramp.svg';
+            } elseif (\Illuminate\Support\Str::contains($primaryNameStr, ['lift', 'elevator'])) {
+                $primaryIconFile = 'lift.svg';
+            } elseif (!empty($primaryCategory->icon_marker) && \Illuminate\Support\Str::endsWith($primaryCategory->icon_marker, '.svg')) {
+                $primaryIconFile = $primaryCategory->icon_marker;
+            }
         @endphp
 
         const iconHtml = `
-            <div style="display:flex; justify-content:center; align-items:flex-start; width:48px; height:60px; position:relative;">
-                <i class="fas fa-map-marker" style="color:var(--color-primary); font-size:48px; filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25));"></i>
-                <div style="position:absolute; top:7px; width:24px; height:24px; background:var(--color-surface); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:inset 0px 1px 3px rgba(0,0,0,0.1);">
-                    <img src="{{ asset($primaryIcon) }}" alt="icon" style="width: 14px; height: 14px; object-fit: contain;">
+            <div class="sleman-marker hover:scale-110 transition-transform duration-200" style="display:flex; justify-content:center; align-items:flex-start; width:48px; height:60px; position:relative;">
+                <i class="fas fa-map-marker pin" style="color:var(--color-primary); font-size:48px; filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25)); transition: color 0.3s;"></i>
+                <div class="icon-circle" style="position:absolute; top:7px; width:24px; height:24px; background:var(--color-surface); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:inset 0px 1px 3px rgba(0,0,0,0.1);">
+                    <img src="{{ asset($primaryIconFile) }}" alt="icon" style="width: 14px; height: 14px; object-fit: contain;">
                 </div>
             </div>
         `;
@@ -175,6 +197,7 @@
             className: '',
             iconSize: [48, 60],
             iconAnchor: [24, 60],
+            popupAnchor: [0, -60]
         });
 
         L.marker([{{ $report->latitude }}, {{ $report->longitude }}], { icon: customIcon }).addTo(map);
