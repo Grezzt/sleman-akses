@@ -48,18 +48,33 @@
             </div>
         </div>
 
-        <!-- Per Page Selector -->
-        <form method="GET" class="flex items-center gap-3 w-full md:w-auto mt-2 md:mt-0">
+        <!-- Per Page Selector & Category Filter -->
+        <form method="GET" class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto mt-2 md:mt-0">
             @if(request('status'))
                 <input type="hidden" name="status" value="{{ request('status') }}">
             @endif
-            <label class="font-bold text-text-muted whitespace-nowrap">Per halaman:</label>
-            <select name="per_page" class="input-solid py-1.5 px-3 bg-white w-full md:w-auto" onchange="this.form.submit()">
-                <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
-                <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
-                <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
-                <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
-            </select>
+            
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <label class="font-bold text-text-muted whitespace-nowrap hidden sm:block">Kategori:</label>
+                <select name="category_id" class="input-solid py-1.5 px-3 bg-white w-full sm:w-auto" onchange="this.form.submit()">
+                    <option value="">Semua Kategori</option>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}" {{ request('category_id') == $category->id ? 'selected' : '' }}>
+                            {{ $category->facility_name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+
+            <div class="flex items-center gap-2 w-full sm:w-auto">
+                <label class="font-bold text-text-muted whitespace-nowrap hidden sm:block">Per halaman:</label>
+                <select name="per_page" class="input-solid py-1.5 px-3 bg-white w-full sm:w-auto" onchange="this.form.submit()">
+                    <option value="10" {{ request('per_page') == 10 ? 'selected' : '' }}>10</option>
+                    <option value="25" {{ request('per_page') == 25 ? 'selected' : '' }}>25</option>
+                    <option value="50" {{ request('per_page') == 50 ? 'selected' : '' }}>50</option>
+                    <option value="100" {{ request('per_page') == 100 ? 'selected' : '' }}>100</option>
+                </select>
+            </div>
         </form>
     </div>
 
@@ -80,14 +95,22 @@
                     @foreach ($reports as $index => $report)
                         @php
                             $statusValue = $report->validation?->approval_status ?? 'pending';
-                            $categoryName = $report->details->first()?->category?->facility_name ?? '-';
                         @endphp
                         <tr class="hover:bg-slate-50 transition-colors">
-                            <td class="py-3 px-4 font-bold text-text-onsurface">{{ $index + 1 }}</td>
+                            <td class="py-3 px-4 font-bold text-text-onsurface">{{ $reports->firstItem() + $index }}</td>
                             <td class="py-3 px-4 font-bold text-text-onsurface">{{ $report->user?->full_name ?? '-' }}</td>
                             <td class="py-3 px-4 text-text-muted font-bold text-sm">{{ $report->timestamp?->format('d M Y H:i') }}</td>
                             <td class="py-3 px-4">
-                                <span class="bg-background text-text-onsurface border-2 border-border-solid px-3 py-1 rounded-full text-xs font-bold">{{ $categoryName }}</span>
+                                <div class="flex flex-wrap gap-1.5">
+                                    @foreach ($report->details->where('availability_status', true) as $detail)
+                                        <span class="bg-background text-text-onsurface border-2 border-border-solid px-3 py-1 rounded-full text-xs font-bold whitespace-nowrap">
+                                            {{ $detail->category?->facility_name ?? '-' }}
+                                        </span>
+                                    @endforeach
+                                    @if ($report->details->where('availability_status', true)->isEmpty())
+                                        <span class="text-text-muted text-xs font-bold">-</span>
+                                    @endif
+                                </div>
                             </td>
                             <td class="py-3 px-4"><x-badge-status :status="$statusValue" /></td>
                             <td class="py-3 px-4">

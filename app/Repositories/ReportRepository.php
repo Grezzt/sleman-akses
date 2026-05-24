@@ -67,6 +67,13 @@ class ReportRepository implements ReportRepositoryInterface
       });
     }
 
+    if (!empty($filters['category_id'])) {
+      $query->whereHas('details', function ($builder) use ($filters) {
+        $builder->where('category_id', $filters['category_id'])
+                ->where('availability_status', true);
+      });
+    }
+
     return $query->orderByDesc('timestamp')->paginate($perPage);
   }
 }

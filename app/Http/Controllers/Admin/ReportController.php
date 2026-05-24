@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\FacilityCategory;
 use App\Repositories\Contracts\ReportRepositoryInterface;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
@@ -22,12 +23,16 @@ class ReportController extends Controller
 
     $reports = $this->reports->getAllPaginated([
       'status' => $status,
+      'category_id' => $request->get('category_id'),
       'per_page' => $request->get('per_page'),
     ]);
+
+    $categories = FacilityCategory::orderBy('facility_name')->get();
 
     return view('admin.reports.index', [
       'reports' => $reports,
       'status' => $status,
+      'categories' => $categories,
     ]);
   }
 
