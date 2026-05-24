@@ -76,7 +76,31 @@
 
                 <hr class="my-6 border-border-solid border-t-2">
 
-                <h5 class="mb-4 font-black text-xl text-text-primary">Validasi Laporan</h5>
+                @if($report->validation && $report->validation->approval_status !== 'pending')
+                    <h5 class="mb-4 font-black text-xl text-text-primary">Riwayat Validasi</h5>
+                    <div class="mb-6 p-4 bg-slate-50 border-2 border-border-solid rounded-xl">
+                        <div class="flex items-center gap-3 mb-2">
+                            <span class="font-bold text-sm text-text-muted">Status Sebelumnya:</span>
+                            <x-badge-status :status="$report->validation->approval_status" />
+                        </div>
+                        <div class="mb-2">
+                            <span class="font-bold text-sm text-text-muted">Tanggal Validasi:</span>
+                            <span class="text-sm font-bold ml-2 text-text-primary">{{ $report->validation->updated_at?->format('d M Y H:i') }}</span>
+                        </div>
+                        @if($report->validation->evaluation_note)
+                            <div class="mt-3">
+                                <span class="font-bold text-sm text-text-muted block mb-1">Catatan Evaluasi:</span>
+                                <p class="text-sm text-text-onsurface bg-white p-3 border-2 border-border-solid rounded-lg m-0">{{ $report->validation->evaluation_note }}</p>
+                            </div>
+                        @endif
+                    </div>
+                    
+                    <hr class="my-6 border-border-solid border-t-2">
+                    <h5 class="mb-4 font-black text-xl text-text-primary">Perbarui Validasi</h5>
+                @else
+                    <h5 class="mb-4 font-black text-xl text-text-primary">Validasi Laporan</h5>
+                @endif
+
                 @php
                     $mapLocation = $report->validation?->mapLocation;
                 @endphp
@@ -133,7 +157,27 @@
             attribution: '&copy; OpenStreetMap',
         }).addTo(map);
 
-        L.marker([{{ $report->latitude }}, {{ $report->longitude }}]).addTo(map);
+        @php
+            $primaryIcon = $report->details->first()?->category?->icon_url ?? '/parkir-difabel.svg';
+        @endphp
+
+        const iconHtml = `
+            <div style="display:flex; justify-content:center; align-items:flex-start; width:48px; height:60px; position:relative;">
+                <i class="fas fa-map-marker" style="color:var(--color-primary); font-size:48px; filter:drop-shadow(0px 4px 4px rgba(0,0,0,0.25));"></i>
+                <div style="position:absolute; top:7px; width:24px; height:24px; background:var(--color-surface); border-radius:50%; display:flex; align-items:center; justify-content:center; box-shadow:inset 0px 1px 3px rgba(0,0,0,0.1);">
+                    <img src="{{ asset($primaryIcon) }}" alt="icon" style="width: 14px; height: 14px; object-fit: contain;">
+                </div>
+            </div>
+        `;
+
+        const customIcon = L.divIcon({
+            html: iconHtml,
+            className: '',
+            iconSize: [48, 60],
+            iconAnchor: [24, 60],
+        });
+
+        L.marker([{{ $report->latitude }}, {{ $report->longitude }}], { icon: customIcon }).addTo(map);
 
         const approvalSelect = document.querySelector('[name="approval_status"]');
         const mapFields = document.querySelectorAll('[data-map-field]');
