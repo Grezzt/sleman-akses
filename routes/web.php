@@ -41,4 +41,5 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::delete('categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
 
     Route::get('users', [AdminUserController::class, 'index'])->name('users.index');
+    Route::patch('users/{id}/toggle-status', [AdminUserController::class, 'toggleStatus'])->name('users.toggle_status');
 });
