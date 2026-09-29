@@ -219,15 +219,13 @@
 
         document.getElementById('validationForm').addEventListener('submit', function(event) {
             event.preventDefault();
-            Swal.fire({
-                title: 'Yakin validasi laporan?',
-                text: 'Status laporan akan diperbarui.',
+            window.showConfirmDialog({
+                title: 'Validasi Laporan Ini?',
+                text: 'Status laporan akan diperbarui dan dicatat dalam riwayat validasi.',
                 icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, validasi',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) {
+                confirmText: 'Ya, Validasi',
+                confirmColor: 'primary',
+                onConfirm: () => {
                     event.target.submit();
                 }
             });

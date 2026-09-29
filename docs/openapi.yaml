@@ -22,6 +22,8 @@ tags:
     description: CRUD laporan dan upload foto (foto di-upload ke Cloudinary)
   - name: Media
     description: Manajemen foto pengguna (list, delete) — terintegrasi dengan Cloudinary
+  - name: News
+    description: Endpoint berita dan materi edukasi aksesibilitas fasilitas publik
 security:
   - bearerAuth: []
 paths:
@@ -269,6 +271,66 @@ paths:
                 $ref: "#/components/schemas/ErrorResponse"
         "401":
           $ref: "#/components/responses/Unauthenticated"
+        "404":
+          $ref: "#/components/responses/NotFound"
+
+  /news:
+    get:
+      tags: [News]
+      summary: Daftar berita dan materi edukasi aksesibilitas
+      security: []
+      parameters:
+        - name: category
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Filter kategori artikel
+        - name: search
+          in: query
+          required: false
+          schema:
+            type: string
+          description: Pencarian kata kunci pada judul atau ringkasan
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 1
+        - name: per_page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        "200":
+          description: Berhasil mengambil data berita
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsListResponse"
+
+  /news/{id}:
+    get:
+      tags: [News]
+      summary: Detail artikel berita / materi edukasi
+      security: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+          description: ID atau slug artikel berita
+      responses:
+        "200":
+          description: Berhasil mengambil detail berita
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NewsDetailResponse"
         "404":
           $ref: "#/components/responses/NotFound"
 components:
@@ -614,3 +676,82 @@ components:
           type: integer
         total:
           type: integer
+    NewsItem:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        slug:
+          type: string
+        summary:
+          type: string
+        category:
+          type: string
+          example: Edukasi & Kesadaran
+        detected_facilities:
+          type: array
+          items:
+            type: string
+          example: ["Ramp", "Toilet Difabel"]
+        image_url:
+          type: string
+          nullable: true
+        author_name:
+          type: string
+        source_name:
+          type: string
+          nullable: true
+        source_url:
+          type: string
+          nullable: true
+        is_scraped:
+          type: boolean
+        ai_processed:
+          type: boolean
+          example: true
+        published_at:
+          type: string
+          format: date-time
+          nullable: true
+        views_count:
+          type: integer
+          example: 42
+        reading_time_minutes:
+          type: integer
+          example: 3
+    NewsDetail:
+      allOf:
+        - $ref: "#/components/schemas/NewsItem"
+        - type: object
+          properties:
+            content:
+              type: string
+    NewsListResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Data berita berhasil diambil.
+        data:
+          type: array
+          items:
+            $ref: "#/components/schemas/NewsItem"
+        meta:
+          $ref: "#/components/schemas/Pagination"
+    NewsDetailResponse:
+      type: object
+      properties:
+        success:
+          type: boolean
+          example: true
+        message:
+          type: string
+          example: Detail berita berhasil diambil.
+        data:
+          $ref: "#/components/schemas/NewsDetail"
+

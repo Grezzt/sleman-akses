@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repositories\ArticleRepository;
+use App\Repositories\Contracts\ArticleRepositoryInterface;
 use App\Repositories\CategoryRepository;
 use App\Repositories\Contracts\CategoryRepositoryInterface;
 use App\Repositories\Contracts\MapLocationRepositoryInterface;
@@ -29,6 +31,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(ValidationRepositoryInterface::class, ValidationRepository::class);
         $this->app->bind(MapLocationRepositoryInterface::class, MapLocationRepository::class);
         $this->app->bind(CategoryRepositoryInterface::class, CategoryRepository::class);
+        $this->app->bind(ArticleRepositoryInterface::class, ArticleRepository::class);
     }
 
     /**

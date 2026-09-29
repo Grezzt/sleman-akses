@@ -35,6 +35,10 @@ class UserController extends Controller
       $user->is_active = !$user->is_active;
       $user->save();
 
+      if (!$user->is_active) {
+          $user->tokens()->delete();
+      }
+
       if ($request->wantsJson()) {
           return response()->json([
               'success' => true, 

@@ -228,6 +228,72 @@
         </div>
     </section>
 
+    <!-- NEWS / EDUKASI SECTION -->
+    @if(isset($latestArticles) && $latestArticles->count() > 0)
+    <section class="py-24 bg-background border-b-2 border-border-solid">
+        <div class="container px-4 mx-auto max-w-7xl">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-12">
+                <div>
+                    <div class="inline-flex items-center px-4 py-1.5 rounded-full text-xs font-black text-primary bg-white mb-4 border-2 border-border-solid shadow-[2px_2px_0px_0px_var(--color-border-solid)]">
+                        <i class="fa-solid fa-newspaper mr-2"></i> Wawasan & Edukasi
+                    </div>
+                    <h2 class="font-black text-text-onsurface leading-tight" style="font-size: clamp(28px, 4vw, 42px); letter-spacing: -0.02em;">
+                        Kabar Aksesibilitas Terkini
+                    </h2>
+                    <p class="text-text-muted text-base mt-2 max-w-xl">
+                        Informasi terverifikasi mengenai fasilitas difabel, kebijakan inklusi, dan pembaruan fasilitas publik di Kabupaten Sleman.
+                    </p>
+                </div>
+                <div>
+                    <a href="{{ route('public.articles.index') }}" class="btn-primary-solid inline-flex items-center gap-2 text-sm">
+                        <span>Lihat Semua Berita</span>
+                        <i class="fa-solid fa-arrow-right text-xs"></i>
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                @foreach($latestArticles as $article)
+                    <article class="bg-white border-2 border-border-solid rounded-2xl shadow-[4px_4px_0px_0px_var(--color-border-solid)] hover:-translate-y-1 hover:shadow-[6px_6px_0px_0px_var(--color-border-solid)] transition-all flex flex-col justify-between overflow-hidden">
+                        <div>
+                            <a href="{{ route('public.articles.show', $article->slug) }}" class="block relative aspect-video overflow-hidden bg-slate-100 border-b-2 border-border-solid group">
+                                <img src="{{ $article->image_url }}" alt="{{ $article->title }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                <span class="absolute top-3 left-3 bg-white/95 px-2.5 py-1 rounded-full border border-border-solid text-[10px] font-black text-primary shadow-[1px_1px_0px_0px_var(--color-border-solid)]">
+                                    {{ $article->category }}
+                                </span>
+                            </a>
+                            <div class="p-5">
+                                <div class="flex items-center gap-2 text-[11px] font-bold text-text-muted mb-2">
+                                    <span>{{ $article->published_at ? $article->published_at->format('d M Y') : $article->created_at->format('d M Y') }}</span>
+                                    <span>•</span>
+                                    <span>{{ $article->reading_time_minutes }} mnt baca</span>
+                                </div>
+                                <h3 class="text-base font-black text-text-primary leading-snug line-clamp-2 mb-2">
+                                    <a href="{{ route('public.articles.show', $article->slug) }}" class="hover:text-primary transition-colors">
+                                        {{ $article->title }}
+                                    </a>
+                                </h3>
+                                <p class="text-xs text-text-muted font-medium line-clamp-2 leading-relaxed">
+                                    {{ $article->summary }}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="px-5 pb-5 pt-2 flex items-center justify-between text-xs">
+                            <span class="text-[11px] font-bold text-text-muted truncate max-w-[150px]">
+                                {{ $article->author_name ?: $article->source_name ?: 'Sleman Akses' }}
+                            </span>
+                            <a href="{{ route('public.articles.show', $article->slug) }}" class="font-black text-primary hover:text-primary-hover flex items-center gap-1 group">
+                                <span>Baca</span>
+                                <i class="fa-solid fa-arrow-right text-[10px] group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </article>
+                @endforeach
+            </div>
+        </div>
+    </section>
+    @endif
+
     <!-- FAQ SECTION -->
     <section class="py-24 bg-secondary border-b-2 border-border-solid">
         <div class="container px-4 mx-auto max-w-4xl">

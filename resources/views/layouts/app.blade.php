@@ -46,6 +46,11 @@
                     <i class="fa-solid fa-map-location-dot w-5 text-center"></i>
                     <span>Peta</span>
                 </a>
+                <a href="{{ route('admin.articles.index') }}"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold transition-all {{ request()->routeIs('admin.articles.*') ? 'bg-white text-primary border-2 border-border-solid shadow-[2px_2px_0px_0px_var(--color-secondary)] -translate-y-0.5 -translate-x-0.5' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                    <i class="fa-solid fa-newspaper w-5 text-center"></i>
+                    <span>Berita</span>
+                </a>
                 {{-- <a href="{{ route('admin.categories.index') }}"
                     class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold transition-all {{ request()->routeIs('admin.categories.*') ? 'bg-white text-primary border-2 border-border-solid shadow-[2px_2px_0px_0px_var(--color-secondary)] -translate-y-0.5 -translate-x-0.5' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     <i class="fa-solid fa-tags w-5 text-center"></i>
@@ -90,11 +95,16 @@
 
             <!-- Page Content -->
             <section class="p-6 lg:p-8 flex-1 w-full overflow-x-hidden">
+                <x-alert />
                 @yield('content')
             </section>
         </main>
     </div>
 
+    <!-- SweetAlert2 Core Script -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!-- Global Neobrutalism System Response Dialog & Helpers -->
     <script>
         const sidebar = document.getElementById('sidebar');
         const overlay = document.getElementById('sidebar-overlay');
@@ -114,9 +124,187 @@
             }
         };
 
-        openBtn.addEventListener('click', toggleSidebar);
-        closeBtn.addEventListener('click', toggleSidebar);
-        overlay.addEventListener('click', toggleSidebar);
+        if (openBtn) openBtn.addEventListener('click', toggleSidebar);
+        if (closeBtn) closeBtn.addEventListener('click', toggleSidebar);
+        if (overlay) overlay.addEventListener('click', toggleSidebar);
+
+        /**
+         * Sleman Akses Mascot Assets Dictionary
+         * Maps conditions and situations to contextual mascot illustrations:
+         * - success: laporan sukses.svg (Happy celebratory mascot)
+         * - error: maskot-nangis.svg (Crying mascot for errors and failures)
+         * - warning/caution: maskot-side-eye.svg (Side-eye mascot for confirmations and warnings)
+         * - info/neutral: maskot-genit.svg (Winking cheerful mascot for guidance and info)
+         */
+        const MASCOT_ASSETS = {
+            success: @json(asset('laporan sukses.svg')),
+            error: @json(asset('maskot-nangis.svg')),
+            warning: @json(asset('maskot-side-eye.svg')),
+            info: @json(asset('maskot-genit.svg')),
+            side_eye: @json(asset('maskot-side-eye.svg')),
+            crying: @json(asset('maskot-nangis.svg')),
+            happy: @json(asset('laporan sukses.svg')),
+            wink: @json(asset('maskot-genit.svg'))
+        };
+
+        /**
+         * Sleman Akses Neobrutalism Toast Notification with Contextual Mascot
+         */
+        window.showToast = function({ type = 'success', title = 'Berhasil', message = '', timer = 3500, mascot = null }) {
+            const iconType = ['success', 'error', 'warning', 'info'].includes(type) ? type : 'info';
+            const mascotUrl = mascot || MASCOT_ASSETS[iconType] || MASCOT_ASSETS.info;
+
+            Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: iconType,
+                iconHtml: `<img src="${mascotUrl}" class="w-6 h-6 object-contain" alt="Maskot" />`,
+                title: message ? `${title}: ${message}` : title,
+                showConfirmButton: false,
+                timer: timer,
+                timerProgressBar: true,
+                customClass: {
+                    popup: 'swal-toast-neo',
+                    icon: 'swal-toast-icon-neo'
+                }
+            });
+        };
+
+        /**
+         * Sleman Akses Neobrutalism System Response Alert Dialog with Contextual Mascot
+         * Replaces window.alert ("localhost says") with a branded modal dialog
+         */
+        window.showAlertDialog = function({ title = 'Pemberitahuan Sistem', text = '', icon = 'info', confirmText = 'Mengerti', onConfirm = null, mascot = null }) {
+            const mascotUrl = mascot || MASCOT_ASSETS[icon] || MASCOT_ASSETS.info;
+
+            Swal.fire({
+                imageUrl: mascotUrl,
+                imageWidth: 92,
+                imageHeight: 92,
+                imageAlt: 'Maskot Sleman Akses',
+                title: title,
+                text: text,
+                confirmButtonText: confirmText,
+                customClass: {
+                    popup: 'swal-neobrutalism',
+                    title: 'swal-title-neo',
+                    htmlContainer: 'swal-text-neo',
+                    confirmButton: 'swal-btn-confirm-primary'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed && typeof onConfirm === 'function') {
+                    onConfirm();
+                }
+            });
+        };
+
+        /**
+         * Sleman Akses Neobrutalism System Response Confirmation Dialog with Side-Eye Mascot
+         * Replaces window.confirm ("localhost says") with an expressive mascot modal
+         */
+        window.showConfirmDialog = function({
+            title = 'Konfirmasi Tindakan',
+            text = 'Apakah Anda yakin ingin melanjutkan tindakan ini?',
+            icon = 'warning',
+            confirmText = 'Ya, Lanjutkan',
+            cancelText = 'Batal',
+            confirmColor = 'danger',
+            mascot = null,
+            onConfirm = null
+        }) {
+            const confirmBtnClass = confirmColor === 'danger' ? 'swal-btn-confirm-danger' : 'swal-btn-confirm-primary';
+            // Default mascot for confirmation: Side-Eye Mascot looking skeptically
+            const mascotUrl = mascot || (confirmColor === 'danger' ? MASCOT_ASSETS.side_eye : (MASCOT_ASSETS[icon] || MASCOT_ASSETS.side_eye));
+
+            Swal.fire({
+                imageUrl: mascotUrl,
+                imageWidth: 92,
+                imageHeight: 92,
+                imageAlt: 'Konfirmasi Tindakan',
+                title: title,
+                text: text,
+                showCancelButton: true,
+                confirmButtonText: confirmText,
+                cancelButtonText: cancelText,
+                reverseButtons: true,
+                customClass: {
+                    popup: 'swal-neobrutalism',
+                    title: 'swal-title-neo',
+                    htmlContainer: 'swal-text-neo',
+                    confirmButton: confirmBtnClass,
+                    cancelButton: 'swal-btn-cancel-neo'
+                },
+                buttonsStyling: false
+            }).then((result) => {
+                if (result.isConfirmed && typeof onConfirm === 'function') {
+                    onConfirm();
+                }
+            });
+        };
+
+        /**
+         * Override window.alert to prevent native "localhost says" dialogs
+         */
+        const nativeAlert = window.alert;
+        window.alert = function(message) {
+            window.showAlertDialog({
+                title: 'Pemberitahuan Sistem',
+                text: message,
+                icon: 'warning'
+            });
+        };
+
+        /**
+         * Global listener for declarative form confirmations (data-confirm)
+         */
+        document.addEventListener('submit', function(e) {
+            const form = e.target;
+            const confirmMsg = form.getAttribute('data-confirm');
+            if (confirmMsg && !form.dataset.confirmed) {
+                e.preventDefault();
+                const mascotKey = form.getAttribute('data-confirm-mascot');
+                window.showConfirmDialog({
+                    title: form.getAttribute('data-confirm-title') || 'Konfirmasi Tindakan',
+                    text: confirmMsg,
+                    icon: form.getAttribute('data-confirm-icon') || 'warning',
+                    confirmText: form.getAttribute('data-confirm-btn') || 'Ya, Lanjutkan',
+                    cancelText: form.getAttribute('data-confirm-cancel') || 'Batal',
+                    confirmColor: form.getAttribute('data-confirm-color') || 'danger',
+                    mascot: mascotKey && MASCOT_ASSETS[mascotKey] ? MASCOT_ASSETS[mascotKey] : null,
+                    onConfirm: function() {
+                        form.dataset.confirmed = 'true';
+                        form.submit();
+                    }
+                });
+            }
+        });
+
+        /**
+         * Global listener for declarative link confirmations (data-confirm-link)
+         */
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('[data-confirm-link]');
+            if (btn) {
+                e.preventDefault();
+                const href = btn.getAttribute('href');
+                const mascotKey = btn.getAttribute('data-confirm-mascot');
+                window.showConfirmDialog({
+                    title: btn.getAttribute('data-confirm-title') || 'Konfirmasi Tindakan',
+                    text: btn.getAttribute('data-confirm-link'),
+                    icon: btn.getAttribute('data-confirm-icon') || 'warning',
+                    confirmText: btn.getAttribute('data-confirm-btn') || 'Ya, Lanjutkan',
+                    cancelText: btn.getAttribute('data-confirm-cancel') || 'Batal',
+                    confirmColor: btn.getAttribute('data-confirm-color') || 'danger',
+                    mascot: mascotKey && MASCOT_ASSETS[mascotKey] ? MASCOT_ASSETS[mascotKey] : null,
+                    onConfirm: function() {
+                        if (href && href !== '#' && !href.startsWith('javascript:')) {
+                            window.location.href = href;
+                        }
+                    }
+                });
+            }
+        });
     </script>
 
     @stack('scripts')

@@ -23,6 +23,7 @@
                 <ul class="space-y-3 font-bold text-base">
                     <li><a href="{{ url('/') }}" class="text-surface hover:text-secondary hover:translate-x-1 inline-block transition-all">Beranda</a></li>
                     <li><a href="{{ url('/map') }}" class="text-surface hover:text-secondary hover:translate-x-1 inline-block transition-all">Peta Aksesibilitas</a></li>
+                    <li><a href="{{ route('public.articles.index') }}" class="text-surface hover:text-secondary hover:translate-x-1 inline-block transition-all">Berita & Edukasi</a></li>
                     <li><a href="{{ url('/about') }}" class="text-surface hover:text-secondary hover:translate-x-1 inline-block transition-all">Tentang Kami</a></li>
                 </ul>
             </div>

@@ -124,13 +124,10 @@
                 const data = await response.json();
                 
                 if (response.ok && data.success) {
-                    Swal.fire({
-                        toast: true,
-                        position: 'top-end',
-                        icon: 'success',
-                        title: data.message,
-                        showConfirmButton: false,
-                        timer: 3000
+                    window.showToast({
+                        type: 'success',
+                        title: 'Status Pengguna Diperbarui',
+                        message: data.message
                     });
                     
                     const tr = form.closest('tr');
@@ -156,7 +153,11 @@
                     throw new Error(data.message || 'Terjadi kesalahan');
                 }
             } catch (error) {
-                Swal.fire('Error', error.message, 'error');
+                window.showAlertDialog({
+                    title: 'Gagal Memperbarui Status',
+                    text: error.message,
+                    icon: 'error'
+                });
                 btn.textContent = originalText;
             } finally {
                 btn.disabled = false;

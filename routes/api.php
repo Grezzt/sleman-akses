@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\MapController;
+use App\Http\Controllers\Api\NewsController;
 use App\Http\Controllers\Api\ProfileController;
 use App\Http\Controllers\Api\ReportController;
 use App\Http\Controllers\Api\MediaController;
@@ -14,6 +15,8 @@ Route::prefix('v1')->group(function () {
   Route::get('categories', [CategoryController::class, 'index']);
   Route::get('map', [MapController::class, 'index']);
   Route::get('map/{id}', [MapController::class, 'show']);
+  Route::get('news', [NewsController::class, 'index'])->name('api.news.index');
+  Route::get('news/{id}', [NewsController::class, 'show'])->name('api.news.show');
 });
 
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {

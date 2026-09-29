@@ -25,7 +25,14 @@ class PublicController extends Controller
             'reports' => Report::count(),
         ];
 
-        return view('public.landing', compact('categories', 'stats'));
+        $latestArticles = \App\Models\Article::query()
+            ->where('status', \App\Models\Article::STATUS_PUBLISHED)
+            ->where('is_published', true)
+            ->orderByDesc('published_at')
+            ->limit(3)
+            ->get();
+
+        return view('public.landing', compact('categories', 'stats', 'latestArticles'));
     }
 
     public function about(): View

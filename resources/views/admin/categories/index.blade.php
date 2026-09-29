@@ -159,20 +159,13 @@
         document.querySelectorAll('.js-delete').forEach((form) => {
             form.addEventListener('submit', (event) => {
                 event.preventDefault();
-                Swal.fire({
-                    title: 'Hapus kategori ini?',
-                    text: 'Data kategori akan dihapus permanen.',
+                window.showConfirmDialog({
+                    title: 'Hapus Kategori Ini?',
+                    text: 'Data kategori akan dihapus permanen dari sistem.',
                     icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Hapus',
-                    cancelButtonText: 'Batal',
-                    customClass: {
-                        confirmButton: 'btn-primary-solid mr-2',
-                        cancelButton: 'px-4 py-2 border-2 border-border-solid rounded-full font-bold text-text-muted hover:bg-slate-200 transition-colors'
-                    },
-                    buttonsStyling: false
-                }).then((result) => {
-                    if (result.isConfirmed) {
+                    confirmText: 'Hapus',
+                    confirmColor: 'danger',
+                    onConfirm: () => {
                         form.submit();
                     }
                 });

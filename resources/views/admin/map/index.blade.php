@@ -515,22 +515,15 @@
             }
         });
 
-        // SweetAlert Delete
+        // Neobrutalism System Response Dialog Delete
         window.confirmDelete = function(form) {
-            Swal.fire({
-                title: 'Hapus lokasi ini?',
-                text: 'Lokasi akan dihapus dari peta publik.',
+            window.showConfirmDialog({
+                title: 'Hapus Lokasi Ini?',
+                text: 'Lokasi fasilitas publik ini akan dihapus permanen dari peta publik.',
                 icon: 'warning',
-                showCancelButton: true,
-                confirmButtonText: 'Hapus',
-                cancelButtonText: 'Batal',
-                customClass: {
-                    confirmButton: 'btn-primary-solid mr-2',
-                    cancelButton: 'px-4 py-2 border-2 border-border-solid rounded-full font-bold text-text-muted hover:bg-slate-200 transition-colors'
-                },
-                buttonsStyling: false
-            }).then((result) => {
-                if (result.isConfirmed) {
+                confirmText: 'Hapus Lokasi',
+                confirmColor: 'danger',
+                onConfirm: () => {
                     form.submit();
                 }
             });

@@ -46,4 +46,10 @@ return [
         'folder' => env('CLOUDINARY_FOLDER', 'reports'),
     ],
 
+    'gemini' => [
+        'primary_key' => env('GEMINI_API_KEY'),
+        'fallback_key' => env('GEMINI_API_KEY_FALLBACK'),
+        'model' => env('GEMINI_MODEL', 'gemini-2.0-flash-lite'),
+    ],
+
 ];
