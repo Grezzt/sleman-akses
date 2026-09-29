@@ -51,6 +51,7 @@ class NewsController extends Controller
     {
         try {
             $article = $this->articles->getArticleDetail($id);
+            $article->increment('views_count');
 
             return response()->json([
                 'success' => true,
