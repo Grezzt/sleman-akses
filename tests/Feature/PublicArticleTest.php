@@ -272,4 +272,24 @@ class PublicArticleTest extends TestCase
             ->assertSee('Dengarkan')
             ->assertSee('Ukuran Teks:');
     }
+
+    public function test_detail_page_renders_content_wrapped_in_paragraphs_for_tts_accessibility(): void
+    {
+        $article = Article::create([
+            'title' => 'Edukasi Hak Aksesibilitas Sleman ' . uniqid(),
+            'category' => 'Edukasi & Kesadaran',
+            'summary' => 'Ringkasan edukasi hak',
+            'content' => "Paragraf pertama edukasi hak difabel.\n\nParagraf kedua standar fasilitas publik.",
+            'is_published' => true,
+            'status' => Article::STATUS_PUBLISHED,
+            'published_at' => now(),
+        ]);
+
+        $response = $this->get(route('public.articles.show', $article->slug));
+
+        $response->assertStatus(200)
+            ->assertSee('<p>Paragraf pertama edukasi hak difabel.</p>', false)
+            ->assertSee('<p>Paragraf kedua standar fasilitas publik.</p>', false);
+    }
 }
+

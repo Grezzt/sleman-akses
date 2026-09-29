@@ -76,9 +76,10 @@
     }
     .tts-active-highlight {
         background-color: #FEF08A !important;
-        border-left: 4px solid var(--color-primary, #037940) !important;
-        padding-left: 0.75rem !important;
-        border-radius: 6px !important;
+        border-left: 5px solid var(--color-primary, #037940) !important;
+        padding: 0.5rem 0.75rem !important;
+        border-radius: 8px !important;
+        box-shadow: 2px 2px 0px 0px rgba(0, 0, 0, 0.08) !important;
         transition: all 0.2s ease-in-out !important;
     }
 </style>
@@ -274,8 +275,26 @@
                 @endif
 
                 {{-- Formatted Article Body --}}
+                @php
+                    $rawContent = $article->content ?? '';
+                    // Deteksi jika konten sudah memiliki struktur elemen blok HTML (misal dari rich editor)
+                    $hasBlockHtml = preg_match('/<\s*(p|div|article|section|blockquote|h[1-6]|ul|ol|table)\b/i', $rawContent);
+                    if ($hasBlockHtml) {
+                        $renderedHtml = $rawContent;
+                    } else {
+                        // Pecah string plain text per paragraf (dipisahkan baris baru ganda)
+                        $paragraphs = preg_split('/(\r\n){2,}|\r{2,}|\n{2,}/', trim($rawContent));
+                        $renderedHtml = '';
+                        foreach ($paragraphs as $para) {
+                            $cleanPara = trim($para);
+                            if ($cleanPara !== '') {
+                                $renderedHtml .= '<p>' . nl2br(e($cleanPara)) . '</p>';
+                            }
+                        }
+                    }
+                @endphp
                 <div class="article-body" id="articleContentBody">
-                    {!! nl2br($article->content) !!}
+                    {!! $renderedHtml !!}
                 </div>
 
                 {{-- Detected Accessibility Facilities Box --}}
@@ -500,22 +519,88 @@
     let isTtsPlaying = false;
     let isTtsPaused = false;
     let ttsSpeed = 1.0;
+    let currentUtterance = null;
+    let availableVoices = [];
+
+    function loadVoices() {
+        if (!synth) return;
+        availableVoices = synth.getVoices();
+    }
+    if (synth) {
+        loadVoices();
+        if (synth.onvoiceschanged !== undefined) {
+            synth.onvoiceschanged = loadVoices;
+        }
+    }
 
     function initTextElements() {
         textElements = [];
+
+        // 1. Ringkasan wawasan utama (jika tersedia)
         const summaryEl = document.querySelector('.lead-summary-text');
         if (summaryEl && summaryEl.innerText.trim()) {
             textElements.push(summaryEl);
         }
+
+        // 2. Paragraf & elemen teks dalam isi artikel
         const bodyEl = document.getElementById('articleContentBody');
         if (bodyEl) {
-            const paragraphs = bodyEl.querySelectorAll('p, h2, h3, blockquote, li');
-            paragraphs.forEach(p => {
-                if (p.innerText.trim()) {
-                    textElements.push(p);
+            let elements = Array.from(bodyEl.querySelectorAll('p, h2, h3, h4, blockquote, li'));
+
+            // Fallback pengaman dinamis: Jika belum ada tag blok, pecah teks & bungkus dalam <p>
+            if (elements.length === 0 && bodyEl.innerText.trim()) {
+                const rawParagraphs = bodyEl.innerHTML
+                    .split(/<br\s*[\/]?>\s*<br\s*[\/]?>|\n\s*\n/)
+                    .map(s => s.trim())
+                    .filter(s => s.length > 0);
+
+                if (rawParagraphs.length > 0) {
+                    bodyEl.innerHTML = rawParagraphs.map(p => `<p>${p}</p>`).join('');
+                } else {
+                    bodyEl.innerHTML = `<p>${bodyEl.innerHTML.trim()}</p>`;
+                }
+                elements = Array.from(bodyEl.querySelectorAll('p'));
+            }
+
+            elements.forEach(el => {
+                if (el.innerText.trim()) {
+                    textElements.push(el);
                 }
             });
         }
+
+        // Hubungkan event click untuk interaktivitas lompat ke paragraf
+        attachElementClickHandlers();
+    }
+
+    function attachElementClickHandlers() {
+        textElements.forEach((el, idx) => {
+            if (!el.dataset.ttsBound) {
+                el.dataset.ttsBound = 'true';
+                el.setAttribute('data-tts-index', idx);
+                el.classList.add('cursor-pointer', 'transition-all');
+                el.title = 'Klik untuk mendengarkan bagian ini';
+
+                el.addEventListener('click', (e) => {
+                    // Abaikan jika klik tautan anchor atau sedang memblok teks untuk disalin
+                    if (e.target.tagName.toLowerCase() === 'a') return;
+                    if (window.getSelection && window.getSelection().toString().trim().length > 0) return;
+
+                    if (!synth) {
+                        alert('Peramban Anda belum mendukung fitur Web Speech API (Text-to-Speech).');
+                        return;
+                    }
+
+                    if (synth.speaking || synth.pending) {
+                        synth.cancel();
+                    }
+                    isTtsPlaying = true;
+                    isTtsPaused = false;
+                    updatePlayButtonUI();
+                    playElementAt(idx);
+                });
+            }
+        });
     }
 
     function clearTtsHighlight() {
@@ -541,7 +626,6 @@
             btnPlay.classList.replace('bg-primary', 'bg-amber-600');
             btnPlay.classList.replace('hover:bg-primary-hover', 'hover:bg-amber-700');
             btnStop.classList.remove('hidden');
-            setTtsStatus('Sedang membacakan...', 'fa-solid fa-volume-high fa-bounce');
         } else if (isTtsPaused) {
             iconPlay.className = 'fa-solid fa-play text-xs';
             labelPlay.innerText = 'Lanjut';
@@ -575,16 +659,33 @@
         targetEl.classList.add('tts-active-highlight');
         targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
 
+        // Update indikator teks spesifik
+        const isSummary = targetEl.classList.contains('lead-summary-text');
+        if (isSummary) {
+            setTtsStatus(`Membacakan Ringkasan (${index + 1}/${textElements.length})`, 'fa-solid fa-volume-high fa-bounce');
+        } else {
+            const hasSummary = textElements.length > 0 && textElements[0].classList.contains('lead-summary-text');
+            const paraNum = hasSummary ? index : index + 1;
+            setTtsStatus(`Membacakan Paragraf ${paraNum} (${index + 1}/${textElements.length})`, 'fa-solid fa-volume-high fa-bounce');
+        }
+
         const textToRead = targetEl.innerText.trim();
         const utterance = new SpeechSynthesisUtterance(textToRead);
         utterance.lang = 'id-ID';
         utterance.rate = ttsSpeed;
 
-        const voices = synth.getVoices();
-        const indonesianVoice = voices.find(v => v.lang.includes('id') || v.lang.includes('ID'));
+        // Pilih suara Bahasa Indonesia jika didukung peramban
+        const voices = availableVoices.length > 0 ? availableVoices : synth.getVoices();
+        const indonesianVoice = voices.find(v => {
+            const l = (v.lang || '').toLowerCase().replace('_', '-');
+            return l.startsWith('id') || l.includes('indonesia');
+        });
         if (indonesianVoice) {
             utterance.voice = indonesianVoice;
         }
+
+        // Simpan referensi global pencegah garbage-collection di engine Chromium
+        currentUtterance = utterance;
 
         utterance.onend = function() {
             if (isTtsPlaying && !isTtsPaused) {
@@ -593,6 +694,7 @@
         };
 
         utterance.onerror = function(e) {
+            if (e.error === 'canceled' || e.error === 'interrupted') return;
             if (isTtsPlaying && !isTtsPaused) {
                 playElementAt(index + 1);
             }
@@ -619,6 +721,17 @@
             synth.resume();
             isTtsPaused = false;
             updatePlayButtonUI();
+            if (textElements[currentElementIndex]) {
+                const targetEl = textElements[currentElementIndex];
+                const isSummary = targetEl.classList.contains('lead-summary-text');
+                if (isSummary) {
+                    setTtsStatus(`Membacakan Ringkasan (${currentElementIndex + 1}/${textElements.length})`, 'fa-solid fa-volume-high fa-bounce');
+                } else {
+                    const hasSummary = textElements.length > 0 && textElements[0].classList.contains('lead-summary-text');
+                    const paraNum = hasSummary ? currentElementIndex : currentElementIndex + 1;
+                    setTtsStatus(`Membacakan Paragraf ${paraNum} (${currentElementIndex + 1}/${textElements.length})`, 'fa-solid fa-volume-high fa-bounce');
+                }
+            }
         } else {
             synth.pause();
             isTtsPaused = true;
@@ -633,6 +746,7 @@
         isTtsPlaying = false;
         isTtsPaused = false;
         currentElementIndex = 0;
+        currentUtterance = null;
         updatePlayButtonUI();
     }
 
@@ -658,6 +772,11 @@
             playElementAt(currentElementIndex);
         }
     }
+
+    // Inisialisasi awal elemen teks saat dokumen dimuat
+    document.addEventListener('DOMContentLoaded', () => {
+        initTextElements();
+    });
 
     window.addEventListener('beforeunload', () => {
         if (synth) synth.cancel();
