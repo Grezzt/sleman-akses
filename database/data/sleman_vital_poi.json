@@ -1,0 +1,776 @@
+[
+  {
+    "id": "POI-SLM-001",
+    "place_name": "RSUD Sleman",
+    "search_query": "RSUD Sleman Murangan",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Bhayangkara No.48, Temulawak, Triharjo, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55514",
+    "kapanewon": "Sleman",
+    "latitude": -7.697486,
+    "longitude": 110.334057,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664170/lift-kursi-roda-di-tangga-umum-1-1024x768_gnmiba.jpg?v=101",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-002",
+    "place_name": "Rumah Sakit Akademik (RSA) UGM",
+    "search_query": "RSA UGM Kragilan Gamping Sleman",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Kabupaten, Kranggahan I, Trihanggo, Kec. Gamping, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55291",
+    "kapanewon": "Mlati",
+    "latitude": -7.742841,
+    "longitude": 110.350325,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664144/lift-kursi-roda-di-tangga-umum-4_waife0.jpg?v=102",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-003",
+    "place_name": "RS JIH (Jogja International Hospital)",
+    "search_query": "RS JIH Sleman Ring Road",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Ring Road Utara No.160, Perumnas Condong Catur, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55283",
+    "kapanewon": "Depok",
+    "latitude": -7.75781,
+    "longitude": 110.403462,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": false,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=103",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-004",
+    "place_name": "RS Hermina Yogya",
+    "search_query": "RS Hermina Yogya Maguwoharjo Sleman",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Selokan Mataram, Meguwo, Maguwoharjo, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55282",
+    "kapanewon": "Depok",
+    "latitude": -7.771234,
+    "longitude": 110.432567,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663998/WhatsApp_Image_2023-03-29_at_12.39.01_ucwwue.jpg?v=104",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-005",
+    "place_name": "RS Panti Nugroho",
+    "search_query": "RS Panti Nugroho Pakem Sleman",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Kaliurang No.KM.17, Sukanan, Pakembinangun, Kec. Pakem, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55584",
+    "kapanewon": "Pakem",
+    "latitude": -7.668912,
+    "longitude": 110.419845,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663875/toilet_wfpm1h.jpg?v=105",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-006",
+    "place_name": "RS Condong Catur",
+    "search_query": "RS Condong Catur Depok Sleman",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Manggis No.6, Gempol, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55581",
+    "kapanewon": "Depok",
+    "latitude": -7.755891,
+    "longitude": 110.392341,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664061/Parkir-khusus-difabel_qkxvmp.jpg?v=106",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-007",
+    "place_name": "RS Mitra Paramedika",
+    "search_query": "RS Mitra Paramedika Ngemplak Sleman",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Raya Ngemplak, Area Sawah, Widodomartani, Kec. Ngemplak, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55571",
+    "kapanewon": "Ngemplak",
+    "latitude": -7.701235,
+    "longitude": 110.449871,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663779/WhatsApp-Image-2025-03-18-at-11.20.00-scaled_feiyao.jpg?v=107",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-008",
+    "place_name": "Puskesmas Sleman",
+    "search_query": "Puskesmas Sleman Triharjo",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Kapten Haryadi No.6, Srimulyo, Triharjo, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55514",
+    "kapanewon": "Sleman",
+    "latitude": -7.692341,
+    "longitude": 110.331245,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=108",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-009",
+    "place_name": "Puskesmas Depok 1",
+    "search_query": "Puskesmas Depok 1 Sleman",
+    "facility_type": "KESEHATAN",
+    "address": "Nanggulan, Maguwoharjo, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.763451,
+    "longitude": 110.428712,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663875/toilet_wfpm1h.jpg?v=109",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-010",
+    "place_name": "Puskesmas Mlati 1",
+    "search_query": "Puskesmas Mlati 1 Sleman Sendangadi",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Wijaya Kusuma, Kutu Tegal, Sinduadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55284",
+    "kapanewon": "Mlati",
+    "latitude": -7.741289,
+    "longitude": 110.362145,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664061/Parkir-khusus-difabel_qkxvmp.jpg?v=110",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-011",
+    "place_name": "Kampus Terpadu UII",
+    "search_query": "Universitas Islam Indonesia Kampus Terpadu Kaliurang Sleman",
+    "facility_type": "PENDIDIKAN",
+    "address": "Jl. Kaliurang No.Km. 14,5, Krawitan, Umbulmartani, Kec. Ngemplak, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55584",
+    "kapanewon": "Ngemplak",
+    "latitude": -7.68765,
+    "longitude": 110.414237,
+    "accessibility": {
+      "ramp": false,
+      "toilet_difabel": false,
+      "parkir_difabel": false,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664144/lift-kursi-roda-di-tangga-umum-4_waife0.jpg?v=111",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-012",
+    "place_name": "Universitas Gadjah Mada (UGM)",
+    "search_query": "Universitas Gadjah Mada Bulaksumur Sleman",
+    "facility_type": "PENDIDIKAN",
+    "address": "Bulaksumur, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.76798,
+    "longitude": 110.378775,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663875/toilet_wfpm1h.jpg?v=112",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-013",
+    "place_name": "Universitas Negeri Yogyakarta (UNY)",
+    "search_query": "Universitas Negeri Yogyakarta Karangmalang Sleman",
+    "facility_type": "PENDIDIKAN",
+    "address": "Jl. Colombo No.1, Karang Malang, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.773725,
+    "longitude": 110.386251,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664061/Parkir-khusus-difabel_qkxvmp.jpg?v=113",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-014",
+    "place_name": "UPN Veteran Yogyakarta",
+    "search_query": "UPN Veteran Yogyakarta Kampus Condongcatur",
+    "facility_type": "PENDIDIKAN",
+    "address": "Jl. Padjajaran Jl. Ring Road Utara No.104, Ngropoh, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55283",
+    "kapanewon": "Depok",
+    "latitude": -7.762232,
+    "longitude": 110.409279,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663779/WhatsApp-Image-2025-03-18-at-11.20.00-scaled_feiyao.jpg?v=114",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-015",
+    "place_name": "UIN Sunan Kalijaga (Kampus Sambilegi)",
+    "search_query": "UIN Sunan Kalijaga Kampus Sambilegi Maguwoharjo Sleman",
+    "facility_type": "PENDIDIKAN",
+    "address": "Jl. Laksda Adisucipto, Papringan, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.784784,
+    "longitude": 110.394359,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664170/lift-kursi-roda-di-tangga-umum-1-1024x768_gnmiba.jpg?v=115",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-016",
+    "place_name": "Universitas AMIKOM Yogyakarta",
+    "search_query": "Universitas AMIKOM Yogyakarta Condongcatur",
+    "facility_type": "PENDIDIKAN",
+    "address": "Jl. Ring Road Utara, Ngringin, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.759456,
+    "longitude": 110.408712,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=116",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-017",
+    "place_name": "Universitas Sanata Dharma (Kampus III Paingan)",
+    "search_query": "Universitas Sanata Dharma Kampus 3 Paingan Maguwoharjo Sleman",
+    "facility_type": "PENDIDIKAN",
+    "address": "Jl. Paingan, Krodan, Maguwoharjo, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.761891,
+    "longitude": 110.424312,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664144/lift-kursi-roda-di-tangga-umum-4_waife0.jpg?v=117",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-018",
+    "place_name": "Universitas Teknologi Yogyakarta (UTY Kampus 1)",
+    "search_query": "Universitas Teknologi Yogyakarta Kampus 1 Ring Road Jombor Sleman",
+    "facility_type": "PENDIDIKAN",
+    "address": "Jl. Siliwangi Jl. Jombor Lor, Mlati Krajan, Sendangadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55284",
+    "kapanewon": "Mlati",
+    "latitude": -7.747344,
+    "longitude": 110.355519,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": false,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664061/Parkir-khusus-difabel_qkxvmp.jpg?v=118",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-019",
+    "place_name": "Kantor Bupati Sleman",
+    "search_query": "Kantor Bupati Sleman Jl Parasamya",
+    "facility_type": "PELAYANAN PUBLIK",
+    "address": "79M4+86Q, Jl. Parasamya, Beran Lor, Tridadi, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55511",
+    "kapanewon": "Sleman",
+    "latitude": -7.716673,
+    "longitude": 110.355607,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664061/Parkir-khusus-difabel_qkxvmp.jpg?v=119",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-020",
+    "place_name": "Disdukcapil Kabupaten Sleman",
+    "search_query": "Disdukcapil Kabupaten Sleman Tridadi",
+    "facility_type": "PELAYANAN PUBLIK",
+    "address": "Jl. Magelang No.Km.11, Beran Lor, Tridadi, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55511",
+    "kapanewon": "Sleman",
+    "latitude": -7.715367,
+    "longitude": 110.356247,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663998/WhatsApp_Image_2023-03-29_at_12.39.01_ucwwue.jpg?v=120",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-021",
+    "place_name": "Mal Pelayanan Publik (DPMPTSP Sleman)",
+    "search_query": "Mal Pelayanan Publik Sleman Beran",
+    "facility_type": "PELAYANAN PUBLIK",
+    "address": "Jl. Magelang No.Km. 11, Beran Lor, Tridadi, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55511",
+    "kapanewon": "Sleman",
+    "latitude": -7.713911,
+    "longitude": 110.352467,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=121",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-022",
+    "place_name": "Dinas Sosial (Dinsos) Kabupaten Sleman",
+    "search_query": "Dinas Sosial Kabupaten Sleman Tridadi",
+    "facility_type": "PELAYANAN PUBLIK",
+    "address": "79M4+347, Jl. Parasamya, Beran, Tridadi, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55511",
+    "kapanewon": "Sleman",
+    "latitude": -7.714521,
+    "longitude": 110.355102,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663875/toilet_wfpm1h.jpg?v=122",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-023",
+    "place_name": "Bappeda Kabupaten Sleman",
+    "search_query": "Bappeda Kabupaten Sleman Parasamya",
+    "facility_type": "PELAYANAN PUBLIK",
+    "address": "Jl. Parasamya No.1, Beran, Tridadi, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55511",
+    "kapanewon": "Sleman",
+    "latitude": -7.713102,
+    "longitude": 110.353841,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664144/lift-kursi-roda-di-tangga-umum-4_waife0.jpg?v=123",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-024",
+    "place_name": "Kantor Bersama Samsat Sleman",
+    "search_query": "Samsat Sleman Maguwoharjo",
+    "facility_type": "PELAYANAN PUBLIK",
+    "address": "Jl. Raya Solo - Yogyakarta No.Km 8, Kembang, Maguwoharjo, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55573",
+    "kapanewon": "Depok",
+    "latitude": -7.764512,
+    "longitude": 110.429541,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664061/Parkir-khusus-difabel_qkxvmp.jpg?v=124",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-025",
+    "place_name": "Kantor Kapanewon Depok",
+    "search_query": "Kantor Kapanewon Depok Sleman Caturtunggal",
+    "facility_type": "PELAYANAN PUBLIK",
+    "address": "69RV+GFM, Jalan Ring Road Utara, Gandok, Condongcatur, Depok, Candok, Condongcatur, Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55283",
+    "kapanewon": "Depok",
+    "latitude": -7.753891,
+    "longitude": 110.398412,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=125",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-026",
+    "place_name": "Kantor Kapanewon Mlati",
+    "search_query": "Kantor Kapanewon Mlati Sleman Tirtoadi",
+    "facility_type": "PELAYANAN PUBLIK",
+    "address": "788H+9GC, Jl. Gajah Mada, Area Sawah, Tlogoadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55286",
+    "kapanewon": "Mlati",
+    "latitude": -7.733512,
+    "longitude": 110.349812,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663875/toilet_wfpm1h.jpg?v=126",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-027",
+    "place_name": "Jogja City Mall (JCM)",
+    "search_query": "Jogja City Mall Mlati Sleman",
+    "facility_type": "MALL",
+    "address": "Jl. Magelang No.18, Kutu Patran, Sinduadi, Kec. Mlati, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55284",
+    "kapanewon": "Mlati",
+    "latitude": -7.752479,
+    "longitude": 110.360995,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664170/lift-kursi-roda-di-tangga-umum-1-1024x768_gnmiba.jpg?v=127",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-028",
+    "place_name": "Pakuwon Mall Jogja",
+    "search_query": "Pakuwon Mall Jogja Ring Road Utara Sleman",
+    "facility_type": "MALL",
+    "address": "Jl. Ring Road Utara, Kaliwaru, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.759247,
+    "longitude": 110.395175,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=128",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-029",
+    "place_name": "Sleman City Hall (SCH)",
+    "search_query": "Sleman City Hall Jl Magelang",
+    "facility_type": "MALL",
+    "address": "Jl. Magelang Jl. Gito Gati No.KM 9, Denggung, Tridadi, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55511",
+    "kapanewon": "Sleman",
+    "latitude": -7.724285,
+    "longitude": 110.363991,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664144/lift-kursi-roda-di-tangga-umum-4_waife0.jpg?v=129",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-030",
+    "place_name": "Plaza Ambarrukmo",
+    "search_query": "Plaza Ambarrukmo Adisucipto Sleman",
+    "facility_type": "MALL",
+    "address": "Jl. Laksda Adisucipto No.80, Ambarukmo, Caturtunggal, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.782629,
+    "longitude": 110.401444,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664170/lift-kursi-roda-di-tangga-umum-1-1024x768_gnmiba.jpg?v=130",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-031",
+    "place_name": "Pasar Sleman Unit 1",
+    "search_query": "Pasar Sleman Unit 1 Tridadi",
+    "facility_type": "PASAR",
+    "address": "Jl. Dr. Radjimin No.1, Kalah Ijo 1, Triharjo, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55514",
+    "kapanewon": "Sleman",
+    "latitude": -7.701658,
+    "longitude": 110.34726,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": false,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=131",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-032",
+    "place_name": "Pasar Tradisional Condongcatur",
+    "search_query": "Pasar Tradisional Condongcatur Sleman",
+    "facility_type": "PASAR",
+    "address": "Jl. Ring Road Utara No.414, Ngringin, Condongcatur, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.759731,
+    "longitude": 110.407267,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664061/Parkir-khusus-difabel_qkxvmp.jpg?v=132",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-033",
+    "place_name": "Pasar Godean Baru",
+    "search_query": "Pasar Godean Sleman Sidoagung",
+    "facility_type": "PASAR",
+    "address": "Jl. Godean No.Km.09, Godean, Sidoagung, Kec. Godean, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55264",
+    "kapanewon": "Godean",
+    "latitude": -7.766395,
+    "longitude": 110.293465,
+    "accessibility": {
+      "ramp": false,
+      "toilet_difabel": true,
+      "parkir_difabel": false,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663998/WhatsApp_Image_2023-03-29_at_12.39.01_ucwwue.jpg?v=133",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-034",
+    "place_name": "Superindo Kaliurang Km 6",
+    "search_query": "Superindo Kaliurang Km 6 Sleman",
+    "facility_type": "MALL",
+    "address": "Jl. Kaliurang Km 6.2 No.45, Manggung, Caturtunggal, Kec. Depok, Kabupaten Sleman, D.I. Yogyakarta 55281",
+    "kapanewon": "Depok",
+    "latitude": -7.752102,
+    "longitude": 110.380912,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=134",
+    "source": "google_maps_partial_live"
+  },
+  {
+    "id": "POI-SLM-035",
+    "place_name": "Stasiun Maguwo",
+    "search_query": "Stasiun Maguwo KRL Sleman",
+    "facility_type": "TRANSPORTASI",
+    "address": "Maguwoharjo, 55282 Sleman, Indonesia, Special Region of Yogyakarta",
+    "kapanewon": "Depok",
+    "latitude": -7.784763,
+    "longitude": 110.436716,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663875/toilet_wfpm1h.jpg?v=135",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-036",
+    "place_name": "Terminal Bus Jombor",
+    "search_query": "Terminal Jombor Mlati Sleman",
+    "facility_type": "TRANSPORTASI",
+    "address": "Terminal jombor, Jombor Lor, Trihanggo, Kec. Gamping, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55291",
+    "kapanewon": "Mlati",
+    "latitude": -7.746628,
+    "longitude": 110.36147,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": false,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664170/lift-kursi-roda-di-tangga-umum-1-1024x768_gnmiba.jpg?v=136",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-037",
+    "place_name": "Halte Trans Jogja Bandara Adisutjipto",
+    "search_query": "Halte Trans Jogja Bandara Adisutjipto Maguwoharjo",
+    "facility_type": "TRANSPORTASI",
+    "address": "Karangploso, Maguwoharjo, Kec. Depok, Kabupaten Sleman, Daerah Istimewa Yogyakarta",
+    "kapanewon": "Depok",
+    "latitude": -7.78454,
+    "longitude": 110.43571,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": true
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663779/WhatsApp-Image-2025-03-18-at-11.20.00-scaled_feiyao.jpg?v=137",
+    "source": "google_maps_partial_live"
+  },
+  {
+    "id": "POI-SLM-038",
+    "place_name": "Lapangan Pemda Denggung",
+    "search_query": "Lapangan Denggung Tridadi Sleman",
+    "facility_type": "RUANG PUBLIK",
+    "address": "Jaban, Tridadi, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55511",
+    "kapanewon": "Sleman",
+    "latitude": -7.721741,
+    "longitude": 110.360899,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": false,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664170/lift-kursi-roda-di-tangga-umum-1-1024x768_gnmiba.jpg?v=138",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-039",
+    "place_name": "Masjid Agung Wahidin Soedirohusodo",
+    "search_query": "Masjid Agung Sleman Wahidin Soedirohusodo Tridadi",
+    "facility_type": "TEMPAT IBADAH",
+    "address": "79P4+56F, Jl. Parasamya, Beran Lor, Tridadi, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55511",
+    "kapanewon": "Sleman",
+    "latitude": -7.71556,
+    "longitude": 110.35467,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=139",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-040",
+    "place_name": "Gereja Santo Aloysius Gonzaga Mlati",
+    "search_query": "Gereja Santo Aloysius Gonzaga Mlati Sleman",
+    "facility_type": "TEMPAT IBADAH",
+    "address": "Jl. Magelang Km. 7, 8 Mlati, Mlati Glondong, Sendangadi, Kec. Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55285",
+    "kapanewon": "Mlati",
+    "latitude": -7.738123,
+    "longitude": 110.362841,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664061/Parkir-khusus-difabel_qkxvmp.jpg?v=140",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-041",
+    "place_name": "RSUD Prambanan",
+    "search_query": "RSUD Prambanan Sleman",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Raya Piyungan - Prambanan No.Km.7, Delegan, Sumberharjo, Kec. Prambanan, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55572",
+    "kapanewon": "Prambanan",
+    "latitude": -7.778912,
+    "longitude": 110.495612,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779664170/lift-kursi-roda-di-tangga-umum-1-1024x768_gnmiba.jpg?v=141",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-042",
+    "place_name": "Puskesmas Godean 1",
+    "search_query": "Puskesmas Godean 1 Sleman Sidoagung",
+    "facility_type": "KESEHATAN",
+    "address": "Jl. Pandean 7, Sidoluhur, Godean, Pandean, Sidoluhur, Sleman, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55264",
+    "kapanewon": "Godean",
+    "latitude": -7.767123,
+    "longitude": 110.294102,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663875/toilet_wfpm1h.jpg?v=142",
+    "source": "google_maps_live_scrape"
+  },
+  {
+    "id": "POI-SLM-043",
+    "place_name": "Museum Gunungapi Merapi",
+    "search_query": "Museum Gunungapi Merapi Pakem Sleman",
+    "facility_type": "RUANG PUBLIK",
+    "address": "9CMC+7RJ, Jl. Banteng No.22, Banteng, Hargobinangun, Kec. Pakem, Kabupaten Sleman, Daerah Istimewa Yogyakarta 55582",
+    "kapanewon": "Pakem",
+    "latitude": -7.616335,
+    "longitude": 110.424364,
+    "accessibility": {
+      "ramp": true,
+      "toilet_difabel": true,
+      "parkir_difabel": true,
+      "lift": false
+    },
+    "photo_url": "https://res.cloudinary.com/debmlrrkg/image/upload/v1779663916/IMG_2082-scaled_y65ag6.jpg?v=143",
+    "source": "google_maps_live_scrape"
+  }
+]

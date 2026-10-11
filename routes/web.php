@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\MapController as AdminMapController;
 use App\Http\Controllers\Admin\ReportController as AdminReportController;
+use App\Http\Controllers\Admin\SpatialAnalysisController;
 use App\Http\Controllers\Admin\UserController as AdminUserController;
 use App\Http\Controllers\Admin\ValidationController;
 use App\Http\Controllers\Auth\LoginController;
@@ -39,6 +40,9 @@ Route::prefix('admin')->middleware(['auth', 'role:admin'])->name('admin.')->grou
     Route::get('map', [AdminMapController::class, 'index'])->name('map.index');
     Route::delete('map/{id}', [AdminMapController::class, 'destroy'])->name('map.destroy');
     Route::patch('map/{id}/toggle-status', [AdminMapController::class, 'toggleStatus'])->name('map.toggle_status');
+
+    Route::get('spatial-analysis', [SpatialAnalysisController::class, 'index'])->name('spatial.index');
+    Route::get('spatial-analysis/data', [SpatialAnalysisController::class, 'data'])->name('spatial.data');
 
     Route::get('articles', [AdminArticleController::class, 'index'])->name('articles.index');
     Route::get('articles/create', [AdminArticleController::class, 'create'])->name('articles.create');

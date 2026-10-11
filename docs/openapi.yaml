@@ -185,6 +185,14 @@ paths:
         Buat laporan baru dengan foto. Foto akan di-resize di server dan di-upload ke Cloudinary.
         Field `photo` harus berupa file (`multipart/form-data`). Respons `photo_url` pada data
         adalah URL HTTPS langsung dari Cloudinary (secure_url).
+      parameters:
+        - in: header
+          name: Idempotency-Key
+          required: false
+          description: "UUID v4 unik yang dihasilkan klien mobile untuk mencegah duplikasi pelaporan (offline-first sync)."
+          schema:
+            type: string
+            format: uuid
       requestBody:
         required: true
         content:
@@ -409,6 +417,11 @@ components:
       type: object
       required: [latitude, longitude, photo, categories]
       properties:
+        uuid:
+          type: string
+          format: uuid
+          nullable: true
+          description: "UUID v4 unik laporan untuk rekonsiliasi idempotensi offline-first."
         latitude:
           type: number
           format: float
@@ -562,6 +575,10 @@ components:
       properties:
         report_id:
           type: integer
+        uuid:
+          type: string
+          format: uuid
+          nullable: true
         latitude:
           type: number
           format: float

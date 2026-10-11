@@ -19,7 +19,7 @@ class ValidationController extends Controller
   {
     $validated = $request->validate([
       'approval_status' => ['required', 'in:approved,rejected'],
-      'evaluation_note' => ['nullable', 'string', 'max:1000'],
+      'evaluation_note' => ['required_if:approval_status,rejected', 'nullable', 'string', 'max:1000'],
       'place_name' => ['required_if:approval_status,approved', 'string', 'max:150'],
       'address' => ['required_if:approval_status,approved', 'string', 'max:255'],
       'status' => ['required_if:approval_status,approved', 'in:active,inactive'],

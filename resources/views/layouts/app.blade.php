@@ -46,6 +46,11 @@
                     <i class="fa-solid fa-map-location-dot w-5 text-center"></i>
                     <span>Peta</span>
                 </a>
+                <a href="{{ route('admin.spatial.index') }}"
+                    class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold transition-all {{ request()->routeIs('admin.spatial.*') ? 'bg-white text-primary border-2 border-border-solid shadow-[2px_2px_0px_0px_var(--color-secondary)] -translate-y-0.5 -translate-x-0.5' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
+                    <i class="fa-solid fa-chart-pie w-5 text-center"></i>
+                    <span>Analitik Spasial</span>
+                </a>
                 <a href="{{ route('admin.articles.index') }}"
                     class="flex items-center gap-3 px-4 py-2.5 rounded-xl font-bold transition-all {{ request()->routeIs('admin.articles.*') ? 'bg-white text-primary border-2 border-border-solid shadow-[2px_2px_0px_0px_var(--color-secondary)] -translate-y-0.5 -translate-x-0.5' : 'text-white/80 hover:bg-white/10 hover:text-white' }}">
                     <i class="fa-solid fa-newspaper w-5 text-center"></i>

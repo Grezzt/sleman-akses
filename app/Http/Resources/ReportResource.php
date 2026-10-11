@@ -20,6 +20,7 @@ class ReportResource extends JsonResource
 
     return [
       'report_id' => $this->id,
+      'uuid' => $this->uuid,
       'latitude' => $this->latitude,
       'longitude' => $this->longitude,
       'photo_url' => $this->photo_url ? explode(',', $this->photo_url)[0] : null,

@@ -14,6 +14,8 @@ interface ReportRepositoryInterface
 
   public function findWithRelations(int $id): ?Report;
 
+  public function findByUuid(string $uuid): ?Report;
+
   public function getByUserPaginated(int $userId, int $perPage = 10): LengthAwarePaginator;
 
   public function getStatsByUser(int $userId): array;

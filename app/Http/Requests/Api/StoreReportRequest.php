@@ -14,6 +14,7 @@ class StoreReportRequest extends FormRequest
   public function rules(): array
   {
     return [
+      'uuid' => ['nullable', 'string', 'max:36'],
       'latitude' => ['required', 'numeric', 'between:-90,90'],
       'longitude' => ['required', 'numeric', 'between:-180,180'],
       'photo_url' => ['required', 'string'],

@@ -28,6 +28,11 @@ class ReportRepository implements ReportRepositoryInterface
     return Report::with(['user', 'details.category', 'validation.mapLocation'])->find($id);
   }
 
+  public function findByUuid(string $uuid): ?Report
+  {
+    return Report::with(['user', 'details.category', 'validation.mapLocation'])->where('uuid', $uuid)->first();
+  }
+
   public function getByUserPaginated(int $userId, int $perPage = 10): LengthAwarePaginator
   {
     return Report::with(['user', 'details.category', 'validation.mapLocation'])

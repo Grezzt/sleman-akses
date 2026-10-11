@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Report extends Model
 {
     protected $fillable = [
+        'uuid',
         'user_id',
         'latitude',
         'longitude',

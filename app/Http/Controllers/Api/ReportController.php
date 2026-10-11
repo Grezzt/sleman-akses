@@ -51,17 +51,26 @@ class ReportController extends Controller
   public function store(StoreReportRequest $request): JsonResponse
   {
     $user = Auth::user();
+    $data = $request->validated();
+
+    $idempotencyKey = $request->header('Idempotency-Key');
+    if (!empty($idempotencyKey) && empty($data['uuid'])) {
+      $data['uuid'] = $idempotencyKey;
+    }
+
     $report = $this->reports->createReport(
-      $request->validated(),
+      $data,
       $user->id,
       $request->input('photo_url')
     );
 
+    $statusCode = $report->wasRecentlyCreated ? 201 : 200;
+
     return response()->json([
       'success' => true,
-      'message' => 'Laporan berhasil dikirim.',
+      'message' => $report->wasRecentlyCreated ? 'Laporan berhasil dikirim.' : 'Laporan sudah terdaftar sebelumnya (idempoten).',
       'data' => new ReportResource($report->load(['details.category', 'validation'])),
-    ], 201);
+    ], $statusCode);
   }
 
   public function show(int $id): JsonResponse

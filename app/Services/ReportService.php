@@ -20,7 +20,15 @@ class ReportService
     public function createReport(array $data, int $userId, string $photoUrl): Report
     {
         try {
+            if (!empty($data['uuid'])) {
+                $existing = $this->reports->findByUuid($data['uuid']);
+                if ($existing) {
+                    return $existing;
+                }
+            }
+
             $report = $this->reports->create([
+                'uuid' => $data['uuid'] ?? null,
                 'user_id' => $userId,
                 'latitude' => $data['latitude'],
                 'longitude' => $data['longitude'],
